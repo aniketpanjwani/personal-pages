@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Medellin Format Spike Outcome v2</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 18px 64px;
+      font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    img, video, canvas, svg { max-width: 100%; height: auto; }
+    pre { overflow-x: auto; padding: 12px; border: 1px solid #ddd; }
+    code { font-size: 0.92em; }
+    table { display: block; overflow-x: auto; border-collapse: collapse; }
+    th, td { padding: 0.35rem 0.5rem; border: 1px solid #ddd; }
+  </style>
+
+  <meta charset="utf-8">
+  <style>
+:root {
+  color-scheme: light;
+  --bg: #f6f3ee;
+  --paper: #fffdf8;
+  --ink: #171717;
+  --muted: #66645f;
+  --line: #ded7ca;
+  --accent: #176b5d;
+  --accent-soft: #e4f1eb;
+  --blue: #245f91;
+  --blue-soft: #e7eef8;
+  --rose: #94405b;
+  --rose-soft: #f6e7ed;
+  --gold: #8a5a12;
+  --gold-soft: #f7eddb;
+  --shadow: 0 18px 50px rgba(35, 28, 17, 0.08);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background:
+    linear-gradient(180deg, rgba(255,253,248,0.86), rgba(246,243,238,1) 360px),
+    var(--bg);
+  color: var(--ink);
+  font: 16px/1.58 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+a { color: var(--accent); }
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: rgba(23, 107, 93, 0.08);
+  padding: 0.08rem 0.28rem;
+  border-radius: 5px;
+}
+.page { max-width: 1180px; margin: 0 auto; padding: 34px 20px 72px; }
+.hero {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: clamp(24px, 4vw, 48px);
+  box-shadow: var(--shadow);
+}
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+h1, h2, h3 { line-height: 1.12; letter-spacing: 0; }
+h1 { max-width: 920px; margin: 10px 0 12px; font-size: clamp(2.05rem, 5vw, 4.7rem); }
+h2 { margin: 0 0 16px; font-size: clamp(1.35rem, 2.4vw, 2.2rem); }
+h3 { margin: 0 0 8px; font-size: 1.05rem; }
+.subtitle { max-width: 760px; color: var(--muted); font-size: clamp(1.02rem, 1.6vw, 1.22rem); }
+.meta, .stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.pill, .stat {
+  border: 1px solid var(--line);
+  background: #fffaf1;
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: #47433b;
+  font-size: 0.88rem;
+}
+.stat { min-width: 136px; border-radius: 14px; }
+.stat strong { display: block; font-size: 1.15rem; color: var(--ink); }
+.layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; align-items: start; margin-top: 28px; }
+.toc {
+  position: sticky;
+  top: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255,253,248,0.86);
+  padding: 14px;
+}
+.toc a { display: block; color: #4c4944; text-decoration: none; padding: 7px 8px; border-radius: 8px; font-size: 0.9rem; }
+.toc a:hover { background: var(--accent-soft); color: var(--accent); }
+.content { min-width: 0; }
+.section {
+  margin-bottom: 22px;
+  padding: clamp(20px, 2.4vw, 30px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(35, 28, 17, 0.045);
+}
+.section p { max-width: 76ch; }
+.section-intro { color: var(--muted); }
+.callout {
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+}
+.callout.accent, .card.accent { background: var(--accent-soft); }
+.callout.blue, .card.blue { background: var(--blue-soft); }
+.callout.rose, .card.rose { background: var(--rose-soft); }
+.callout.gold, .card.gold { background: var(--gold-soft); }
+.card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.card {
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+}
+.muted { color: var(--muted); }
+.field { margin-top: 12px; }
+.field-label { color: var(--muted); font-size: 0.73rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.field-value { margin-top: 2px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+table { width: 100%; border-collapse: collapse; min-width: 720px; background: #fffaf1; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+th { color: #423d34; background: #f2eadc; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+tr:last-child td { border-bottom: 0; }
+.steps { counter-reset: step; list-style: none; padding: 0; display: grid; gap: 12px; }
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 14px 14px 14px 52px;
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.flow-node {
+  position: relative;
+  min-height: 124px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fffaf1;
+}
+.flow-label { color: var(--accent); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+.flow-title { margin-top: 8px; font-weight: 800; }
+.flow-body { margin-top: 6px; color: var(--muted); font-size: 0.92rem; }
+.appendix-list { display: grid; gap: 12px; }
+.appendix-list article { border-top: 1px solid var(--line); padding-top: 14px; }
+footer {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  text-align: center;
+}
+@media (max-width: 860px) {
+  .page { padding: 16px 12px 48px; }
+  .layout { display: block; }
+  .toc { position: static; margin-bottom: 18px; }
+  .toc nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card-grid { grid-template-columns: 1fr; }
+  .section { border-radius: 14px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 15px; }
+  .hero { border-radius: 14px; padding: 22px 16px; }
+  .toc nav { grid-template-columns: 1fr; }
+  .meta, .stats { display: grid; }
+  table { min-width: 620px; }
+}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<div class="eyebrow">Medellin Insider</div>
+<h1>Medellin Format Spike Outcome</h1>
+<p class="subtitle">A readable research packet: source analyses, cross-anchor synthesis, and the recommended Edition #1 shape.</p>
+<div class="meta">
+<span class="pill"><strong>Status:</strong> recommended for operator review</span>
+<span class="pill"><strong>Date:</strong> 2026-06-15</span>
+<span class="pill"><strong>Source set:</strong> 6 approved Taste Anchor profiles</span>
+<span class="pill"><strong>Publish mode:</strong> public-obscure, noindex</span>
+</div>
+<div class="stats">
+<div class="stat"><strong>6</strong>anchors analyzed</div>
+<div class="stat"><strong>52</strong>captured source files</div>
+<div class="stat"><strong>4</strong>persistent blocks</div>
+<div class="stat"><strong>3-5</strong>Shortlist entries</div>
+</div>
+</header>
+<div class="layout">
+<aside class="toc"><div class="eyebrow">Contents</div><nav>
+<a href="#executive-summary">Executive Summary</a>
+<a href="#edition-shape">Recommended Edition Shape</a>
+<a href="#source-analyses">Source Analyses</a>
+<a href="#cross-anchor-matrix">Cross-Anchor Comparison</a>
+<a href="#edition-blocks">Proposed Edition Blocks</a>
+<a href="#four-edition-plan">Four-Edition Experiment Plan</a>
+<a href="#surface-routing">Surface Routing</a>
+<a href="#appendix">Appendix: Handoff Summary</a>
+</nav></aside>
+<div class="content">
+<section class="section callout-section" id="executive-summary">
+<h2>Executive Summary</h2>
+<div class="callout accent">
+<div class="eyebrow">Recommendation</div>
+<p>Edition #1 should ship as a compact weekly briefing, not an event newsletter with extras. The launch shape should be: one-time reintroduction, This Week&#x27;s Signal, The Shortlist, Move Smarter, and Personal Note.</p>
+<p>The key change is that events stay important but stop being the whole product. The email carries judgment: what changed, what is worth doing, and how to move through Medellin better.</p>
+<ul><li>Persistent blocks after Edition #1: This Week&#x27;s Signal, The Shortlist, Move Smarter, Personal Note.</li><li>Experiments for Editions #2-#4: social carousel, Local Moment visual post, participatory prompt or Builder Profile lead.</li><li>Deferred: standing real estate coverage, full Format Radar automation, regular Facebook-group extraction.</li></ul>
+</div></section>
+<section class="section flow-section" id="edition-shape">
+<h2>Recommended Edition Shape</h2>
+<p class="section-intro">The Edition should read like a guided briefing. Instagram and app/web get derivatives and durable references; email keeps the complete operator read.</p>
+<div class="flow">
+<div class="flow-node">
+<div class="flow-label">Edition #1 only</div>
+<div class="flow-title">Reintroduction</div>
+<div class="flow-body">Short note explaining what Medellin Insider is now and why dormant subscribers are receiving it.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">Persistent</div>
+<div class="flow-title">This Week&#x27;s Signal</div>
+<div class="flow-body">One public-source-backed local update or outside-coverage translation with a clear audience implication.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">Persistent</div>
+<div class="flow-title">The Shortlist</div>
+<div class="flow-body">3-5 curated events or activities that clear the worth-leaving-the-apartment bar.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">Persistent</div>
+<div class="flow-title">Move Smarter</div>
+<div class="flow-body">One practical living-in-Medellin answer: mistake, workaround, neighborhood tradeoff, safety pattern, or etiquette note.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">Email-only</div>
+<div class="flow-title">Personal Note</div>
+<div class="flow-body">2-4 signed sentences from Aniket. Relationship block, never Instagram filler.</div>
+</div>
+</div></section>
+<section class="section cards-section" id="source-analyses">
+<h2>Source Analyses</h2>
+<p class="section-intro">These are the subagent-style anchor analyses that should have been visible in the first HTML packet. Each card names what the source teaches, what transfers, and what should not be copied.</p>
+<div class="card-grid">
+<article class="card accent">
+<div class="eyebrow">Medellin / Colombia adjacent</div>
+<h3>Medellingles</h3>
+<p class="muted">English-language Medellin utility, Substack, Instagram, and Facebook presence.</p>
+<div class="field">
+<div class="field-label">Evidence read</div>
+<div class="field-value">Substack feed, public Facebook metadata, Instagram profile/posts attempt, raw collection manifest.</div>
+</div>
+<div class="field">
+<div class="field-label">Teaches</div>
+<div class="field-value">A lightweight local media product can compound around service guides, restaurant/event utilities, and outside-coverage adaptation.</div>
+</div>
+<div class="field">
+<div class="field-label">Transfer</div>
+<div class="field-value">This Week&#x27;s Signal: turn outside Colombia/Medellin coverage into practical English-language meaning.</div>
+</div>
+<div class="field">
+<div class="field-label">Avoid</div>
+<div class="field-value">Do not become a utilitarian paid guide/archive without stronger operator voice and curation.</div>
+</div>
+<div class="field">
+<div class="field-label">Confidence</div>
+<div class="field-value">Medium; Substack/Facebook evidence is useful, but Instagram reels were restricted.</div>
+</div>
+
+</article>
+<article class="card blue">
+<div class="eyebrow">Medellin creator</div>
+<h3>Remote Roberto</h3>
+<p class="muted">TikTok account for remote workers, travelers, relocation-curious visitors, and Medellin service funnel.</p>
+<div class="field">
+<div class="field-label">Evidence read</div>
+<div class="field-value">TikTok profile, latest videos, transcripts for sampled public video URLs.</div>
+</div>
+<div class="field">
+<div class="field-label">Teaches</div>
+<div class="field-value">Foreigner-facing Medellin content works when it names a concrete anxiety and gives a trusted next step.</div>
+</div>
+<div class="field">
+<div class="field-label">Transfer</div>
+<div class="field-value">Move Smarter: one rookie mistake, one practical fix, one next move.</div>
+</div>
+<div class="field">
+<div class="field-label">Avoid</div>
+<div class="field-value">Do not copy concierge/VIP/dating/status positioning into Medellin Insider&#x27;s editorial voice.</div>
+</div>
+<div class="field">
+<div class="field-label">Confidence</div>
+<div class="field-value">Medium-high for hook and funnel mechanics; conversion quality and comments were not captured.</div>
+</div>
+
+</article>
+<article class="card blue">
+<div class="eyebrow">Medellin guide</div>
+<h3>Medellin Tour Guidee</h3>
+<p class="muted">Visitor-facing TikTok guide/concierge account built around local trust and trip decisions.</p>
+<div class="field">
+<div class="field-label">Evidence read</div>
+<div class="field-value">TikTok profile, 10 latest public videos, transcripts where available.</div>
+</div>
+<div class="field">
+<div class="field-label">Teaches</div>
+<div class="field-value">Practical help lands better when wrapped in local trust, arrival emotion, and immediate traveler decisions.</div>
+</div>
+<div class="field">
+<div class="field-label">Transfer</div>
+<div class="field-value">Occasional Ask a Local Guide / Trip Trigger items for event logistics, arrival, solo travel, food, or neighborhoods.</div>
+</div>
+<div class="field">
+<div class="field-label">Avoid</div>
+<div class="field-value">Do not become a single personality-led concierge funnel.</div>
+</div>
+<div class="field">
+<div class="field-label">Confidence</div>
+<div class="field-value">Medium; public TikTok evidence is concrete but lacks comments and conversion data.</div>
+</div>
+
+</article>
+<article class="card gold">
+<div class="eyebrow">Social format</div>
+<h3>Naptown Scoop</h3>
+<p class="muted">Instagram-first Annapolis local-news brand with strong local moment Reels.</p>
+<div class="field">
+<div class="field-label">Evidence read</div>
+<div class="field-value">Instagram profile, posts, reels, and website/social seed attempt.</div>
+</div>
+<div class="field">
+<div class="field-label">Teaches</div>
+<div class="field-value">Local media can turn ordinary service journalism into high-reach visual proof: place, fact, personality, CTA.</div>
+</div>
+<div class="field">
+<div class="field-label">Transfer</div>
+<div class="field-value">Local Moment: real stills or short clips, generated motion when natural, one useful caption, app/newsletter CTA.</div>
+</div>
+<div class="field">
+<div class="field-label">Avoid</div>
+<div class="field-value">Do not assume Annapolis civic shorthand transfers to a newcomer-heavy Medellin audience without explanatory context.</div>
+</div>
+<div class="field">
+<div class="field-label">Confidence</div>
+<div class="field-value">Medium-high for Instagram grammar; lower for newsletter/funnel because the social URL returned 404.</div>
+</div>
+
+</article>
+<article class="card accent">
+<div class="eyebrow">Newsletter + social</div>
+<h3>Winnipeg Digest</h3>
+<p class="muted">Beehiiv local newsletter plus Instagram carousel/Reel distribution.</p>
+<div class="field">
+<div class="field-label">Evidence read</div>
+<div class="field-value">Instagram profile/posts/reels and six public Beehiiv editions.</div>
+</div>
+<div class="field">
+<div class="field-label">Teaches</div>
+<div class="field-value">A local newsletter can route one researched issue into email context, a saveable carousel, and durable reference value.</div>
+</div>
+<div class="field">
+<div class="field-label">Transfer</div>
+<div class="field-value">Stable briefing order: Signal, useful explainer, Shortlist, practical note, and social derivative.</div>
+</div>
+<div class="field">
+<div class="field-label">Avoid</div>
+<div class="field-value">Do not copy civic/family-local assumptions; Medellin needs more interpretation for foreigners and long-stay readers.</div>
+</div>
+<div class="field">
+<div class="field-label">Confidence</div>
+<div class="field-value">High for structure and social routing; medium for exact cadence and monetization.</div>
+</div>
+
+</article>
+<article class="card rose">
+<div class="eyebrow">High-quality local newsletter</div>
+<h3>Catskill Crew</h3>
+<p class="muted">Weekly local newsletter with voice, community mechanics, events, guides, sponsors, and participation.</p>
+<div class="field">
+<div class="field-label">Evidence read</div>
+<div class="field-value">Homepage, archive, subscribe/partner/submit pages, and five full public editions.</div>
+</div>
+<div class="field">
+<div class="field-label">Teaches</div>
+<div class="field-value">A newsletter becomes memorable when it has a named lead, local relationship stack, community mechanics, and curated happenings.</div>
+</div>
+<div class="field">
+<div class="field-label">Transfer</div>
+<div class="field-value">Reader Intel / Quest and eventual participatory guides: readers nominate, operator tests, app/web stores final guide.</div>
+</div>
+<div class="field">
+<div class="field-label">Avoid</div>
+<div class="field-value">Do not copy rural/outdoorsy regional whimsy; Medellin needs urban judgment and practical context.</div>
+</div>
+<div class="field">
+<div class="field-label">Confidence</div>
+<div class="field-value">High for newsletter structure, voice, event treatment, and community mechanics.</div>
+</div>
+
+</article>
+</div></section>
+<section class="section matrix-section" id="cross-anchor-matrix">
+<h2>Cross-Anchor Comparison</h2>
+<p class="section-intro">The common thread: readers need curation and interpretation. The app/web can hold breadth; email should hold judgment.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Anchor</th>
+<th>Best lesson</th>
+<th>Edition block influenced</th>
+<th>What not to copy</th>
+</tr></thead><tbody>
+<tr>
+<td>Medellingles</td>
+<td>Translate outside coverage and local utility into English-language city context.</td>
+<td>This Week&#x27;s Signal</td>
+<td>Static utility archive without distinctive taste.</td>
+</tr>
+<tr>
+<td>Remote Roberto</td>
+<td>Name a foreigner anxiety and give one trusted next step.</td>
+<td>Move Smarter</td>
+<td>VIP/dating/status-coded concierge tone.</td>
+</tr>
+<tr>
+<td>Medellin Tour Guidee</td>
+<td>Wrap visitor help in local trust and immediate trip decisions.</td>
+<td>Move Smarter / occasional Trip Trigger</td>
+<td>Single-guide service funnel.</td>
+</tr>
+<tr>
+<td>Naptown Scoop</td>
+<td>Make local moments social-native with visual proof and concise utility.</td>
+<td>Local Moment social experiment</td>
+<td>Local civic shorthand without newcomer context.</td>
+</tr>
+<tr>
+<td>Winnipeg Digest</td>
+<td>Route newsletter depth into saveable social and durable references.</td>
+<td>This Week&#x27;s Signal / Shortlist</td>
+<td>Broad civic bulletin or family-local assumptions.</td>
+</tr>
+<tr>
+<td>Catskill Crew</td>
+<td>Build a local relationship stack: lead story, report, community, happenings.</td>
+<td>Reader Intel / Quest / richer Shortlist</td>
+<td>Rural regional voice pasted onto Medellin.</td>
+</tr>
+</tbody></table></div></section>
+<section class="section matrix-section" id="edition-blocks">
+<h2>Proposed Edition Blocks</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Block</th>
+<th>Role</th>
+<th>Frequency</th>
+<th>Confidence source</th>
+</tr></thead><tbody>
+<tr>
+<td>Reintroduction</td>
+<td>Explain what Medellin Insider is now and why dormant subscribers are receiving it.</td>
+<td>Edition #1 only</td>
+<td>Relaunch requirements</td>
+</tr>
+<tr>
+<td>This Week&#x27;s Signal</td>
+<td>One public-source-backed update or outside-coverage translation.</td>
+<td>Persistent</td>
+<td>Medellingles, Winnipeg Digest</td>
+</tr>
+<tr>
+<td>The Shortlist</td>
+<td>3-5 curated events or activities worth the audience&#x27;s time.</td>
+<td>Persistent</td>
+<td>Relaunch plan, Winnipeg Digest, Catskill Crew</td>
+</tr>
+<tr>
+<td>Move Smarter</td>
+<td>One practical living-in-Medellin answer.</td>
+<td>Persistent</td>
+<td>Remote Roberto, Medellin Tour Guidee, Reddit/WhatsApp research direction</td>
+</tr>
+<tr>
+<td>Personal Note</td>
+<td>Short signed relationship block from Aniket.</td>
+<td>Persistent, email-only</td>
+<td>Relaunch core and newsletter direction</td>
+</tr>
+<tr>
+<td>Local Moment</td>
+<td>Visual Medellin item for Reel/carousel.</td>
+<td>Experimental</td>
+<td>Naptown Scoop</td>
+</tr>
+<tr>
+<td>Reader Intel / Quest</td>
+<td>Participatory guide seed or reader-nominated shortlist.</td>
+<td>Occasional experiment</td>
+<td>Catskill Crew</td>
+</tr>
+<tr>
+<td>Builder Profile</td>
+<td>Short profile of a local founder/operator/creative/host/business.</td>
+<td>Occasional experiment</td>
+<td>Newsletter direction</td>
+</tr>
+<tr>
+<td>Housing / Real Estate</td>
+<td>Practical housing or neighborhood decision support.</td>
+<td>Deferred rotating lane</td>
+<td>Newsletter direction, Remote Roberto</td>
+</tr>
+</tbody></table></div></section>
+<section class="section steps-section" id="four-edition-plan">
+<h2>Four-Edition Experiment Plan</h2>
+<ol class="steps">
+<li>
+<strong>Edition #1: prove the core briefing</strong>
+<p>Ship reintroduction, This Week&#x27;s Signal, Shortlist, Move Smarter, and Personal Note. Success is operator approval in about one hour and no block feeling like filler.</p>
+</li>
+<li>
+<strong>Edition #2: social carousel derivative</strong>
+<p>Turn one Shortlist or Signal item into a saveable Instagram carousel. Stop if the carousel duplicates all email value or becomes manual design work.</p>
+</li>
+<li>
+<strong>Edition #3: Local Moment visual post</strong>
+<p>Test real stills or short clips, with generated motion only if it looks natural. Stop if it feels synthetic, tourist-board-like, or labor-intensive.</p>
+</li>
+<li>
+<strong>Edition #4: participatory prompt</strong>
+<p>Ask for reader nominations, a tiny quest, or Builder Profile leads. Stop if it attracts low-quality promotion or distracts from cadence.</p>
+</li>
+</ol></section>
+<section class="section callout-section" id="surface-routing">
+<h2>Surface Routing</h2>
+<div class="callout blue">
+<div class="eyebrow">Email keeps the relationship</div>
+<p>Email owns the complete Edition: operator interpretation, criteria, practical caveats, source context, and the signed Personal Note.</p>
+<p>Instagram gets unsigned Brand Voice derivatives: Shortlist carousel, Signal explainer, Local Moment, Move Smarter teaser, and subscribe CTA.</p>
+<p>App and web own breadth: the full event database, saved events, durable guides, venue/neighborhood pages, and future reader-nominated references.</p>
+
+</div></section>
+<section class="section appendix-section" id="appendix">
+<h2>Appendix: Handoff Summary</h2>
+<p class="section-intro">The full repo docs remain the source of truth. This published report is a review surface.</p>
+<div class="appendix-list">
+<article>
+<h3>Decision memo</h3>
+<p>The decision memo recommends the locked launch order and challenges the old five-events / one-Nugget / one-note assumption.</p>
+<ul><li>Reframe five events to a 3-5 item Shortlist.</li><li>Rename the reader-facing Nugget lane to Move Smarter.</li><li>Keep the Personal Note short, signed, and email-exclusive.</li></ul>
+</article>
+<article>
+<h3>Revised requirements</h3>
+<p>The implementation handoff keeps the Edition as a git-versioned artifact and avoids new root Convex surfaces for this decision.</p>
+<ul><li>No new admin GUI or database table is implied by the format decision.</li><li>Private Research Signals and Evidence Pointers stay out of public outputs.</li><li>The next product task is adapting the Edition file/template/rendering path to this block order.</li></ul>
+</article>
+</div></section>
+</div></div>
+<footer>Composed 2026-06-15 with html-report from the Medellin Format Spike decision memo, revised requirements, and six approved Taste Anchor profiles.</footer>
+</main>
+</body>
+</html>
