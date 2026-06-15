@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>DiD Navigator Interface Ideation Revised</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 18px 64px;
+      font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    img, video, canvas, svg { max-width: 100%; height: auto; }
+    pre { overflow-x: auto; padding: 12px; border: 1px solid #ddd; }
+    code { font-size: 0.92em; }
+    table { display: block; overflow-x: auto; border-collapse: collapse; }
+    th, td { padding: 0.35rem 0.5rem; border: 1px solid #ddd; }
+  </style>
+
+<meta charset="utf-8">
+<style>
+  :root{
+    --bg:#fbfaf7; --surface:#ffffff; --ink:#1d1c1a; --muted:#5d5953;
+    --line:#e6e1d8; --line-strong:#d3ccbf;
+    --accent:#7a4f1d; --accent-soft:#f4ece0; --accent-text:#6a4416;
+    --good:#2f6b41; --good-soft:#e8f1ea;
+    --warn:#9a5b13; --warn-soft:#f6ecdd;
+    --info:#3a5a78; --info-soft:#e9f0f6;
+    --bad:#8a3030; --bad-soft:#f5e7e5;
+    --radius:10px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#1a1916; --surface:#232017; --ink:#ece7dd; --muted:#a9a299;
+      --line:#36322a; --line-strong:#46412f;
+      --accent:#d9a766; --accent-soft:#2c2519; --accent-text:#e2b878;
+      --good:#7fc294; --good-soft:#1f2c22; --warn:#d6a45c; --warn-soft:#2c2417;
+      --info:#8fb4d6; --info-soft:#1b2531; --bad:#d98b86; --bad-soft:#2c1d1c;
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    line-height:1.6; font-size:16px;
+  }
+  .wrap{max-width:940px; margin-inline:auto; padding:48px 24px 96px}
+  header.doc{border-bottom:2px solid var(--line-strong); padding-bottom:24px; margin-bottom:32px}
+  .eyebrow{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    text-transform:uppercase; letter-spacing:.12em; font-size:.72rem; font-weight:700;
+    color:var(--accent-text); margin:0 0 8px}
+  h1{font-size:2rem; line-height:1.18; margin:0 0 14px; font-weight:700}
+  h2{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:1.32rem; margin:48px 0 6px; padding-top:10px; font-weight:700; letter-spacing:-.01em}
+  h3{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:1.06rem; margin:0 0 10px; font-weight:700}
+  p{margin:0 0 12px} p,li{max-width:74ch}
+  a{color:var(--accent-text)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.86em;
+    background:var(--accent-soft); padding:1px 5px; border-radius:5px}
+  .meta{font-family:ui-sans-serif,system-ui,sans-serif; font-size:.86rem; color:var(--muted); display:flex; flex-wrap:wrap; gap:6px 20px}
+  .meta b{color:var(--ink); font-weight:600}
+  .stats{display:flex; flex-wrap:wrap; gap:12px; margin:24px 0 0}
+  .stat{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:12px 16px; flex:1 1 150px}
+  .stat .n{font-family:ui-sans-serif,system-ui,sans-serif; font-size:1.5rem; font-weight:700; display:block}
+  .stat .l{font-family:ui-sans-serif,system-ui,sans-serif; font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted)}
+  section{margin-top:8px}
+  .lead{font-size:1.05rem; color:var(--ink)}
+  .axes{list-style:none; padding:0; margin:0; display:grid; gap:8px}
+  .axes li{background:var(--surface); border:1px solid var(--line); border-left:none; border-radius:var(--radius); padding:10px 14px; max-width:none}
+  .axes b{font-family:ui-sans-serif,system-ui,sans-serif}
+  .callout{border:1px solid var(--line-strong); border-radius:var(--radius); padding:18px 20px; margin:18px 0}
+  .callout.rec{background:var(--accent-soft)}
+  .callout.note{background:var(--info-soft); border-color:var(--info)}
+  .callout .eyebrow{margin-top:0}
+  .jump{font-family:ui-sans-serif,system-ui,sans-serif; font-size:.9rem; background:var(--surface);
+    border:1px solid var(--line); border-radius:var(--radius); padding:14px 18px; margin:16px 0 28px}
+  .jump ol{margin:6px 0 0; padding-left:22px} .jump li{margin:3px 0; max-width:none}
+  .jump a{text-decoration:none} .jump a:hover{text-decoration:underline}
+  article.idea{background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:22px 24px; margin:18px 0}
+  article.idea h3{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+  .idchip{font-family:ui-sans-serif,system-ui,sans-serif; font-size:.78rem; font-weight:700;
+    background:var(--accent-soft); color:var(--accent-text); border:1px solid var(--line-strong);
+    border-radius:999px; padding:2px 10px; flex:none}
+  .pills{display:flex; flex-wrap:wrap; gap:8px; margin:2px 0 14px}
+  .pill{font-family:ui-sans-serif,system-ui,sans-serif; font-size:.74rem; font-weight:600;
+    border-radius:999px; padding:3px 11px; border:1px solid var(--line-strong); color:var(--muted); background:var(--bg)}
+  .pill.axis{background:var(--info-soft); color:var(--info); border-color:transparent}
+  .pill.conf{background:var(--good-soft); color:var(--good); border-color:transparent}
+  .pill.cx{background:var(--warn-soft); color:var(--warn); border-color:transparent}
+  .pill.new{background:var(--accent-soft); color:var(--accent-text); border-color:var(--accent)}
+  .idea dl{margin:12px 0 0; display:grid; grid-template-columns:max-content 1fr; gap:8px 16px}
+  .idea dt{font-family:ui-sans-serif,system-ui,sans-serif; font-size:.7rem; font-weight:700;
+    text-transform:uppercase; letter-spacing:.08em; color:var(--muted); padding-top:3px}
+  .idea dd{margin:0}
+  .idea dd p{margin:0 0 8px} .idea dd p:last-child{margin:0}
+  .tag{font-family:ui-monospace,monospace; font-size:.8em; font-weight:700}
+  .tag.direct{color:var(--good)} .tag.external{color:var(--info)} .tag.reasoned{color:var(--warn)}
+  figure{margin:18px 0 4px; text-align:center}
+  figure svg{max-width:100%; height:auto}
+  figcaption{font-family:ui-sans-serif,system-ui,sans-serif; font-size:.78rem; color:var(--muted); margin-top:8px}
+  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:.94rem}
+  th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+  th{font-family:ui-sans-serif,system-ui,sans-serif; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted)}
+  td:first-child{font-family:ui-sans-serif,system-ui,sans-serif; font-weight:700; white-space:nowrap; color:var(--accent-text)}
+  footer.composition-signal{margin-top:64px; padding-top:18px; border-top:1px solid var(--line);
+    font-family:ui-sans-serif,system-ui,sans-serif; font-size:.78rem; color:var(--muted)}
+  .svgtxt{font-family:ui-sans-serif,system-ui,sans-serif; paint-order:stroke fill}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <p class="eyebrow">Compound Engineering · Ideation</p>
+  <h1>DiD / Methods Navigator — Optimal Interface &amp; Behavior</h1>
+  <div class="meta">
+    <span><b>Date:</b> <time datetime="2026-06-14">2026-06-14</time></span>
+    <span><b>Revised:</b> <time datetime="2026-06-15">2026-06-15</time> (access-ladder pass)</span>
+    <span><b>Topic:</b> did-navigator-interface</span>
+    <span><b>Mode:</b> repo-grounded</span>
+  </div>
+  <p class="meta" style="margin-top:10px"><b>Focus:</b>&nbsp;Optimal product interface and behavior for the agent-native DiD/Methods Navigator across shells (Codex/Claude Desktop, in-app browsers, hosted web, CLI/skill, shared substrate) <em>and across access/trust postures</em> — separate from the LLM-judge eval work.</p>
+  <div class="stats">
+    <div class="stat"><span class="n">8</span><span class="l">Ranked ideas</span></div>
+    <div class="stat"><span class="n">44</span><span class="l">Raw candidates</span></div>
+    <div class="stat"><span class="n">3</span><span class="l">Rescued to ladder</span></div>
+    <div class="stat"><span class="n">6</span><span class="l">Topic axes covered</span></div>
+  </div>
+</header>
+
+<section>
+  <h2>What Changed in This Revision</h2>
+  <div class="callout note">
+    <p class="eyebrow">2026-06-15 access-ladder pass</p>
+    <p>This is a <strong>targeted revision</strong> of the 2026-06-14 doc, not a fresh brainstorm. The original through-line is preserved intact: <strong>one shared Navigator substrate, many host-tuned interfaces</strong>. Four new assumptions reshaped the rest:</p>
+    <p style="margin-bottom:0"><strong>(1)</strong> No-data-access is a <em>launch/pilot/default privacy posture, not a permanent product boundary</em> — future modes may inspect data, work with project files, write code, and run analysis. <strong>(2)</strong> The <em>agent-brief mode</em> (hand precise artifacts to the member's own Codex/Claude&nbsp;Code/R/Stata agent) is a valid first-class architecture, not a fallback. <strong>(3)</strong> Data-connected and code-writing modes are feasible <em>higher-trust</em> modes, not off-limits. <strong>(4)</strong> Codex Desktop's in-app Browser <em>supports authentication</em>, so an authenticated hosted Navigator inside Codex Browser is viable and worth optimizing for in the first pass. Together these add a sixth axis (access &amp; trust posture), a new north-star idea — a <strong>progressive access/trust ladder</strong> (I2) — a vertical reframe of the recommended direction, a re-rank of the seven prior ideas, and the rescue of three previously-cut candidates as upper-rung modes. <strong>The revision is substantive and merited a rewritten doc</strong> (this file, in place).</p>
+  </div>
+</section>
+
+<section>
+  <h2>Grounding Context</h2>
+  <p class="lead">The Navigator already exists as <strong>one corpus rendered in two shells</strong>; the original design tension was whether those shells multiply or collapse into a shared substrate. This revision adds a second, orthogonal tension: <strong>how much access the Navigator is allowed</strong> — and treats today's no-data posture as the bottom rung of a ladder, not a wall.</p>
+  <p><strong>The corpus.</strong> <a href="https://github.com/aniketpanjwani/ai-mba/blob/main/library/did-navigator/SKILL.md"><code>library/did-navigator/SKILL.md</code></a> is an interview-driven decision tree encoding the Baker–Callaway–Cunningham–Goodman-Bacon–Sant'Anna DiD Practitioner's Guide. It interviews the economist one question at a time, classifies the design (2×2 / event study / staggered / extensions), walks an 8-step forward-engineering framework, and emits two artifacts: a <strong>design memo</strong> (decision + rationale + Guide citation per step) and an <strong>agent brief</strong> (a self-contained instruction block the economist hands to their own R/Python/Stata coding agent). The current non-goals — it does not run regressions, does not accept confidential microdata (it works from <em>descriptions</em> of data), and does not replace referee judgment — are now read as a <strong>default/launch posture</strong>: "your drafts, data, and code never leave your machine" is a deliberate promise to a scoop-paranoid profession, but the product is explicitly allowed to offer <em>higher-trust modes</em> later that inspect data, touch project files, write code, or run analysis, as opt-in steps up a ladder rather than a one-way door.</p>
+  <p><strong>Shell A — the local skill (flagship).</strong> SKILL.md runs inside the economist's own Claude Code / Codex / Claude Desktop, on their machine, keys, and licenses — distributed under the Agent Skills open standard (Dec 2025; adopted by Claude Code, Codex, Copilot, Cursor, Gemini CLI, and 20+ hosts). This is the paid product's distribution model — and, critically, the shell that makes the <em>upper</em> rungs of the access ladder safe: data inspection and code-writing can happen local-first, on the member's machine, without anything leaving it.</p>
+  <p><strong>Shell B — the hosted pilot.</strong> <a href="https://github.com/aniketpanjwani/ai-mba/blob/main/pilot/README.md"><code>pilot/</code></a> is a deliberately tiny invite-only chat web app (assistant-ui front-end + pi-agent-core backend, one Bun process on a VPS) built to <em>validate</em> the corpus with real economists before charging. Hosted-as-product is explicitly rejected; full session traces are the "payment" that drives a confusion log and ≥1 material Navigator revision (the launch gate). Under this revision the hosted shell is the natural home for the <em>low</em> rungs (advisory, data-light) and the broad on-ramp.</p>
+  <p><strong>The reachability picture (spike 2026-06-12, corrected 2026-06-15).</strong> The plan bet on the hosted pilot being driveable from the desktop apps' in-app browsers. The <a href="https://github.com/aniketpanjwani/ai-mba/blob/main/pilot/spike/RESULTS-2026-06-12.md">spike</a> found Claude Desktop's in-app preview browser is <strong>origin-locked to its localhost dev server</strong> — a hosted https URL is silently unreachable in-app (cookies, typing, and streaming all work; navigation does not). Synthetic pointer clicks were also no-ops, so flows must complete without trusted pointer events. The Codex Desktop leg was skipped in the spike and was previously listed as unverified. <strong>Corrected assumption (take as fact):</strong> Codex Desktop's in-app Browser <em>supports authentication</em> — so an authenticated, session-carrying hosted Navigator inside Codex Browser is viable, and the first pass can optimize for it rather than for a public no-auth page. This removes the previous "Codex reaches https but carries no cookies/session" caveat and the tension it created with the invite-only pilot. The asymmetry that remains is one-sided: <strong>Codex = authenticated in-app hosted web works; Claude Desktop in-app preview stays localhost-locked</strong>, so the Claude side routes through the local skill or Claude-in-Chrome.</p>
+  <p><strong>External signals.</strong> MCP Apps / SEP-1865 (Nov 2025) defines interactive <code>ui://</code> resources inside MCP and <em>mandates a text-only fallback for every UI-enabled tool</em> — literally a "two shells, one tool" contract. Agent-native interface research (arXiv 2603.20300) frames the unit of design as an "invocable capability" with explicit schemas, not a human-facing feature — the memo and brief <em>are</em> capability contracts, and the access ladder is a contract about <em>scope</em>. The TurboTax pattern (live, accreting artifact) and SparkMe adaptive-interview research (rigid sequences are the #1 tedium source) bear on conversation behavior. LSP / compiler-linker are exact structural analogs for "one logic core, many thin clients," and capability-scoping / permission-tier models (least-privilege, progressive consent) are the analog for the access ladder. (assistant-ui is community-maintained with an uncertain trajectory; pi is niche — both are pilot-grade, not obviously scale-grade.)</p>
+</section>
+
+<section>
+  <h2>Topic Axes</h2>
+  <ul class="axes">
+    <li><b>1 · Interface surface &amp; substrate</b> — which shells exist; one adaptive interface vs many; a shared logic core.</li>
+    <li><b>2 · Interview &amp; conversation behavior</b> — question mechanics, agent-drivability, adaptivity, guardrails.</li>
+    <li><b>3 · Context-in</b> — how drafts, data/repo descriptions, and prior work enter the session.</li>
+    <li><b>4 · Artifacts-out &amp; handoff</b> — the memo and agent brief, and how they land in the economist's coding agent / paper.</li>
+    <li><b>5 · Continuity &amp; return</b> — sessions, state, resume, and corpus versioning over a paper's life.</li>
+    <li><b>6 · Access &amp; trust posture</b> <span style="color:var(--accent-text); font-weight:600">(new)</span> — what the Navigator is allowed to <em>see</em> and <em>do</em>: descriptions only → agent-brief handoff → local file/data inspection → code-writing → running analysis. Data privacy as a tunable rung, not a fixed boundary.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Recommended Direction</h2>
+  <div class="callout rec">
+    <p class="eyebrow">The through-line</p>
+    <p><strong>Two axes, one core.</strong> Keep the original insight as the <em>horizontal</em> axis — <strong>one substrate, many host-tuned renderers</strong>, not one monolithic UI and not N parallel reimplementations (Idea&nbsp;1). Add a <em>vertical</em> axis this revision makes explicit: that same substrate climbs a <strong>progressive access/trust ladder</strong> (Idea&nbsp;2). The <em>logic</em> is one adaptive core; the <em>surfaces</em> differ because the hosts differ; and the <em>scope</em> differs because trust is earned in rungs.</p>
+    <p style="margin-bottom:0">Concretely: the bottom rungs ship today — advisory (works from descriptions, data never leaves the machine) and the <strong>agent-brief handoff</strong> (the member's own coding agent inspects data and runs code; the Navigator never touches either). These are not a permanent ceiling — they are the launch/default privacy posture. Above them sit clearly-labeled <strong>higher-trust modes</strong> (the Navigator inspects local files/data, writes code, ultimately runs the analysis) that the architecture should not foreclose. The <strong>local-skill shell</strong> is what makes those upper rungs safe — local-first, on the member's keys, nothing leaving the box — while the <strong>authenticated hosted shell, now viable inside Codex Desktop's in-app Browser</strong>, is the low-friction entry rung for the data-light surfaces. The substrate (Idea&nbsp;1) is what makes <em>both</em> the horizontal renderers <em>and</em> the vertical rungs cheap, and it is what makes the next Navigators (RDD, shift-share, SE/clustering) cheap too — so the architecture pays for itself across the whole Methods Navigator line. The schema-first brief (Idea&nbsp;3) is the pivot rung where advisory becomes execution; Ideas&nbsp;4–8 are what render, gate, and persist on top of that spine.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Ranked Ideas</h2>
+  <nav class="jump" aria-label="Jump to idea">
+    <strong>Jump to:</strong>
+    <ol>
+      <li><a href="#i1">Shared Navigator substrate + thin host-tuned renderers</a> · Axis 1</li>
+      <li><a href="#i2">Progressive access / trust ladder (north star)</a> · Axis 6 · new</li>
+      <li><a href="#i3">Schema-first agent brief + design.lock (the pivot rung)</a> · Axis 4</li>
+      <li><a href="#i4">Smart intake: the on-ramp that climbs the ladder</a> · Axis 3</li>
+      <li><a href="#i5">Pre-flight gates for load-bearing facts</a> · Axis 2</li>
+      <li><a href="#i6">Authenticated Codex hosted web vs Claude skill/extension</a> · Axis 1</li>
+      <li><a href="#i7">Live accreting design memo (memo-as-canvas)</a> · Axis 1</li>
+      <li><a href="#i8">Repo-local session state &amp; resume (git-as-research-log)</a> · Axis 5</li>
+    </ol>
+  </nav>
+
+  <article class="idea" id="i1">
+    <h3><span class="idchip">I1</span> Shared Navigator substrate + thin host-tuned renderers</h3>
+    <div class="pills"><span class="pill axis">Axis 1 · Substrate</span><span class="pill conf">Confidence 82%</span><span class="pill cx">Complexity High</span><span class="pill">Recommended anchor</span></div>
+    <figure>
+      <svg viewBox="0 0 760 300" role="img" aria-label="A central interview state machine and memo/brief schema feeds four thin renderers: local skill, CLI, MCP tool with text fallback, and hosted chat; future Navigators plug into the same core.">
+        <rect x="280" y="118" width="200" height="64" rx="10" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="380" y="143" text-anchor="middle" class="svgtxt" font-size="13" font-weight="700" fill="var(--accent-text)" stroke="var(--surface)" stroke-width="3">Interview state machine</text>
+        <text x="380" y="162" text-anchor="middle" class="svgtxt" font-size="13" font-weight="700" fill="var(--accent-text)" stroke="var(--surface)" stroke-width="3">+ memo / brief schema</text>
+        <!-- renderers -->
+        <g font-size="12" fill="var(--ink)">
+          <rect x="40" y="30" width="150" height="44" rx="8" fill="var(--surface)" stroke="var(--line-strong)"/>
+          <text x="115" y="57" text-anchor="middle" class="svgtxt" stroke="var(--surface)" stroke-width="3" fill="var(--ink)">Local skill (flagship)</text>
+          <rect x="40" y="226" width="150" height="44" rx="8" fill="var(--surface)" stroke="var(--line-strong)"/>
+          <text x="115" y="253" text-anchor="middle" class="svgtxt" stroke="var(--surface)" stroke-width="3" fill="var(--ink)">CLI (text menus)</text>
+          <rect x="570" y="30" width="150" height="44" rx="8" fill="var(--surface)" stroke="var(--line-strong)"/>
+          <text x="645" y="51" text-anchor="middle" class="svgtxt" stroke="var(--surface)" stroke-width="3" fill="var(--ink)">MCP tool</text>
+          <text x="645" y="66" text-anchor="middle" class="svgtxt" font-size="10.5" stroke="var(--surface)" stroke-width="3" fill="var(--muted)">(ui:// + text fallback)</text>
+          <rect x="570" y="226" width="150" height="44" rx="8" fill="var(--surface)" stroke="var(--line-strong)"/>
+          <text x="645" y="253" text-anchor="middle" class="svgtxt" stroke="var(--surface)" stroke-width="3" fill="var(--ink)">Hosted chat (live memo)</text>
+        </g>
+        <g stroke="var(--accent)" stroke-width="1.6" fill="none" opacity="0.8">
+          <path d="M278 138 L192 56"/><path d="M278 162 L192 244"/>
+          <path d="M482 138 L568 56"/><path d="M482 162 L568 244"/>
+        </g>
+        <rect x="300" y="232" width="160" height="40" rx="8" fill="var(--info-soft)" stroke="var(--info)" stroke-dasharray="4 3"/>
+        <text x="380" y="256" text-anchor="middle" class="svgtxt" font-size="11.5" stroke="var(--surface)" stroke-width="3" fill="var(--info)">Future: RDD, shift-share…</text>
+        <path d="M380 230 L380 184" stroke="var(--info)" stroke-width="1.6" fill="none" stroke-dasharray="4 3"/>
+      </svg>
+      <figcaption>The logic is one adaptive core; each surface is a thin renderer. New Navigators become configs over the same machine — and the same serialized state is what the access ladder (I2) tiers.</figcaption>
+    </figure>
+    <dl>
+      <dt>Description</dt>
+      <dd><p>Factor the Navigator into (a) a host-agnostic, serializable interview state machine plus a typed memo/brief schema, and (b) thin per-shell renderers. The agent emits typed "design-diagnostic" objects (<code>{step, decision, rationale, guideCite, changeMyMind[], severity}</code>); Claude Code renders them as <code>AskUserQuestion</code> + markdown, the CLI as numbered menus, the hosted shell as a live skeleton, and a future MCP host as a sandboxed <code>ui://</code> resource — all from one emission. Delivered as a single MCP server tool, SEP-1865's mandated text-only fallback means the same tool lights up rich UI where the host allows and degrades to text where it doesn't. The same machine powers future Navigators (RDD, shift-share, SE/clustering) and the cross-method router that Step 8 ("name alternative designs rather than rescuing DiD") already implies — and, new in this revision, the serialized state is exactly what lets the <em>same</em> logic run at different access rungs (advisory ↔ data-inspecting ↔ code-writing) without a rewrite.</p></dd>
+      <dt>Basis</dt>
+      <dd><p><span class="tag external">external:</span> SEP-1865 mandates text-only fallback for all UI-enabled tools (modelcontextprotocol blog, Nov 2025); LSP and compiler/linker are exact structural analogs for one logic core + many clients (grounding). <span class="tag reasoned">reasoned:</span> N shells × M Navigators × K access rungs is a combinatorial integration trap if memo formatting and scope-handling live inside each prompt; a typed schema plus an explicit rung enum collapses it. <span class="tag direct">direct:</span> SKILL.md Step 8 already says to "name alternative designs," a dead-end sentence today but a live routing edge once a shared intake/memo schema exists.</p></dd>
+      <dt>Rationale</dt>
+      <dd><p>This is the highest-leverage structural decision in the whole product line and the literal answer to the framing question. It makes the "one corpus, many shells" promise architectural rather than aspirational, makes MCP a thin wrapper instead of a rewrite, makes Ideas 7 (live memo) and 8 (resume) nearly free because state is already a serializable document — and is the precondition for the access ladder (I2): you can only re-scope a core you can serialize.</p></dd>
+      <dt>Downsides</dt>
+      <dd><p>Highest up-front cost: today the product is a markdown SKILL.md, not code, so this is a real engineering investment before a paying member exists. SEP-1865 rich-UI host adoption (claude.ai, Desktop) is not confirmed shipping, so the <code>ui://</code> payoff may lag the text-fallback payoff. Over-building the substrate before pilot feedback risks plumbing for a product that may still pivot — so scope the schema and the rung enum, not a framework.</p></dd>
+    </dl>
+  </article>
+
+  <article class="idea" id="i2">
+    <h3><span class="idchip">I2</span> Progressive access / trust ladder (north star)</h3>
+    <div class="pills"><span class="pill axis">Axis 6 · Access posture</span><span class="pill new">New this revision</span><span class="pill conf">Confidence 78%</span><span class="pill cx">Complexity High (mostly directional)</span><span class="pill">Recommended vertical axis</span></div>
+    <figure>
+      <svg viewBox="0 0 760 320" role="img" aria-label="A five-step staircase rising left to right: advisory (descriptions only), agent-brief handoff, local data and file inspection, Navigator writes code, Navigator runs analysis. The lower two steps are labelled shipping today; the upper three are future higher-trust modes. An arrow beneath reads: more access, more trust, more capability.">
+        <!-- bracket labels -->
+        <text x="100" y="22" text-anchor="middle" class="svgtxt" font-size="12" font-weight="700" fill="var(--good)" stroke="var(--surface)" stroke-width="3">SHIPS TODAY · default privacy posture</text>
+        <text x="528" y="22" text-anchor="middle" class="svgtxt" font-size="12" font-weight="700" fill="var(--info)" stroke="var(--surface)" stroke-width="3">FUTURE · higher-trust modes</text>
+        <!-- staircase steps, bottoms aligned at y=282 -->
+        <g class="svgtxt" font-size="11">
+          <rect x="30" y="222" width="128" height="60" rx="8" fill="var(--good-soft)" stroke="var(--good)"/>
+          <text x="94" y="246" text-anchor="middle" font-weight="700" fill="var(--good)" stroke="var(--good-soft)" stroke-width="2.5">R0 · Advisory</text>
+          <text x="94" y="263" text-anchor="middle" font-size="10" fill="var(--good)" stroke="var(--good-soft)" stroke-width="2.5">descriptions only</text>
+          <rect x="172" y="182" width="128" height="100" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="236" y="206" text-anchor="middle" font-weight="700" fill="var(--accent-text)" stroke="var(--accent-soft)" stroke-width="2.5">R1 · Agent-brief</text>
+          <text x="236" y="223" text-anchor="middle" font-size="10" fill="var(--accent-text)" stroke="var(--accent-soft)" stroke-width="2.5">your agent runs it</text>
+          <rect x="314" y="142" width="128" height="140" rx="8" fill="var(--info-soft)" stroke="var(--info)" stroke-dasharray="5 3"/>
+          <text x="378" y="166" text-anchor="middle" font-weight="700" fill="var(--info)" stroke="var(--info-soft)" stroke-width="2.5">R2 · Inspect</text>
+          <text x="378" y="183" text-anchor="middle" font-size="10" fill="var(--info)" stroke="var(--info-soft)" stroke-width="2.5">local files / data</text>
+          <rect x="456" y="102" width="128" height="180" rx="8" fill="var(--info-soft)" stroke="var(--info)" stroke-dasharray="5 3"/>
+          <text x="520" y="126" text-anchor="middle" font-weight="700" fill="var(--info)" stroke="var(--info-soft)" stroke-width="2.5">R3 · Write code</text>
+          <text x="520" y="143" text-anchor="middle" font-size="10" fill="var(--info)" stroke="var(--info-soft)" stroke-width="2.5">Navigator authors</text>
+          <rect x="598" y="62" width="128" height="220" rx="8" fill="var(--info-soft)" stroke="var(--info)" stroke-dasharray="5 3"/>
+          <text x="662" y="86" text-anchor="middle" font-weight="700" fill="var(--info)" stroke="var(--info-soft)" stroke-width="2.5">R4 · Run it</text>
+          <text x="662" y="103" text-anchor="middle" font-size="10" fill="var(--info)" stroke="var(--info-soft)" stroke-width="2.5">Navigator executes</text>
+        </g>
+        <!-- baseline + arrow -->
+        <path d="M28 290 L744 290" stroke="var(--line-strong)" stroke-width="1.4"/>
+        <path d="M40 306 L720 306" stroke="var(--muted)" stroke-width="1.6" fill="none"/>
+        <path d="M720 306 l-9 -4 v8 z" fill="var(--muted)"/>
+        <text x="380" y="319" text-anchor="middle" class="svgtxt" font-size="10.5" fill="var(--muted)">more access · more trust · more capability  →</text>
+      </svg>
+      <figcaption>The same substrate, re-scoped in rungs. Local-first shells make the upper rungs safe; each rung is opt-in, reversible, and labelled by exactly what leaves the machine.</figcaption>
+    </figure>
+    <dl>
+      <dt>Description</dt>
+      <dd><p>Treat the Navigator's <em>access posture</em> as an explicit, opt-in ladder rather than a single fixed boundary, and use it as the product's north star for what to build next. The rungs: <strong>R0 Advisory</strong> — works from descriptions of data, nothing leaves the machine (today's default and the privacy promise). <strong>R1 Agent-brief handoff</strong> — the Navigator emits precise instructions/artifacts the member hands to their <em>own</em> Codex/Claude&nbsp;Code/R/Stata agent, which inspects data and runs code; the Navigator still never touches either (today, and the architecture in I3). <strong>R2 Local file/data inspection</strong> — running inside the member's own agent host, the Navigator reads project files, data schemas, or a sample <em>locally</em>, so it can stop <em>asking</em> facts it can <em>see</em>. <strong>R3 Code-writing</strong> — the Navigator authors the analysis code itself. <strong>R4 Run-for-you</strong> — the Navigator executes the analysis and reads results back. Each rung is opt-in, reversible, and labelled by precisely what crosses the machine boundary; the corpus and the typed memo/brief schema (I1) are constant across rungs — only scope changes. Present R2–R4 as a directional commitment that shapes today's decisions (e.g. don't bake in "the Navigator can never see a column name"), <em>not</em> as a near-term build.</p></dd>
+      <dt>Basis</dt>
+      <dd><p><span class="tag direct">direct:</span> the user's stated direction — no-data-access is a "launch/pilot/default privacy posture, not a permanent product boundary," agent-brief mode is a valid architecture, and data-connected / code-writing are "feasible future higher-trust modes." SKILL.md already embodies R0–R1 (works from descriptions; emits an agent brief). <span class="tag external">external:</span> least-privilege and progressive-consent permission tiers (security-capability model); agent-native research (arXiv 2603.20300) treats scope as part of the capability contract. <span class="tag reasoned">reasoned:</span> a scoop-paranoid economist will not jump from "shows you nothing" to "runs your data" in one step, but <em>will</em> climb a labelled ladder where each rung's exposure is legible and reversible — selling trust in rungs is how you eventually earn the high-value modes without spending the launch-day privacy promise.</p></dd>
+      <dt>Rationale</dt>
+      <dd><p>This reframes the single most strategically loaded question in the product — "does it touch data?" — from a yes/no wall into a roadmap. It protects the launch promise (R0/R1 stay the default and the marketing) while keeping the high-value modes (R2–R4) architecturally reachable, so a later pivot toward data-connected analysis is a rung you climb, not a rewrite. It pairs with I1 as the vertical axis to I1's horizontal one — together they define the product's whole design space — and it is what rescues three previously-cut ideas (economist-as-supervisor, reactive memo cells, PR-style ack loop) as upper-rung modes rather than dead ends.</p></dd>
+      <dt>Downsides</dt>
+      <dd><p>It is a <em>direction</em>, not a buildable unit — its near-term cost is restraint (don't foreclose the upper rungs) more than construction, and a north star with no shipped rung above R1 can drift into vaporware if it is allowed to justify scope creep before the pilot validates the corpus. Each real upper rung (R2+) reopens the privacy promise and needs its own consent UX, audit story, and per-host file-permission spec — so the ladder must stay clearly labelled "future" until the pilot's confusion log says the bottom rungs work. Higher rungs also collide with the "doesn't replace referee judgment" non-goal — running the analysis is closer to doing the econometrics than advising on it, which is a positioning decision, not just an engineering one.</p></dd>
+    </dl>
+  </article>
+
+  <article class="idea" id="i3">
+    <h3><span class="idchip">I3</span> Schema-first agent brief + design.lock — the pivot rung</h3>
+    <div class="pills"><span class="pill axis">Axis 4 · Artifacts-out</span><span class="pill conf">Confidence 86%</span><span class="pill cx">Complexity Medium</span><span class="pill">Promoted</span></div>
+    <dl>
+      <dt>Description</dt>
+      <dd><p>Emit the agent brief as a structured object first — target parameter, PT flavor, estimator, clustering level, aggregation, exact per-language package entry-points, expected data columns in the member's own variable names, outputs-to-check — with a human-readable rendering layered on top. The downstream coding agent parses the schema (idempotent, verifiable) instead of re-interpreting prose, so design decisions cannot be silently re-decided. Alongside it, emit a compact <code>design.lock</code>: every routing decision + the corpus git SHA + the per-choice Guide citation, so a coauthor, referee, or the member 18 months later can reproduce the identical design and verify which corpus version produced it. Carry the "what would change my mind" items forward as typed verification probes the brief states as acceptance criteria (e.g. "if the pre-trend slope exceeds X, reconsider PT-GT-all"). <strong>Re-read under this revision:</strong> the schema-first brief <em>is</em> the ladder's pivot rung (R1) — the exact contract that lets the member's own agent execute without the Navigator touching data — and the <em>same</em> typed object is what an R3 code-writing Navigator would consume internally. Building the brief as a schema now is what makes climbing the ladder cheap later.</p></dd>
+      <dt>Basis</dt>
+      <dd><p><span class="tag direct">direct:</span> SKILL.md Phase 4 already enumerates the brief's exact fields, and Step 6's sensitivity hooks + the closing "what would change my mind" list are already conditional triggers; the pilot already stamps the corpus git SHA into every trace. <span class="tag external">external:</span> agent-native interface research (arXiv 2603.20300) — the memo and brief are capability contracts, "make them schema-first"; lockfiles / Nix derivations / architect's stamps as the reproducibility-plus-attribution analog. <span class="tag reasoned">reasoned:</span> prose is lossy across the agent-to-agent boundary, where a "helpful" coding agent may re-decide the estimator and silently destroy the Navigator's value — and that boundary is precisely the R1 rung the ladder makes load-bearing.</p></dd>
+      <dt>Rationale</dt>
+      <dd><p>The handoff is the product's most critical seam and the rung most members will actually live on; a typed contract is the difference between "paste this and hope" and "your agent parses this and cannot drop a decision." The lock answers "why $20/mo, not $20 once" structurally — a scoop-paranoid economist won't share data but will share a version-pinned design, and a corpus revision (the pilot's whole purpose) becomes diffable against past designs. Promoted above the host-reach and memo-rendering ideas this revision because, under the access-ladder lens, it is the concrete anchor of the ladder's mid-rung rather than just one artifact among several.</p></dd>
+      <dt>Downsides</dt>
+      <dd><p>A maintained JSON schema for the brief introduces schema-drift risk as the Guide's recommendations evolve (versioning it with the corpus SHA mitigates this). The fully <em>reactive</em> version — results flowing back to re-evaluate the memo automatically — stays out of scope at R1 (it needs the R3/R4 rungs' execution capability), so the forward-only probes are the feasible half today. The lock is only as valuable as coauthors'/referees' willingness to open it.</p></dd>
+    </dl>
+  </article>
+
+  <article class="idea" id="i4">
+    <h3><span class="idchip">I4</span> Smart intake: the on-ramp that climbs the ladder</h3>
+    <div class="pills"><span class="pill axis">Axis 3 · Context-in</span><span class="pill conf">Confidence 85%</span><span class="pill cx">Complexity Medium</span></div>
+    <dl>
+      <dt>Description</dt>
+      <dd><p>Let the economist seed the session from what they already wrote: paste a methods section / pre-analysis plan, or point the Navigator at a standardized repo file (<code>did-intake.md</code>) their coding agent fills from the actual data, in their own variable names. The Navigator pre-fills the intake checklist, marks inferred facts "I inferred X — correct me," and opens the interview only on genuine gaps and conflicts (a version-control "merge-base" over the draft). It compresses adaptively: a precise opening answer ("staggered, not-yet-treated comparison, Callaway–Sant'Anna with group-size weights") collapses to two or three confirmations, while a novice answer gets scaffolded. And it surfaces implementation-aware constraints at language-declaration time (e.g. the Python ecosystem's gaps for certain estimators) so the design is shaped around what the coding agent can actually run. <strong>Re-read under this revision:</strong> intake is the ladder's on-ramp — the <code>did-intake.md</code>-via-your-own-agent pattern already lives at R1, and the <em>same</em> intake step is what an R2 Navigator would satisfy by reading the file/data <em>directly</em> instead of asking. The interface should make "I'll describe it" vs "let my agent fill the file" vs (future) "let the Navigator look" feel like three rungs of one on-ramp, not three different products.</p></dd>
+      <dt>Basis</dt>
+      <dd><p><span class="tag direct">direct:</span> SKILL.md Phase 1 already says to collect facts "skipping anything the member already volunteered," already "works from descriptions of data," and Phase 4 already anticipates Python coverage caveats ("say so in the brief rather than letting the downstream agent improvise"). <span class="tag external">external:</span> SparkMe (arXiv 2602.21136, Feb 2026) finds rigid predetermined sequences are the #1 tedium source. <span class="tag reasoned">reasoned:</span> applied economists arrive from a half-finished methods section or a grant proposal, not a blank sheet — and the cheapest way up the access ladder is to let intake graduate from "describe" to "point at the file."</p></dd>
+      <dt>Rationale</dt>
+      <dd><p>Re-typing facts you have already written is the top reason an expert abandons an interview tool. Draft-in plausibly cuts intake time 60–80% for the common case and shifts the session's register from interrogation to refinement — which is what the $20/mo, expert-grade positioning requires. Surfacing ecosystem constraints early prevents the economist from committing to a design their agent can't implement and only discovering it at brief-reading time. Framing intake as the ladder on-ramp also gives the higher rungs a concrete, low-stakes first step (file-pointing) before any data is exposed.</p></dd>
+      <dt>Downsides</dt>
+      <dd><p>"Blind redaction" of identifying terms in a pasted draft is technically fuzzy (regex vs LLM pass; what counts as identifying?) — scope it down or drop it for an MVP and lean on the local-first shell where nothing leaves the machine anyway. Emergent adaptive compression is harder to test than a mode toggle and can over-compress past a load-bearing fact — it needs Idea 5's gates as a backstop. The implementation-constraint table needs a maintenance process as the R/Python/Stata ecosystems move.</p></dd>
+    </dl>
+  </article>
+
+  <article class="idea" id="i5">
+    <h3><span class="idchip">I5</span> Pre-flight gates for load-bearing facts</h3>
+    <div class="pills"><span class="pill axis">Axis 2 · Interview behavior</span><span class="pill conf">Confidence 88%</span><span class="pill cx">Complexity Low</span></div>
+    <dl>
+      <dt>Description</dt>
+      <dd><p>Recast the three named load-bearing facts — pre-treatment periods for the earliest-treated cohort, whether treatment timing varies, and whether anyone is never-treated — as hard gates the agent is not allowed to pass, rather than soft conventions. In a rich shell they render as a small gate panel; in text they're a numbered "BLOCKED ON" line. The agent refuses to proceed into the eight steps and says exactly which gate is open, the way a pre-flight or surgical checklist halts before the irreversible step.</p></dd>
+      <dt>Basis</dt>
+      <dd><p><span class="tag direct">direct:</span> SKILL.md already states the doctrine verbatim — "Never assume a fact you can ask for… most commonly the number of pre-treatment periods, whether treatment timing varies, or whether anyone is never treated — ask and wait. Do not proceed on a guess." <span class="tag external">external:</span> aviation pre-flight and surgical pre-incision checklists (Gawande) — the field made the small set of catastrophic-if-skipped items blocking and named.</p></dd>
+      <dt>Rationale</dt>
+      <dd><p>This makes an existing rule <em>verifiable in traces</em> rather than a behavior the model may silently drift past — and a credibility-destroying design built on a guessed pre-period is the single highest-cost failure the pilot's confusion log exists to catch. The agent's refusal-to-guess becomes a trust feature a careful economist will pay for. Lowest complexity of the set; pairs with Idea 4's compression as its safety floor — and matters <em>more</em> as the ladder climbs, since at R3/R4 an unblocked wrong fact gets baked into code that actually runs.</p></dd>
+      <dt>Downsides</dt>
+      <dd><p>Risk of over-rigidity — blocking on a fact the economist volunteered in a different phrasing; the agent must recognize equivalent information so the gate reads as competent, not pedantic.</p></dd>
+    </dl>
+  </article>
+
+  <article class="idea" id="i6">
+    <h3><span class="idchip">I6</span> Authenticated Codex hosted web vs Claude skill/extension</h3>
+    <div class="pills"><span class="pill axis">Axis 1 · Substrate</span><span class="pill conf">Confidence 72%</span><span class="pill cx">Complexity Medium</span><span class="pill">Reinterpreted</span></div>
+    <figure>
+      <svg viewBox="0 0 760 230" role="img" aria-label="Codex Desktop in-app browser reaches an authenticated hosted Navigator with cookies and session; Claude Desktop in-app browser is localhost-locked, so the Claude path goes through the local skill or the Chrome extension.">
+        <text x="190" y="28" text-anchor="middle" class="svgtxt" font-size="13" font-weight="700" fill="var(--ink)" stroke="var(--surface)" stroke-width="3">Codex Desktop</text>
+        <rect x="60" y="44" width="260" height="50" rx="8" fill="var(--good-soft)" stroke="var(--good)"/>
+        <text x="190" y="66" text-anchor="middle" class="svgtxt" font-size="12" stroke="var(--good-soft)" stroke-width="3" fill="var(--good)">in-app Browser</text>
+        <text x="190" y="83" text-anchor="middle" class="svgtxt" font-size="11" stroke="var(--good-soft)" stroke-width="3" fill="var(--good)">authenticated hosted https ✓ (cookies/session)</text>
+        <rect x="60" y="150" width="260" height="44" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <text x="190" y="171" text-anchor="middle" class="svgtxt" font-size="12" stroke="var(--accent-soft)" stroke-width="3" fill="var(--accent-text)">Authenticated hosted Navigator</text>
+        <text x="190" y="186" text-anchor="middle" class="svgtxt" font-size="10.5" stroke="var(--accent-soft)" stroke-width="3" fill="var(--accent-text)">optimize for this first · Enter-key only</text>
+        <path d="M190 94 L190 148" stroke="var(--good)" stroke-width="1.8" fill="none"/>
+        <text x="570" y="28" text-anchor="middle" class="svgtxt" font-size="13" font-weight="700" fill="var(--ink)" stroke="var(--surface)" stroke-width="3">Claude Desktop</text>
+        <rect x="440" y="44" width="260" height="50" rx="8" fill="var(--bad-soft)" stroke="var(--bad)"/>
+        <text x="570" y="66" text-anchor="middle" class="svgtxt" font-size="12" stroke="var(--bad-soft)" stroke-width="3" fill="var(--bad)">in-app preview browser</text>
+        <text x="570" y="83" text-anchor="middle" class="svgtxt" font-size="11" stroke="var(--bad-soft)" stroke-width="3" fill="var(--bad)">localhost-locked — hosted URL ✗</text>
+        <rect x="440" y="150" width="260" height="44" rx="8" fill="var(--surface)" stroke="var(--line-strong)"/>
+        <text x="570" y="177" text-anchor="middle" class="svgtxt" font-size="12" stroke="var(--surface)" stroke-width="3" fill="var(--ink)">Local skill · Claude-in-Chrome</text>
+        <path d="M570 94 L570 148" stroke="var(--bad)" stroke-width="1.8" fill="none" stroke-dasharray="5 3"/>
+      </svg>
+      <figcaption>The asymmetry is now one-sided: Codex's in-app Browser carries an authenticated session, so the hosted Navigator is a first-class Codex surface; the Claude side still routes through the skill or extension.</figcaption>
+    </figure>
+    <dl>
+      <dt>Description</dt>
+      <dd><p>Stop pretending the in-app browsers behave uniformly — but, given the corrected fact that <strong>Codex Desktop's in-app Browser supports authentication</strong>, optimize the first pass for an <em>authenticated, session-carrying</em> hosted Navigator inside Codex Browser rather than a public no-auth page. That single change dissolves the prior tension between "public reach" and the pilot's invite-only, passcode-gated model: the Codex surface can sit behind the same auth the pilot already uses (cookies/session work), keep the Enter-key-only, no-trusted-pointer constraint the spike requires, and serve the low rungs of the access ladder (R0 advisory, R1 brief) directly in-app. Route the Claude side through the local skill or Claude-in-Chrome / agent-browser, since Claude Desktop's in-app preview is localhost-locked. The interface adapts to each host's reachability envelope; the asymmetry is now Codex-favorable, not symmetric.</p></dd>
+      <dt>Basis</dt>
+      <dd><p><span class="tag direct">direct:</span> the spike confirmed Claude Desktop's preview browser is origin-locked and that synthetic clicks were no-ops (<code>pilot/spike/RESULTS-2026-06-12.md</code>); the spike's Codex leg was skipped, and the corrected assumption (take as fact) is that Codex's in-app Browser supports auth. <span class="tag reasoned">reasoned:</span> the plan bet on uniform in-app driveability and the spike falsified it for Claude; honest agent-native reach means two first-class, host-tuned paths — an authenticated hosted surface for Codex, the local skill/extension for Claude — rather than degrading everyone to "just use a normal browser."</p></dd>
+      <dt>Rationale</dt>
+      <dd><p>It turns the spike's blocking finding into a deliberate two-surface design with a concrete, near-term distribution story for both major hosts — and the auth correction makes the Codex surface materially stronger than the prior revision assumed (session-carrying rather than cookie-less), which is what lets the hosted pilot double as the authenticated low-rung entry point of the access ladder.</p></dd>
+      <dt>Downsides</dt>
+      <dd><p>The Codex auth behavior is taken as fact here but was <em>not</em> exercised by the spike — a 10-minute Codex smoke test (re-runnable with the same mock) should still gate the build, since cookie/redirect handling inside the in-app Browser can have surprises. Demoted below the ladder, the brief, intake, and gates this revision: with the auth correction it is less of a load-bearing problem and more of an execution detail that sits <em>under</em> Idea 1's substrate and Idea 2's ladder, not a competing direction.</p></dd>
+    </dl>
+  </article>
+
+  <article class="idea" id="i7">
+    <h3><span class="idchip">I7</span> Live accreting design memo (memo-as-canvas)</h3>
+    <div class="pills"><span class="pill axis">Axis 1 · Substrate</span><span class="pill conf">Confidence 82%</span><span class="pill cx">Complexity Medium</span></div>
+    <figure>
+      <svg viewBox="0 0 760 220" role="img" aria-label="Before: a chat stream ending in a surprise wall-of-text memo. After: a memo canvas that fills in live while the chat is a thin advisory margin.">
+        <text x="180" y="24" text-anchor="middle" class="svgtxt" font-size="12" font-weight="700" fill="var(--muted)" stroke="var(--surface)" stroke-width="3">TODAY</text>
+        <rect x="60" y="38" width="240" height="150" rx="8" fill="var(--surface)" stroke="var(--line-strong)"/>
+        <g fill="var(--line-strong)"><rect x="76" y="54" width="150" height="12" rx="4"/><rect x="134" y="74" width="150" height="12" rx="4"/><rect x="76" y="94" width="150" height="12" rx="4"/><rect x="134" y="114" width="150" height="12" rx="4"/></g>
+        <rect x="76" y="138" width="208" height="40" rx="5" fill="var(--warn-soft)" stroke="var(--warn)"/>
+        <text x="180" y="162" text-anchor="middle" class="svgtxt" font-size="10.5" stroke="var(--warn-soft)" stroke-width="3" fill="var(--warn)">…surprise memo at the end</text>
+        <text x="580" y="24" text-anchor="middle" class="svgtxt" font-size="12" font-weight="700" fill="var(--accent-text)" stroke="var(--surface)" stroke-width="3">MEMO-AS-CANVAS</text>
+        <rect x="440" y="38" width="170" height="150" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <text x="525" y="56" text-anchor="middle" class="svgtxt" font-size="10.5" font-weight="700" stroke="var(--accent-soft)" stroke-width="3" fill="var(--accent-text)">Design memo</text>
+        <g font-size="9.5"><rect x="452" y="64" width="146" height="20" rx="4" fill="var(--good-soft)" stroke="var(--good)"/><text x="460" y="78" class="svgtxt" stroke="var(--good-soft)" stroke-width="2.5" fill="var(--good)">Classification ✓</text>
+        <rect x="452" y="88" width="146" height="20" rx="4" fill="var(--good-soft)" stroke="var(--good)"/><text x="460" y="102" class="svgtxt" stroke="var(--good-soft)" stroke-width="2.5" fill="var(--good)">Step 1 target ✓</text>
+        <rect x="452" y="112" width="146" height="20" rx="4" fill="var(--surface)" stroke="var(--line-strong)" stroke-dasharray="3 2"/><text x="460" y="126" class="svgtxt" stroke="var(--surface)" stroke-width="2.5" fill="var(--muted)">Step 2 — filling…</text>
+        <rect x="452" y="136" width="146" height="20" rx="4" fill="var(--surface)" stroke="var(--line)"/><text x="460" y="150" class="svgtxt" stroke="var(--surface)" stroke-width="2.5" fill="var(--muted)">Step 3 …</text></g>
+        <rect x="622" y="38" width="78" height="150" rx="8" fill="var(--surface)" stroke="var(--line)"/>
+        <text x="661" y="115" text-anchor="middle" class="svgtxt" font-size="9.5" fill="var(--muted)" transform="rotate(90 661 115)" stroke="var(--surface)" stroke-width="3">chat margin</text>
+      </svg>
+      <figcaption>Invert the primacy: the artifact the economist is building is the main surface; chat becomes the way they edit it. Now renderable inside the authenticated Codex hosted surface (I6).</figcaption>
+    </figure>
+    <dl>
+      <dt>Description</dt>
+      <dd><p>Render the 8-step memo as the primary, always-visible artifact from message one — a live skeleton with a classification banner and step-slots that fill or revise in place as the economist answers, TurboTax-refund-counter style — and demote the conversation to a thin advisory margin. The economist watches the design coalesce, can click a slot to reopen a decision, and catches a wrong classification before sinking eight steps on the wrong branch. The "what would change my mind" list becomes a persistent visible object, not a closing afterthought.</p></dd>
+      <dt>Basis</dt>
+      <dd><p><span class="tag direct">direct:</span> SKILL.md's memo "sections mirroring Steps 1–8 plus the classification"; the pilot's transport already supports per-path <code>set</code>/<code>append-text</code> operations (<code>pilot/web/src/main.tsx</code>), and today's UI is a flat <code>messages.map</code> list with no memo surface — a real, transport-supported gap. <span class="tag external">external:</span> the TurboTax live-artifact pattern (grounding).</p></dd>
+      <dt>Rationale</dt>
+      <dd><p>A live artifact converts an opaque interview into visibly-progressing co-authorship — the exact mechanism that makes structured-interview tools feel good rather than bureaucratic — and it should reduce the "I spent 30 turns and got a bad memo" abandonment the confusion log exists to catch. Because both shells render the same memo schema (Idea 1), the canvas is also a shared-substrate payoff; and with the Codex auth correction (Idea 6) it now has a viable in-app rich-host home, not just the local-dev preview.</p></dd>
+      <dt>Downsides</dt>
+      <dd><p>Real front-end restructuring of the pilot UI (flat list → canvas + margin), and deeper assistant-ui integration raises exposure to its uncertain maintenance trajectory. In a pure text shell (CLI / text-fallback MCP) "canvas" degrades to a re-printed memo block — still useful, but the visceral live-fill effect is a rich-host benefit. Sits below the ladder and its concrete rungs this revision: a rendering improvement, not a scope decision.</p></dd>
+    </dl>
+  </article>
+
+  <article class="idea" id="i8">
+    <h3><span class="idchip">I8</span> Repo-local session state &amp; resume (git-as-research-log)</h3>
+    <div class="pills"><span class="pill axis">Axis 5 · Continuity</span><span class="pill conf">Confidence 80%</span><span class="pill cx">Complexity Medium</span></div>
+    <dl>
+      <dt>Description</dt>
+      <dd><p>Make a session a file, not server state: the skill writes <code>.did-navigator/&lt;paper-slug&gt;/session.json</code> (decisions so far, current step, open questions, corpus SHA) plus a rendered <code>session.md</code> into the economist's own repo after each exchange. Resuming means the skill reads the file and picks up mid-step — "Resuming your Medicaid study: you confirmed staggered adoption, county-year panel; I still need to know whether you observe any never-treated counties." No accounts, no passcode, no server session. The git history <em>is</em> the session log: diffable, branchable, and reviewable across a revise-and-resubmit cycle.</p></dd>
+      <dt>Basis</dt>
+      <dd><p><span class="tag direct">direct:</span> the local-first promise ("your drafts, data, and code never leave your machine"); the pilot's <code>localStorage</code> session id (<code>pilot/web/src/main.tsx</code>) is the wrong, non-portable model for the product. <span class="tag external">external:</span> the Agent Skills open standard has <em>no</em> native versioning or session-resume (grounding) — this is genuine whitespace. <span class="tag reasoned">reasoned:</span> economists work a paper over years and revisit the design memo during R&amp;R 18 months later; a stateless skill forces a full re-interview.</p></dd>
+      <dt>Rationale</dt>
+      <dd><p>It makes the strongest version of the local-first promise real — even the <em>session</em> never leaves the machine — using a continuity model (git) this audience already trusts, and turns the Navigator from a one-shot consultant into a longitudinal collaborator. Newly relevant under this revision: writing files into the member's repo is the <em>same capability primitive</em> as the access ladder's R2 (local file/data inspection) — ship repo-local session state and you have already built the file-permission plumbing the upper rungs need, so this is the natural first step toward R2 that exposes <em>nothing</em> of the member's data.</p></dd>
+      <dt>Downsides</dt>
+      <dd><p>The skill shell doesn't persist files today; adding session writes means instructing each host to write to a path, and hosts differ in file-write permissions and conventions — it needs a per-host spec (the same spec the ladder's upper rungs will need). Stale-state resume must narrate prior decisions accurately or it erodes the trust it's meant to build.</p></dd>
+    </dl>
+  </article>
+</section>
+
+<section>
+  <h2>Rejection Summary</h2>
+  <p style="font-family:ui-sans-serif,system-ui,sans-serif; font-size:.9rem; color:var(--muted)">The access ladder (I2) changes the disposition of three previously-cut candidates: what was "conflicts with the no-data boundary" is now "a labelled upper rung," so they move from <em>cut</em> to <em>parked on the ladder</em>.</p>
+  <table>
+    <thead><tr><th>Candidate</th><th>Disposition</th></tr></thead>
+    <tbody>
+      <tr><td>Economist-as-supervisor, agent-as-interviewee</td><td><strong>Rescued to the ladder (R2–R3).</strong> The deepest agent-native reframe (the agent <em>is</em> the user) was cut for conflicting with "works from descriptions, not data." Under I2 that boundary is the default posture, not a wall — this is a higher-trust mode where the Navigator works through the member's own coding agent. Still not a day-one build; now a named rung rather than a dead end.</td></tr>
+      <tr><td>Reactive memo cells (auto re-evaluating)</td><td><strong>Rescued to the ladder (R4).</strong> Results flowing back into the live memo needs an execution back-channel — exactly what the run-for-you rung provides. Forward-only typed probes stay in Idea 3 for today; the reactive version is a labelled future rung, not impossible.</td></tr>
+      <tr><td>PR-style handoff with acknowledgment loop</td><td><strong>Rescued to the ladder (R3–R4).</strong> The agent-to-agent ack loop requires a back-channel the R0/R1 product doesn't have, but the code-writing/run rungs do. The feasible forward-only half (brief states acceptance criteria) remains folded into Idea 3.</td></tr>
+      <tr><td>Adversarial referee co-pilot</td><td>Cut. Interesting and on-thesis ("the real competitor is the referee report"), but the challenge-during-intake UX is unproven and risks feeling exhausting — better as a <code>ce-brainstorm</code> variant of interview behavior than a committed direction. Unaffected by the access ladder.</td></tr>
+      <tr><td>Save-state branching (forkable design tree)</td><td>Cut (premature). Depends on Idea 8's session state, and "run the interview twice" gets ~80% of the referee-proof-variant value. A natural extension once continuity ships, not a day-one direction.</td></tr>
+      <tr><td>Pilot traces → published onboarding examples</td><td>Cut. Sound and low-cost, but it lives in pilot ops and brushes the out-of-scope eval work, and it needs a consent-copy change before any session can be published. Noted, not a core-interface survivor.</td></tr>
+      <tr><td>Substrate / MCP tool as standalone ideas</td><td>Merged — same direction at two altitudes; consolidated into Idea 1.</td></tr>
+      <tr><td>Cross-method router as a standalone idea</td><td>Strategically sound (Step 8 implies it) but premature until a second Navigator exists; folded into Idea 1's leverage, where the shared schema makes it cheap.</td></tr>
+    </tbody>
+  </table>
+  <p style="font-family:ui-sans-serif,system-ui,sans-serif; font-size:.86rem; color:var(--muted)">All six topic axes now have at least one strong survivor; the new Axis 6 (access &amp; trust posture) is carried by Idea 2 and threaded through Ideas 3, 4, and 8. Axis 3 (Context-in) remains concentrated in Idea 4 (with the implementation-aware-constraints strand folded in) rather than spread across multiple cards.</p>
+</section>
+
+<footer class="composition-signal">
+  Composed 2026-06-14, revised 2026-06-15 (access-ladder pass) by Compound Engineering <code>ce-ideate</code> from the user prompt and repo grounding (<code>library/did-navigator/SKILL.md</code>, <code>docs/plans/2026-06-12-001-feat-did-navigator-pilot-plan.md</code>, <code>pilot/</code>, <code>pilot/spike/RESULTS-2026-06-12.md</code>) plus external web research, and four new user-supplied assumptions (no-data-access as default posture not boundary; agent-brief mode as valid architecture; data-connected/code-writing as feasible higher-trust modes; authenticated Codex in-app Browser as viable). Ideation artifact — directions for discussion, not a plan or spec.
+</footer>
+
+</div>
+</body>
+</html>
