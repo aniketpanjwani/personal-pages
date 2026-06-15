@@ -1,0 +1,17 @@
+{
+  "base_url": "https://aniketpanjwani.github.io/personal-pages",
+  "entries": [
+    {
+      "content_sha256": "6aba59f2e49e",
+      "expires_at": "2026-06-29T01:00:17Z",
+      "id": "2026-06-15-sample-phone-artifact-menucq",
+      "published_at": "2026-06-15T01:00:17Z",
+      "relative_path": "pages/2026-06-15/sample-phone-artifact-menucq/index.html",
+      "source": "verification",
+      "source_path": "/private/tmp/publish-html-goal-test-20260614/source/sample.html",
+      "title": "Sample Phone Artifact",
+      "url": "https://aniketpanjwani.github.io/personal-pages/pages/2026-06-15/sample-phone-artifact-menucq/"
+    }
+  ],
+  "version": 1
+}
