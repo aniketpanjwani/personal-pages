@@ -1,25 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
-  <title>Medellin Format Spike Outcome v2</title>
-  <style>
-    :root { color-scheme: light dark; }
-    body {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 24px 18px 64px;
-      font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    img, video, canvas, svg { max-width: 100%; height: auto; }
-    pre { overflow-x: auto; padding: 12px; border: 1px solid #ddd; }
-    code { font-size: 0.92em; }
-    table { display: block; overflow-x: auto; border-collapse: collapse; }
-    th, td { padding: 0.35rem 0.5rem; border: 1px solid #ddd; }
-  </style>
-
-  <meta charset="utf-8">
+  <title>Medellin Format Spike Outcome</title>
   <style>
 :root {
   color-scheme: light;
@@ -42,6 +27,10 @@
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
+  max-width: none;
+  min-width: 0;
+  padding: 0;
+  width: 100%;
   background:
     linear-gradient(180deg, rgba(255,253,248,0.86), rgba(246,243,238,1) 360px),
     var(--bg);
@@ -56,7 +45,12 @@ code {
   padding: 0.08rem 0.28rem;
   border-radius: 5px;
 }
-.page { max-width: 1180px; margin: 0 auto; padding: 34px 20px 72px; }
+.page {
+  width: min(calc(100% - 48px), 1500px);
+  max-width: none;
+  margin: 0 auto;
+  padding: clamp(28px, 3vw, 46px) 0 72px;
+}
 .hero {
   background: var(--paper);
   border: 1px solid var(--line);
@@ -92,7 +86,13 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 }
 .stat { min-width: 136px; border-radius: 14px; }
 .stat strong { display: block; font-size: 1.15rem; color: var(--ink); }
-.layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; align-items: start; margin-top: 28px; }
+.layout {
+  display: grid;
+  grid-template-columns: clamp(190px, 15vw, 260px) minmax(0, 1fr);
+  gap: clamp(20px, 2.8vw, 44px);
+  align-items: start;
+  margin-top: 28px;
+}
 .toc {
   position: sticky;
   top: 18px;
@@ -103,7 +103,7 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
 }
 .toc a { display: block; color: #4c4944; text-decoration: none; padding: 7px 8px; border-radius: 8px; font-size: 0.9rem; }
 .toc a:hover { background: var(--accent-soft); color: var(--accent); }
-.content { min-width: 0; }
+.content { min-width: 0; width: 100%; }
 .section {
   margin-bottom: 22px;
   padding: clamp(20px, 2.4vw, 30px);
@@ -112,7 +112,7 @@ h3 { margin: 0 0 8px; font-size: 1.05rem; }
   border-radius: 18px;
   box-shadow: 0 10px 30px rgba(35, 28, 17, 0.045);
 }
-.section p { max-width: 76ch; }
+.section p { max-width: 84ch; }
 .section-intro { color: var(--muted); }
 .callout {
   border-radius: 16px;
@@ -184,7 +184,7 @@ footer {
   text-align: center;
 }
 @media (max-width: 860px) {
-  .page { padding: 16px 12px 48px; }
+  .page { width: min(calc(100% - 24px), 1500px); padding: 16px 0 48px; }
   .layout { display: block; }
   .toc { position: static; margin-bottom: 18px; }
   .toc nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -193,10 +193,14 @@ footer {
 }
 @media (max-width: 520px) {
   body { font-size: 15px; }
+  .page { width: min(calc(100% - 20px), 1500px); }
   .hero { border-radius: 14px; padding: 22px 16px; }
   .toc nav { grid-template-columns: 1fr; }
   .meta, .stats { display: grid; }
   table { min-width: 620px; }
+}
+@media (min-width: 1320px) {
+  .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 </style>
 </head>
