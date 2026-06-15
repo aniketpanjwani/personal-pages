@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Medellin Format Spike Source Dossiers</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 18px 64px;
+      font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    img, video, canvas, svg { max-width: 100%; height: auto; }
+    pre { overflow-x: auto; padding: 12px; border: 1px solid #ddd; }
+    code { font-size: 0.92em; }
+    table { display: block; overflow-x: auto; border-collapse: collapse; }
+    th, td { padding: 0.35rem 0.5rem; border: 1px solid #ddd; }
+  </style>
+
+  <meta charset="utf-8">
+  <style>
+:root {
+  color-scheme: light;
+  --bg: #f6f3ee;
+  --paper: #fffdf8;
+  --ink: #171717;
+  --muted: #66645f;
+  --line: #ded7ca;
+  --accent: #176b5d;
+  --accent-soft: #e4f1eb;
+  --blue: #245f91;
+  --blue-soft: #e7eef8;
+  --rose: #94405b;
+  --rose-soft: #f6e7ed;
+  --gold: #8a5a12;
+  --gold-soft: #f7eddb;
+  --shadow: 0 18px 50px rgba(35, 28, 17, 0.08);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  max-width: none;
+  min-width: 0;
+  padding: 0;
+  width: 100%;
+  background:
+    linear-gradient(180deg, rgba(255,253,248,0.86), rgba(246,243,238,1) 360px),
+    var(--bg);
+  color: var(--ink);
+  font: 16px/1.58 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+a { color: var(--accent); }
+p, li, td, th, .field-value, .card, .callout, .appendix-list article {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: rgba(23, 107, 93, 0.08);
+  padding: 0.08rem 0.28rem;
+  border-radius: 5px;
+}
+.page {
+  width: min(calc(100% - 48px), 1500px);
+  max-width: none;
+  margin: 0 auto;
+  padding: clamp(28px, 3vw, 46px) 0 72px;
+}
+.hero {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: clamp(24px, 4vw, 48px);
+  box-shadow: var(--shadow);
+}
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+h1, h2, h3 { line-height: 1.12; letter-spacing: 0; }
+h1 { max-width: 920px; margin: 10px 0 12px; font-size: clamp(2.05rem, 5vw, 4.7rem); }
+h2 { margin: 0 0 16px; font-size: clamp(1.35rem, 2.4vw, 2.2rem); }
+h3 { margin: 0 0 8px; font-size: 1.05rem; }
+.subtitle { max-width: 760px; color: var(--muted); font-size: clamp(1.02rem, 1.6vw, 1.22rem); }
+.meta, .stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.pill, .stat {
+  border: 1px solid var(--line);
+  background: #fffaf1;
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: #47433b;
+  font-size: 0.88rem;
+}
+.stat { min-width: 136px; border-radius: 14px; }
+.stat strong { display: block; font-size: 1.15rem; color: var(--ink); }
+.layout {
+  display: grid;
+  grid-template-columns: clamp(190px, 15vw, 260px) minmax(0, 1fr);
+  gap: clamp(20px, 2.8vw, 44px);
+  align-items: start;
+  margin-top: 28px;
+}
+.toc {
+  position: sticky;
+  top: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255,253,248,0.86);
+  padding: 14px;
+}
+.toc a { display: block; color: #4c4944; text-decoration: none; padding: 7px 8px; border-radius: 8px; font-size: 0.9rem; }
+.toc a:hover { background: var(--accent-soft); color: var(--accent); }
+.content { min-width: 0; width: 100%; }
+.section {
+  margin-bottom: 22px;
+  padding: clamp(20px, 2.4vw, 30px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(35, 28, 17, 0.045);
+}
+.section p { max-width: 84ch; }
+.section-intro { color: var(--muted); }
+.callout {
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+}
+.callout.accent, .card.accent { background: var(--accent-soft); }
+.callout.blue, .card.blue { background: var(--blue-soft); }
+.callout.rose, .card.rose { background: var(--rose-soft); }
+.callout.gold, .card.gold { background: var(--gold-soft); }
+.card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.card {
+  min-width: 0;
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+}
+.muted { color: var(--muted); }
+.field { margin-top: 12px; }
+.field-label { color: var(--muted); font-size: 0.73rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.field-value { margin-top: 2px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+table { width: 100%; border-collapse: collapse; min-width: 720px; background: #fffaf1; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+th { color: #423d34; background: #f2eadc; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+tr:last-child td { border-bottom: 0; }
+.steps { counter-reset: step; list-style: none; padding: 0; display: grid; gap: 12px; }
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 14px 14px 14px 52px;
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.flow-node {
+  position: relative;
+  min-height: 124px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fffaf1;
+}
+.flow-label { color: var(--accent); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+.flow-title { margin-top: 8px; font-weight: 800; }
+.flow-body { margin-top: 6px; color: var(--muted); font-size: 0.92rem; }
+.appendix-list { display: grid; gap: 12px; }
+.appendix-list article { border-top: 1px solid var(--line); padding-top: 14px; }
+footer {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  text-align: center;
+}
+@media (max-width: 860px) {
+  .page { width: min(calc(100% - 24px), 1500px); padding: 16px 0 48px; }
+  .layout { display: block; }
+  .toc { position: static; margin-bottom: 18px; }
+  .toc nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card-grid { grid-template-columns: 1fr; }
+  .section { border-radius: 14px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 15px; }
+  .page { width: min(calc(100% - 20px), 1500px); }
+  .hero { border-radius: 14px; padding: 22px 16px; }
+  .toc nav { grid-template-columns: 1fr; }
+  .meta, .stats { display: grid; }
+  table { min-width: 620px; }
+}
+@media (min-width: 1320px) {
+  .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<div class="eyebrow">Medellin Insider</div>
+<h1>Medellin Format Spike Source Dossiers</h1>
+<p class="subtitle">A richer v3 report with detailed per-source evidence, references, format ideas, and Medellin Insider adaptations.</p>
+<div class="meta">
+<span class="pill"><strong>Status:</strong> expanded source-dossier draft</span>
+<span class="pill"><strong>Date:</strong> 2026-06-15</span>
+<span class="pill"><strong>Source set:</strong> 6 approved Taste Anchors</span>
+<span class="pill"><strong>Publish mode:</strong> public-obscure, noindex</span>
+</div>
+<div class="stats">
+<div class="stat"><strong>6</strong>source dossiers</div>
+<div class="stat"><strong>52+</strong>raw evidence files</div>
+<div class="stat"><strong>31</strong>new Medellingles Chrome items</div>
+<div class="stat"><strong>4</strong>launch blocks reinforced</div>
+</div>
+</header>
+<div class="layout">
+<aside class="toc"><div class="eyebrow">Contents</div><nav>
+<a href="#executive-summary">Executive Summary</a>
+<a href="#evidence-map">Evidence And Analysis Flow</a>
+<a href="#medellingles">Source Dossier: Medellingles</a>
+<a href="#remote-roberto">Source Dossier: Remote Roberto</a>
+<a href="#medellin-tour-guidee">Source Dossier: Medellin Tour Guidee</a>
+<a href="#naptown-scoop">Source Dossier: Naptown Scoop</a>
+<a href="#winnipeg-digest">Source Dossier: Winnipeg Digest</a>
+<a href="#catskill-crew">Source Dossier: Catskill Crew</a>
+<a href="#cross-anchor-matrix">Cross-Anchor Comparison</a>
+<a href="#edition-implications">Edition Implications</a>
+<a href="#research-gaps">Remaining Research Gaps</a>
+<a href="#subagent-plan">Do We Need Subagents?</a>
+<a href="#appendix">Appendix: Local Source Files</a>
+</nav></aside>
+<div class="content">
+<section class="section callout-section" id="executive-summary">
+<h2>Executive Summary</h2>
+<div class="callout accent">
+<div class="eyebrow">What changed in v3</div>
+<p>This v3 report treats the anchors as source dossiers, not just brief cards. The biggest correction is Medellingles: the original scrape path understated Instagram because default ScrapeCreators routes hit Instagram age-gating. A retry through PH-region ScrapeCreators plus authenticated Chrome recovered direct Instagram profile, carousel, Reels-tab, and Reel-page evidence.</p>
+<p>The launch recommendation stays stable: Edition #1 should be a compact weekly briefing with judgment, not an events-only newsletter. But the source pages now show clearer reusable mechanics: Medellingles for source-to-carousel adaptation, Winnipeg Digest for utility routing, Catskill Crew for voice/community depth, Remote Roberto and Medellin Tour Guidee for newcomer pain-point hooks, and Naptown Scoop for local-moment video packaging.</p>
+<ul><li>Use Medellingles as the closest tactical model for article/resource adaptation into Instagram and newsletter material.</li><li>Use Winnipeg Digest and Catskill Crew to keep the email useful and readable rather than merely timely.</li><li>Use creator accounts for hooks and anxieties, but translate their service/funnel language into Medellin Insider&#x27;s trustworthy editorial voice.</li></ul>
+</div></section>
+<section class="section flow-section" id="evidence-map">
+<h2>Evidence And Analysis Flow</h2>
+<p class="section-intro">The richer report separates raw capture, source interpretation, and launch decisions so future passes can improve one layer without rewriting the whole memo.</p>
+<div class="flow">
+<div class="flow-node">
+<div class="flow-label">1</div>
+<div class="flow-title">Raw Evidence</div>
+<div class="flow-body">ScrapeCreators, newsletter HTML, TikTok transcripts, Instagram JSON, and authenticated Chrome visible-page extracts.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">2</div>
+<div class="flow-title">Source Dossiers</div>
+<div class="flow-body">Each anchor gets format mechanics, references, audience signals, transferable ideas, mismatches, and open questions.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">3</div>
+<div class="flow-title">Synthesis</div>
+<div class="flow-body">Compare anchors by what they teach: utility, voice, hooks, social packaging, app/web routing, and launch risk.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">4</div>
+<div class="flow-title">Edition Shape</div>
+<div class="flow-body">Translate the source lessons into recurring blocks for email, Instagram, app/web, and future experiments.</div>
+</div>
+</div></section>
+<section class="section cards-section" id="medellingles">
+<div class="eyebrow">Closest tactical anchor</div><h2>Source Dossier: Medellingles</h2>
+<p class="section-intro">Medellingles is the most directly comparable anchor: English-language Medellin/Colombia guidance, Substack archive, paid reference value, and now-confirmed Instagram carousel/Reel evidence.</p>
+<div class="card-grid">
+<article class="card accent">
+<div class="eyebrow">What it teaches</div>
+<h3>System Role</h3>
+<div class="field">
+<div class="field-label">Primary lesson</div>
+<div class="field-value">Turn outside Colombia/Medellin coverage and local fragments into English-language utility.</div>
+</div>
+<div class="field">
+<div class="field-label">Audience overlap</div>
+<div class="field-value">English-speaking Medellin residents, visitors, tourists, remote workers, Colombia-curious readers, and diaspora-adjacent followers.</div>
+</div>
+<div class="field">
+<div class="field-label">Surface mix</div>
+<div class="field-value">Substack for archive/monetization; Instagram for discovery, carousels, Reels, and social proof; Facebook as lightweight support.</div>
+</div>
+<ul><li>The product is less personality-led than a creator account; it wins through repeated practical usefulness.</li><li>The strongest pattern is not just event listing; it is translating source material into local meaning.</li></ul>
+</article>
+<article class="card blue">
+<div class="eyebrow">Corrected from v2</div>
+<h3>Recovered Instagram Evidence</h3>
+<div class="field">
+<div class="field-label">Profile</div>
+<div class="field-value">38,344 followers, 345 following, 255 timeline posts, not private.</div>
+</div>
+<div class="field">
+<div class="field-label">Retry path</div>
+<div class="field-value">Default ScrapeCreators hit age-gating; PH-region posts plus authenticated Chrome visible-page extraction succeeded.</div>
+</div>
+<div class="field">
+<div class="field-label">Saved raw files</div>
+<div class="field-value">basic-profile-PH-unblocked-20260615.json, posts-PH-unblocked-20260615.json, chrome-visible-posts-20260615.json, chrome-reels-tab-20260615.json, chrome-visible-reels-20260615.json.</div>
+</div>
+<ul><li>Chrome extracted 11 recent carousel post pages and 20 Reel pages.</li><li>Reels tab exposed 20 visible Reel links with view counts from roughly 3.8k to 95.5k.</li></ul>
+</article>
+<article class="card gold">
+<div class="eyebrow">What to study</div>
+<h3>Carousel References</h3>
+<ul><li>https://www.instagram.com/medellingles/p/DZlOBjNmx7a/ — direct flights to Medellin in 2026; utility hook, caveats, source/credit habit.</li><li>https://www.instagram.com/medellingles/p/DZU3RohnJnZ/ — Medellin among top food cities according to Time Out; strong example of outside-publication-to-local-pride adaptation; 1,815 likes and 84 comments.</li><li>https://www.instagram.com/medellingles/p/DZK1gXhnK6i/ — Colombia World Cup roster age; identity/sports hook; 8,453 likes and 136 comments.</li><li>https://www.instagram.com/medellingles/p/DZaAg5XnHUT/ — Global Peace Index ranking; safety/index explainer that could become SEO, lead magnet, or newsletter context if timely.</li></ul>
+</article>
+<article class="card gold">
+<div class="eyebrow">Lightweight video lane</div>
+<h3>Reel References</h3>
+<ul><li>https://www.instagram.com/medellingles/reel/DYLCsIpzSpZ/ — ciclovia oddity with a simple safety question; local observation, not heavy production.</li><li>https://www.instagram.com/medellingles/reel/DXkbi6_Exe8/ — Jardin Botanico iguanas; factual local explainer with institutional source.</li><li>https://www.instagram.com/medellingles/reel/DSIJoSAjaQ3/ — Chicken &#x27;N Waffle opening in Poblado; restaurant/venue utility with location details.</li><li>https://www.instagram.com/medellingles/reel/DRvPIUijajE/ — Noche de Velitas; cultural tradition explainer with seasonal usefulness.</li></ul>
+</article>
+<article class="card accent">
+<div class="eyebrow">Medellin Insider adaptation</div>
+<h3>Ideas To Steal</h3>
+<ul><li>Create a weekly <code>Medellin Intelligence</code> block: one outside source, one local translation, one why-it-matters note, one link for deeper reading.</li><li>Turn source-backed items into carousels: headline, local implication, caveat, source credit, save/share prompt.</li><li>Maintain app/web reference pages for durable utilities: direct flights, restaurant updates, recurring events, holiday/festival guides, and safety/civic explainers.</li><li>Use Instagram as a research and distribution surface, but keep the Edition as the place where operator judgment and source links accumulate.</li></ul>
+</article>
+<article class="card rose">
+<div class="eyebrow">Taste boundary</div>
+<h3>What Not To Copy</h3>
+<ul><li>Do not become a static paid directory or generic calendar; Insider needs a sharper operator voice and a reason to open weekly.</li><li>Do not over-index on diaspora World Cup content unless it maps back to the Medellin Insider audience or a current local moment.</li><li>Do not treat likes as sufficient proof of launch fit; some high-performing identity posts may be better for Instagram than email.</li></ul>
+</article>
+</div></section>
+<section class="section cards-section" id="remote-roberto">
+<div class="eyebrow">Newcomer anxiety and funnel mechanics</div><h2>Source Dossier: Remote Roberto</h2>
+<p class="section-intro">Remote Roberto is useful less as a brand model and more as a hook library: he names foreigner uncertainty and turns it into a concrete next move.</p>
+<div class="card-grid">
+<article class="card accent">
+<div class="eyebrow">What it teaches</div>
+<h3>System Role</h3>
+<div class="field">
+<div class="field-label">Primary lesson</div>
+<div class="field-value">Specific Medellin anxieties convert better than broad travel vibes.</div>
+</div>
+<div class="field">
+<div class="field-label">Audience</div>
+<div class="field-value">Remote workers, visitors, relocation-curious travelers, and higher-intent trip planners.</div>
+</div>
+<div class="field">
+<div class="field-label">Funnel</div>
+<div class="field-value">TikTok discovery -&gt; DM keyword / Calendly strategy call -&gt; concierge/referral/service fulfillment.</div>
+</div>
+<ul><li>Useful hooks include rookie mistakes, where to go beyond Poblado/Laureles, cost confusion, safety, dating/social norms, housing, and local access.</li><li>Shares and saves matter more than passive views because the content is planning utility.</li></ul>
+</article>
+<article class="card gold">
+<div class="eyebrow">Raw profile + transcripts</div>
+<h3>Evidence References</h3>
+<ul><li>Profile capture: about 13.6k followers, 489k likes, 1,395 videos.</li><li>https://www.tiktok.com/@remoteroberto/video/7605800813025316126 — rookie-mistakes pitch; 16,950 views, 1,210 likes, 67 shares, 168 saves.</li><li>https://www.tiktok.com/@remoteroberto/video/7650616885976861982 — direct planning CTA; 8,770 views, 475 likes, 401 shares, 52 saves.</li><li>https://www.tiktok.com/@remoteroberto/video/7637674561093324063 — origin/credibility story.</li></ul>
+</article>
+<article class="card accent">
+<div class="eyebrow">Editorial translation</div>
+<h3>Ideas To Steal</h3>
+<ul><li>Add <code>Move Through Medellin Smarter</code>: one newcomer mistake, one practical fix, one trusted next step.</li><li>Build evergreen app/web guides from repeat anxieties: what things should cost, first-week logistics, safe route patterns, weekend pueblo planning, neighborhood fit, and social etiquette.</li><li>Use TikTok/Reels hooks as lead-ins, then make email/app the place for measured advice and source-backed recommendations.</li></ul>
+</article>
+<article class="card rose">
+<div class="eyebrow">Taste boundary</div>
+<h3>What Not To Copy</h3>
+<ul><li>Do not copy VIP/dating/status-coded language as the Insider brand voice.</li><li>Do not make the product feel like a trip-planning funnel; use the anxiety clarity without the concierge persona.</li><li>Do not flatten Medellin into foreigner fantasy or access theater.</li></ul>
+</article>
+</div></section>
+<section class="section cards-section" id="medellin-tour-guidee">
+<div class="eyebrow">Local-guide packaging</div><h2>Source Dossier: Medellin Tour Guidee</h2>
+<p class="section-intro">Medellin Tour Guidee supports a practical visitor-facing lane: food, neighborhoods, tours, museums, safety, and what to do when you only have a short window.</p>
+<div class="card-grid">
+<article class="card accent">
+<div class="eyebrow">What it teaches</div>
+<h3>System Role</h3>
+<div class="field">
+<div class="field-label">Primary lesson</div>
+<div class="field-value">Package local knowledge around immediate visitor decisions rather than abstract city coverage.</div>
+</div>
+<div class="field">
+<div class="field-label">Evidence base</div>
+<div class="field-value">TikTok profile, 10 latest videos, and transcripts for captured video URLs.</div>
+</div>
+<div class="field">
+<div class="field-label">Useful tone</div>
+<div class="field-value">Specific, guided, local-adjacent, and activity-oriented.</div>
+</div>
+<ul><li>The strongest material gives a visitor enough confidence to choose a neighborhood, food stop, museum, tour, or activity.</li><li>It is a guide lens, not a newsletter lens; the adaptation should become a recurring answer block rather than the whole product.</li></ul>
+</article>
+<article class="card gold">
+<div class="eyebrow">TikTok videos</div>
+<h3>Evidence References</h3>
+<ul><li>https://www.tiktok.com/@medellintourguidee/video/7616558293141490964 — one of the strongest captured examples by public metrics.</li><li>https://www.tiktok.com/@medellintourguidee/video/7629178652810366226 — visitor-facing local guide example.</li><li>https://www.tiktok.com/@medellintourguidee/video/7650291225542528263, https://www.tiktok.com/@medellintourguidee/video/7649993409901497618, and adjacent captured transcripts show the recurring practical guide pattern.</li></ul>
+</article>
+<article class="card accent">
+<div class="eyebrow">Edition/app translation</div>
+<h3>Ideas To Steal</h3>
+<ul><li>Add an occasional <code>Ask a Local Guide</code> block when a timely visitor question is worth answering for residents too.</li><li>Build app/web guide pages for food tours, museum days, Comuna 13 logistics, first-date plans, day trips, and what to do with visiting friends.</li><li>Use Reels for one practical hook; use email/app for nuance, map links, language difficulty, price, safety, and reservation friction.</li></ul>
+</article>
+<article class="card rose">
+<div class="eyebrow">Taste boundary</div>
+<h3>What Not To Copy</h3>
+<ul><li>Do not make Insider a personality-led tour-guide account.</li><li>Do not overfit to tourists at the expense of long-stay residents and operators.</li><li>Do not recommend experiences without adding who it is for and what friction to expect.</li></ul>
+</article>
+</div></section>
+<section class="section cards-section" id="naptown-scoop">
+<div class="eyebrow">Local-moment visual engine</div><h2>Source Dossier: Naptown Scoop</h2>
+<p class="section-intro">Naptown Scoop matters because it shows how a local newsletter can turn civic moments into short-form visual distribution. The web funnel evidence was weak, but the Instagram evidence is strong enough for production-format ideas.</p>
+<div class="card-grid">
+<article class="card accent">
+<div class="eyebrow">What it teaches</div>
+<h3>System Role</h3>
+<div class="field">
+<div class="field-label">Primary lesson</div>
+<div class="field-value">A local-media product can make routine openings, traditions, events, and civic scenes feel shareable through concise visual proof.</div>
+</div>
+<div class="field">
+<div class="field-label">Audience signal</div>
+<div class="field-value">33,738 Instagram followers; strong Reel plays from 8,405 to 124,701 in sampled posts.</div>
+</div>
+<div class="field">
+<div class="field-label">Production implication</div>
+<div class="field-value">High-res stills plus generated/edited motion could create a Medellin local-moment Reel lane.</div>
+</div>
+<ul><li>Reels carry mood and proof; captions carry who/what/when and practical context.</li><li>The account&#x27;s own recruitment post says the team are newsletter writers looking for short-form video help, which validates separating editorial judgment from video production.</li></ul>
+</article>
+<article class="card gold">
+<div class="eyebrow">Reel examples</div>
+<h3>Evidence References</h3>
+<ul><li>https://www.instagram.com/reel/DIJNY4MACar/ — Annapolis Cup, 124,701 plays.</li><li>https://www.instagram.com/reel/DJHtbr3gwaJ/ — May Day, 114,386 plays.</li><li>https://www.instagram.com/reel/DKAXxamJqkH/ — graduation, 86,364 plays.</li><li>https://www.instagram.com/reel/DLHa1CKgU5E/ — Tides &amp; Tunes, 42,203 plays.</li><li>https://www.instagram.com/p/DVJatG8DbJg/ — meta post about hiring a short-form video expert, ideally with a drone.</li></ul>
+</article>
+<article class="card accent">
+<div class="eyebrow">Visual pipeline</div>
+<h3>Ideas To Steal</h3>
+<ul><li>Create <code>Seen This Week</code>: one visual Medellin moment, two-sentence setup, practical next step, link to app/newsletter for details.</li><li>Test a Seedance-style workflow from real high-resolution photos: 3-5 generated motion shots, one title card, one caption, one CTA.</li><li>Use for openings, museum/exhibit previews, market days, parks, neighborhood beauty, sports/culture events, and seasonal traditions.</li></ul>
+</article>
+<article class="card rose">
+<div class="eyebrow">Taste boundary</div>
+<h3>What Not To Copy</h3>
+<ul><li>Annapolis civic shorthand does not transfer directly; Medellin Insider must explain neighborhoods, language friction, safety/logistics, and why it matters.</li><li>Do not make visual mood substitute for trust. The caption and linked guide still need operator judgment.</li><li>Do not use AI video when the underlying image/source is not real and local.</li></ul>
+</article>
+</div></section>
+<section class="section cards-section" id="winnipeg-digest">
+<div class="eyebrow">Utility routing system</div><h2>Source Dossier: Winnipeg Digest</h2>
+<p class="section-intro">Winnipeg Digest is the cleanest model for routing one local issue across newsletter depth, Instagram carousel packaging, and a broader local utility habit.</p>
+<div class="card-grid">
+<article class="card accent">
+<div class="eyebrow">What it teaches</div>
+<h3>System Role</h3>
+<div class="field">
+<div class="field-label">Primary lesson</div>
+<div class="field-value">A stable utility architecture can make local news, restaurants, events, and service notes feel scannable.</div>
+</div>
+<div class="field">
+<div class="field-label">Audience signal</div>
+<div class="field-value">92,228 Instagram followers; 50,300+ newsletter readers claimed in bio/homepage; 3x/week cadence.</div>
+</div>
+<div class="field">
+<div class="field-label">Surface routing</div>
+<div class="field-value">Newsletter for full briefing; Instagram carousels for save/share; Reels for softer discovery and local business/neighborhood stories.</div>
+</div>
+<ul><li>The best transferable idea is the routing loop: email context -&gt; social utility -&gt; durable reference surface.</li><li>The events list works only because it is embedded in a broader update, not because events alone carry the product.</li></ul>
+</article>
+<article class="card gold">
+<div class="eyebrow">Instagram + Beehiiv</div>
+<h3>Evidence References</h3>
+<ul><li>https://www.instagram.com/p/DZbBs4-Eemj/ — free things to do carousel, 1,542 likes.</li><li>https://www.instagram.com/p/DZDzEtDESBi/ — June events guide carousel, 20 slides, 1,507 likes.</li><li>https://www.instagram.com/p/DZYaG4TkSm2/ — license-plate vote carousel, 1,237 likes and 80 comments.</li><li>https://winnipeg-digest.beehiiv.com/p/winnipeg-gets-new-italian-restaurant — issue architecture with lead news, sponsor, restaurant, updates, and events.</li><li>https://winnipeg-digest.beehiiv.com/p/manitoba-flood-outage-update and https://winnipeg-digest.beehiiv.com/p/heads-up-for-winnipeg-parents — useful civic/service examples.</li></ul>
+</article>
+<article class="card accent">
+<div class="eyebrow">Edition architecture</div>
+<h3>Ideas To Steal</h3>
+<ul><li>Use a stable weekly order: need-to-know update, one useful explainer, restaurant/bar/cafe of the week, practical foreigner note, shortlist of worth-it plans.</li><li>Turn select items into carousels with neighborhood, price, safety/logistics, ticket status, language difficulty, and who it is for.</li><li>Use app/web as the maintained reference layer for events, venues, explainers, and guides.</li></ul>
+</article>
+<article class="card rose">
+<div class="eyebrow">Taste boundary</div>
+<h3>What Not To Copy</h3>
+<ul><li>Winnipeg can assume civic familiarity; Medellin Insider must translate Spanish-language/local context and risk/friction for foreigners.</li><li>Do not become municipal bulletin style; use the utility architecture but keep editorial judgment and taste.</li><li>Do not copy family-local assumptions where the Medellin Insider audience is more remote-worker, visitor, operator, nightlife, food, and logistics oriented.</li></ul>
+</article>
+</div></section>
+<section class="section cards-section" id="catskill-crew">
+<div class="eyebrow">Voice, trust, and community mechanics</div><h2>Source Dossier: Catskill Crew</h2>
+<p class="section-intro">Catskill Crew is the strongest writing/product-quality anchor. It proves a local newsletter can be enjoyable to read while still moving events, sponsors, guides, and reader participation.</p>
+<div class="card-grid">
+<article class="card accent">
+<div class="eyebrow">What it teaches</div>
+<h3>System Role</h3>
+<div class="field">
+<div class="field-label">Primary lesson</div>
+<div class="field-value">A local newsletter can build a relationship stack: lead story, useful report, community mechanic, guide/service module, and curated happenings.</div>
+</div>
+<div class="field">
+<div class="field-label">Audience signal</div>
+<div class="field-value">Home/subscribe pages claim 40,000+ locals, weekenders, and wanderers.</div>
+</div>
+<div class="field">
+<div class="field-label">Community signal</div>
+<div class="field-value">Breakfast Quest had 1,000+ submissions; prior burger quest had 126 submissions and top-20 testing; one edition reported 97.61 percent approval.</div>
+</div>
+<ul><li>Events are present, but the product is carried by voice, local participation, and a reason to care.</li><li>The best lessons are community mechanics and reader trust, not rural Catskills aesthetics.</li></ul>
+</article>
+<article class="card gold">
+<div class="eyebrow">Archive + editions</div>
+<h3>Evidence References</h3>
+<ul><li>https://catskillcrew.com/archive — public archive with recent editions such as MUSHROOM MADNESS, COMPOST, THE HUNT IS ON, BREAKFAST QUEST, and FIELD GUIDES.</li><li>https://catskillcrew.com/p/breakfast-quest — reader-nominated guide/quest mechanics.</li><li>https://catskillcrew.com/p/ode-to-compost and https://catskillcrew.com/p/the-hunt-is-on — examples of turning local texture into an issue, not just a list.</li><li>https://catskillcrew.com/submit-event and https://catskillcrew.com/partner — event and sponsor/partner intake surfaces.</li></ul>
+</article>
+<article class="card accent">
+<div class="eyebrow">Reader relationship</div>
+<h3>Ideas To Steal</h3>
+<ul><li>Create occasional reader quests: best menu del dia, reliable first-date bars, best English-friendly salsa class, reader-voted brunch, coworking/cafe shortlist.</li><li>Keep the Edition readable: one lead package, one practical report, one community mechanic, one guide/service block, one curated happenings list.</li><li>Let email carry criteria and judgment; let app/web store the final guide; let Instagram show the hook and shortlist.</li></ul>
+</article>
+<article class="card rose">
+<div class="eyebrow">Taste boundary</div>
+<h3>What Not To Copy</h3>
+<ul><li>Do not copy the rural/outdoorsy voice directly; Medellin needs sharper urban judgment, bilingual etiquette, safety context, and neighborhood granularity.</li><li>Do not over-romanticize local texture; practical trust is more important for newcomers.</li><li>Do not launch reader quests before the audience has enough trust or feedback volume.</li></ul>
+</article>
+</div></section>
+<section class="section matrix-section" id="cross-anchor-matrix">
+<h2>Cross-Anchor Comparison</h2>
+<p class="section-intro">This comparison is the guardrail against copying any one source too literally.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Anchor</th>
+<th>Most Useful Mechanic</th>
+<th>Best Surface</th>
+<th>Medellin Insider Adaptation</th>
+<th>Risk</th>
+</tr></thead><tbody>
+<tr>
+<td>Medellingles</td>
+<td>Outside coverage -&gt; local-English carousel/newsletter utility</td>
+<td>Instagram + Substack</td>
+<td>Medellin Intelligence block plus source-crediting carousels and durable app guides</td>
+<td>Can become generic utility or paid directory without stronger voice</td>
+</tr>
+<tr>
+<td>Remote Roberto</td>
+<td>Newcomer mistake -&gt; trusted next move</td>
+<td>TikTok</td>
+<td>Move Through Medellin Smarter block and app guide spine</td>
+<td>Concierge/VIP/dating/status tone is off-brand</td>
+</tr>
+<tr>
+<td>Medellin Tour Guidee</td>
+<td>Local guide answer to immediate visitor decisions</td>
+<td>TikTok</td>
+<td>Ask a Local Guide / first-week triage / visiting-friends guide</td>
+<td>Too tourist-heavy if overused</td>
+</tr>
+<tr>
+<td>Naptown Scoop</td>
+<td>Local moment -&gt; short visual proof</td>
+<td>Instagram Reels</td>
+<td>Seen This Week visual lane using real local stills plus generated motion tests</td>
+<td>Visual mood can outrun trust/context</td>
+</tr>
+<tr>
+<td>Winnipeg Digest</td>
+<td>Utility routing across email, carousel, app/web</td>
+<td>Beehiiv + Instagram</td>
+<td>Stable weekly briefing architecture and saveable carousels</td>
+<td>Municipal bulletin feel if not taste-led</td>
+</tr>
+<tr>
+<td>Catskill Crew</td>
+<td>Voice, reader quests, community participation</td>
+<td>Newsletter/website</td>
+<td>Reader Intel/Quest experiments and relationship-building lead packages</td>
+<td>Rural intimacy does not directly transfer to Medellin</td>
+</tr>
+</tbody></table></div></section>
+<section class="section matrix-section" id="edition-implications">
+<h2>Edition Implications</h2>
+<p class="section-intro">The richer source pass reinforces a briefing with persistent blocks plus optional social/app experiments.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Block</th>
+<th>Anchor Support</th>
+<th>What It Does</th>
+<th>Primary Surface</th>
+</tr></thead><tbody>
+<tr>
+<td>This Week&#x27;s Signal</td>
+<td>Medellingles, Winnipeg Digest</td>
+<td>Translate one timely local/source-backed item into practical English-language meaning</td>
+<td>Email + carousel</td>
+</tr>
+<tr>
+<td>The Shortlist</td>
+<td>Winnipeg Digest, Catskill Crew</td>
+<td>Curate 3-5 worth-it plans with who/price/neighborhood/logistics</td>
+<td>Email + app events</td>
+</tr>
+<tr>
+<td>Move Smarter</td>
+<td>Remote Roberto, Medellin Tour Guidee</td>
+<td>One mistake/anxiety, one fix, one next step</td>
+<td>Email + app guide + Reel</td>
+</tr>
+<tr>
+<td>Personal Note / Operator Read</td>
+<td>Catskill Crew</td>
+<td>Keep the product human and taste-led</td>
+<td>Email</td>
+</tr>
+<tr>
+<td>Seen This Week</td>
+<td>Naptown Scoop, Medellingles Reels</td>
+<td>One visual local moment with practical context</td>
+<td>Instagram first, email optional</td>
+</tr>
+<tr>
+<td>Reader Intel / Quest</td>
+<td>Catskill Crew</td>
+<td>Participatory shortlist or nomination loop after trust builds</td>
+<td>Email + app/web + Instagram</td>
+</tr>
+<tr>
+<td>Durable Reference</td>
+<td>Medellingles, Winnipeg Digest</td>
+<td>Store recurring guides so the weekly Edition does not become a directory</td>
+<td>App/web</td>
+</tr>
+<tr>
+<td>Real Estate / Builder Profile</td>
+<td>User direction, future lane</td>
+<td>Standing feature later, separate from events</td>
+<td>Email occasional + web evergreen</td>
+</tr>
+</tbody></table></div></section>
+<section class="section callout-section" id="research-gaps">
+<h2>Remaining Research Gaps</h2>
+<div class="callout gold">
+<div class="eyebrow">Before using this as a recurring system</div>
+<p>This is now strong enough for a richer editorial-format report, but it is still not a full production research system. The most important missing layer is slide/frame-level creative analysis for Instagram carousels and Reels, especially Medellingles, Winnipeg Digest, and Naptown Scoop.</p>
+<ul><li>Medellingles: capture slide-by-slide carousel screenshots or image URLs if we want exact templates to copy.</li><li>Naptown Scoop: inspect actual Reel shot structure if we are serious about the Seedance still-photo-to-video workflow.</li><li>Catskill Crew and Winnipeg Digest: sample more newsletter issues if we want writing-pattern examples, sponsor placement examples, and recurring-block frequencies.</li><li>All anchors: separate newsletter-relevant lessons from SEO/lead-magnet lessons so the weekly Edition stays current and readable.</li></ul>
+</div></section>
+<section class="section steps-section" id="subagent-plan">
+<h2>Do We Need Subagents?</h2>
+<ol class="steps">
+<li>
+<strong>Now: no heavy subagents needed</strong>
+<p>The current evidence is small enough to synthesize in-thread. I used a few source-dossier passes rather than spawning separate agents.</p>
+</li>
+<li>
+<strong>Next expansion: yes, one per source</strong>
+<p>If we want true chapter-length pages with screenshots, slide-by-slide extraction, and example libraries, split by anchor: Medellingles, Winnipeg Digest, Catskill Crew, Naptown Scoop, Remote Roberto, Medellin Tour Guidee.</p>
+</li>
+<li>
+<strong>Best first subagent</strong>
+<p>Medellingles carousel/reel forensic pass: exact slide structures, source-credit conventions, hooks, comments, and Medellin Insider templates.</p>
+</li>
+<li>
+<strong>Best second subagent</strong>
+<p>Naptown Scoop video-format pass: shot counts, title-card patterns, caption structure, and feasibility of generated motion from still photos.</p>
+</li>
+</ol></section>
+<section class="section appendix-section" id="appendix">
+<h2>Appendix: Local Source Files</h2>
+<p class="section-intro">Published report uses human-readable source names rather than local paths in the main sections. These local references are included here for operator continuity.</p>
+<div class="appendix-list">
+<article>
+<h3>Repo-local profile docs</h3>
+<ul><li>docs/research/medellin-format-spike/anchors/medellingles/profile.md</li><li>docs/research/medellin-format-spike/anchors/remote-roberto/profile.md</li><li>docs/research/medellin-format-spike/anchors/medellin-tour-guidee/profile.md</li><li>docs/research/medellin-format-spike/anchors/naptown-scoop/profile.md</li><li>docs/research/medellin-format-spike/anchors/winnipeg-digest/profile.md</li><li>docs/research/medellin-format-spike/anchors/catskill-crew/profile.md</li></ul>
+</article>
+<article>
+<h3>Raw evidence manifest</h3>
+<ul><li>docs/research/medellin-format-spike/raw-manifest.md records the local raw pack and Medellingles retry files.</li><li>The raw evidence pack remains outside git by design; committed docs cite public URLs and summary findings.</li></ul>
+</article>
+</div></section>
+</div></div>
+<footer>Composed 2026-06-15 with html-report from repo-local Taste Anchor profiles plus the corrected Medellingles Instagram retry evidence. Public-obscure/noindex artifact; no secrets or credentials included.</footer>
+</main>
+</body>
+</html>
