@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Medellin Edition Sweep Skill</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 18px 64px;
+      font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    img, video, canvas, svg { max-width: 100%; height: auto; }
+    pre { overflow-x: auto; padding: 12px; border: 1px solid #ddd; }
+    code { font-size: 0.92em; }
+    table { display: block; overflow-x: auto; border-collapse: collapse; }
+    th, td { padding: 0.35rem 0.5rem; border: 1px solid #ddd; }
+  </style>
+
+  <meta charset="utf-8">
+  <style>
+:root {
+  color-scheme: light;
+  --bg: #f6f3ee;
+  --paper: #fffdf8;
+  --ink: #171717;
+  --muted: #66645f;
+  --line: #ded7ca;
+  --accent: #176b5d;
+  --accent-soft: #e4f1eb;
+  --blue: #245f91;
+  --blue-soft: #e7eef8;
+  --rose: #94405b;
+  --rose-soft: #f6e7ed;
+  --gold: #8a5a12;
+  --gold-soft: #f7eddb;
+  --shadow: 0 18px 50px rgba(35, 28, 17, 0.08);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  max-width: none;
+  min-width: 0;
+  padding: 0;
+  width: 100%;
+  background:
+    linear-gradient(180deg, rgba(255,253,248,0.86), rgba(246,243,238,1) 360px),
+    var(--bg);
+  color: var(--ink);
+  font: 16px/1.58 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+a { color: var(--accent); }
+p, li, td, th, .field-value, .card, .callout, .appendix-list article {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: rgba(23, 107, 93, 0.08);
+  padding: 0.08rem 0.28rem;
+  border-radius: 5px;
+}
+.page {
+  width: min(calc(100% - 48px), 1500px);
+  max-width: none;
+  margin: 0 auto;
+  padding: clamp(28px, 3vw, 46px) 0 72px;
+}
+.hero {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: clamp(24px, 4vw, 48px);
+  box-shadow: var(--shadow);
+}
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+h1, h2, h3 { line-height: 1.12; letter-spacing: 0; }
+h1 { max-width: 920px; margin: 10px 0 12px; font-size: clamp(2.05rem, 5vw, 4.7rem); }
+h2 { margin: 0 0 16px; font-size: clamp(1.35rem, 2.4vw, 2.2rem); }
+h3 { margin: 0 0 8px; font-size: 1.05rem; }
+.subtitle { max-width: 760px; color: var(--muted); font-size: clamp(1.02rem, 1.6vw, 1.22rem); }
+.meta, .stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.pill, .stat {
+  border: 1px solid var(--line);
+  background: #fffaf1;
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: #47433b;
+  font-size: 0.88rem;
+}
+.stat { min-width: 136px; border-radius: 14px; }
+.stat strong { display: block; font-size: 1.15rem; color: var(--ink); }
+.layout {
+  display: grid;
+  grid-template-columns: clamp(190px, 15vw, 260px) minmax(0, 1fr);
+  gap: clamp(20px, 2.8vw, 44px);
+  align-items: start;
+  margin-top: 28px;
+}
+.toc {
+  position: sticky;
+  top: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255,253,248,0.86);
+  padding: 14px;
+}
+.toc a { display: block; color: #4c4944; text-decoration: none; padding: 7px 8px; border-radius: 8px; font-size: 0.9rem; }
+.toc a:hover { background: var(--accent-soft); color: var(--accent); }
+.content { min-width: 0; width: 100%; }
+.section {
+  margin-bottom: 22px;
+  padding: clamp(20px, 2.4vw, 30px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(35, 28, 17, 0.045);
+}
+.section p { max-width: 84ch; }
+.section-intro { color: var(--muted); }
+.callout {
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+}
+.callout.accent, .card.accent { background: var(--accent-soft); }
+.callout.blue, .card.blue { background: var(--blue-soft); }
+.callout.rose, .card.rose { background: var(--rose-soft); }
+.callout.gold, .card.gold { background: var(--gold-soft); }
+.card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.card {
+  min-width: 0;
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+}
+.muted { color: var(--muted); }
+.field { margin-top: 12px; }
+.field-label { color: var(--muted); font-size: 0.73rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.field-value { margin-top: 2px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+table { width: 100%; border-collapse: collapse; min-width: 720px; background: #fffaf1; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+th { color: #423d34; background: #f2eadc; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+tr:last-child td { border-bottom: 0; }
+.steps { counter-reset: step; list-style: none; padding: 0; display: grid; gap: 12px; }
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 14px 14px 14px 52px;
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.flow-node {
+  position: relative;
+  min-height: 124px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fffaf1;
+}
+.flow-label { color: var(--accent); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+.flow-title { margin-top: 8px; font-weight: 800; }
+.flow-body { margin-top: 6px; color: var(--muted); font-size: 0.92rem; }
+.appendix-list { display: grid; gap: 12px; }
+.appendix-list article { border-top: 1px solid var(--line); padding-top: 14px; }
+footer {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  text-align: center;
+}
+@media (max-width: 860px) {
+  .page { width: min(calc(100% - 24px), 1500px); padding: 16px 0 48px; }
+  .layout { display: block; }
+  .toc { position: static; margin-bottom: 18px; }
+  .toc nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card-grid { grid-template-columns: 1fr; }
+  .section { border-radius: 14px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 15px; }
+  .page { width: min(calc(100% - 20px), 1500px); }
+  .hero { border-radius: 14px; padding: 22px 16px; }
+  .toc nav { grid-template-columns: 1fr; }
+  .meta, .stats { display: grid; }
+  table { min-width: 620px; }
+}
+@media (min-width: 1320px) {
+  .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<div class="eyebrow">Skill explainer</div>
+<h1>Medellin Edition Sweep Skill</h1>
+<p class="subtitle">A practical map of what the sweep does, what it must not do, and how it feeds the weekly Medellin Insider newsletter and event selection loop.</p>
+<div class="meta">
+<span class="pill"><strong>Source:</strong> skills/medellin-edition-sweep/SKILL.md</span>
+<span class="pill"><strong>Generated:</strong> 2026-06-17</span>
+<span class="pill"><strong>Privacy:</strong> Public-obscure report; no private messages or raw local paths included</span>
+</div>
+<div class="stats">
+<div class="stat"><strong>Intel pass</strong>Primary role</div>
+<div class="stat"><strong>3</strong>Output types</div>
+<div class="stat"><strong>No</strong>Blocks launch?</div>
+<div class="stat"><strong>No</strong>Writes Edition files?</div>
+</div>
+</header>
+<div class="layout">
+<aside class="toc"><div class="eyebrow">Contents</div><nav>
+<a href="#executive-summary">Executive Summary</a>
+<a href="#where-it-fits">Where It Fits</a>
+<a href="#what-the-skill-actually-does">What The Skill Actually Does</a>
+<a href="#outputs-and-ownership">Outputs And Ownership</a>
+<a href="#runbook-shape">Runbook Shape</a>
+<a href="#guardrails-that-matter">Guardrails That Matter</a>
+<a href="#practical-interpretation">Practical Interpretation</a>
+<a href="#source-notes">Source Notes</a>
+</nav></aside>
+<div class="content">
+<section class="section callout-section" id="executive-summary">
+<h2>Executive Summary</h2>
+<div class="callout accent">
+<div class="eyebrow">Bottom line</div>
+<p>The Medellin Edition Sweep is a recurring agent runbook for gathering useful local signals before a weekly Edition is drafted. It reads WhatsApp groups and deterministic scraper/source health, then produces candidate inputs for the newsletter: Move Smarter ideas, event picks worth considering, and source-onboarding proposals.</p>
+<p>It is intentionally not infrastructure. There is no service, queue, or cron. A failed sweep must not block Thursday publishing because the nugget backlog buffers the weekly loop.</p>
+<ul><li>Use it before <code>localcms edition draft &lt;date&gt;</code> when you want fresher local intelligence.</li><li>Keep WhatsApp read-only and write only PII-stripped aggregate outputs.</li><li>Never edit the weekly Edition file during a sweep.</li></ul>
+</div></section>
+<section class="section flow-section" id="where-it-fits">
+<h2>Where It Fits</h2>
+<p class="section-intro">The sweep is upstream of the weekly Edition. It creates evidence-backed inputs, but the Edition draft and operator approval still decide what ships.</p>
+<div class="flow">
+<div class="flow-node">
+<div class="flow-label">1</div>
+<div class="flow-title">Sweep</div>
+<div class="flow-body">Read WhatsApp and source health; mine for patterns, event signals, and missing sources.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">2</div>
+<div class="flow-title">Backlog / flags</div>
+<div class="flow-body">Append Move Smarter candidates, list selection-worthy event slugs, and propose source onboarding.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">3</div>
+<div class="flow-title">Draft</div>
+<div class="flow-body"><code>localcms edition draft &lt;date&gt;</code> uses the event pool plus top backlog item.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">4</div>
+<div class="flow-title">Approve</div>
+<div class="flow-body">Operator edits Signal, Shortlist, Move Smarter, and Personal Note.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">5</div>
+<div class="flow-title">Ship</div>
+<div class="flow-body">Weekly email and IG carousel ship from the approved Edition.</div>
+</div>
+</div></section>
+<section class="section cards-section" id="what-the-skill-actually-does">
+<h2>What The Skill Actually Does</h2>
+<p class="section-intro">The runbook has three work lanes. Each lane has a constrained output so it remains useful without turning into a publishing system.</p>
+<div class="card-grid">
+<article class="card neutral">
+<div class="eyebrow">Lane 1</div>
+<h3>WhatsApp signal pass</h3>
+<p class="muted">Read-only scan of Medellin group activity.</p>
+<div class="field">
+<div class="field-label">Looks for</div>
+<div class="field-value">Recurring practical questions, repeated warnings, event links, venues, organizers.</div>
+</div>
+<div class="field">
+<div class="field-label">Good signal</div>
+<div class="field-value">Recurrence across groups, not one-off anecdotes.</div>
+</div>
+<div class="field">
+<div class="field-label">Constraint</div>
+<div class="field-value">Output must be PII-stripped and non-traceable to a member or message.</div>
+</div>
+
+</article>
+<article class="card neutral">
+<div class="eyebrow">Lane 2</div>
+<h3>Scraper-source pass</h3>
+<p class="muted">Checks the deterministic source system and event candidate depth.</p>
+<div class="field">
+<div class="field-label">Looks for</div>
+<div class="field-value">Stale/erroring sources and whether the next Edition window has enough events.</div>
+</div>
+<div class="field">
+<div class="field-label">Good signal</div>
+<div class="field-value">Healthy pool depth; live-regime pools are expected to be 100+ events/week.</div>
+</div>
+<div class="field">
+<div class="field-label">Constraint</div>
+<div class="field-value">A thin pool means investigate upstream ingestion before Thursday.</div>
+</div>
+
+</article>
+<article class="card neutral">
+<div class="eyebrow">Lane 3</div>
+<h3>Output synthesis</h3>
+<p class="muted">Turns raw signals into newsletter-ready inputs.</p>
+<div class="field">
+<div class="field-label">Writes</div>
+<div class="field-value">Append-only Move Smarter/Nugget backlog candidates.</div>
+</div>
+<div class="field">
+<div class="field-label">Reports</div>
+<div class="field-value">Selection-worthy event slugs and source issues.</div>
+</div>
+<div class="field">
+<div class="field-label">Does not do</div>
+<div class="field-value">No Edition edits and no automatic publication.</div>
+</div>
+
+</article>
+</div></section>
+<section class="section matrix-section" id="outputs-and-ownership">
+<h2>Outputs And Ownership</h2>
+<p class="section-intro">The sweep output is deliberately narrow. It should leave final editorial selection to the Edition loop.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Output</th>
+<th>Where it goes</th>
+<th>Owner after sweep</th>
+<th>Important constraint</th>
+</tr></thead><tbody>
+<tr>
+<td>Move Smarter / Nugget candidates</td>
+<td><code>apps/medellin-insider/content/editions/nugget-backlog.md</code></td>
+<td>Operator / weekly Edition editor</td>
+<td>Append to the end only; do not reorder or delete existing backlog items.</td>
+</tr>
+<tr>
+<td>Selection-worthy events</td>
+<td>Final sweep report</td>
+<td>Edition drafting agent / operator</td>
+<td>List event slugs and why; do not edit Edition files during sweep.</td>
+</tr>
+<tr>
+<td>Source proposals</td>
+<td>Handoff to <code>localcms-scraper-site-onboarding</code></td>
+<td>Scraper/source onboarding workflow</td>
+<td>Use for events seen in chat but missing from the canonical store.</td>
+</tr>
+<tr>
+<td>Failures / gaps</td>
+<td>Final sweep report</td>
+<td>Operator</td>
+<td>If WhatsApp or sources fail, report the failure and let Thursday continue from existing backlog.</td>
+</tr>
+</tbody></table></div></section>
+<section class="section steps-section" id="runbook-shape">
+<h2>Runbook Shape</h2>
+<ol class="steps">
+<li>
+<strong>Confirm WhatsApp readiness</strong>
+<p>Run the WhatsApp doctor and avoid concurrent sync. The local WhatsApp store supports one process at a time.</p>
+</li>
+<li>
+<strong>Import or inspect a bounded read window</strong>
+<p>Use a last-sweep date. The purpose is repeatable analysis, not indefinite scraping.</p>
+</li>
+<li>
+<strong>Mine for recurrence and event signals</strong>
+<p>Prioritize repeated practical patterns, missing event links, and recurring venues/organizers. One-off anecdotes should usually stay out.</p>
+</li>
+<li>
+<strong>Check scraper sources and event pool depth</strong>
+<p>Review source state and the next Thursday-to-Wednesday event window. Thin event pools are an ingestion problem, not a reason to lower the editorial bar.</p>
+</li>
+<li>
+<strong>Write constrained outputs</strong>
+<p>Append backlog candidates, list event slugs with rationale, hand missing-source candidates to source onboarding, and summarize failures.</p>
+</li>
+</ol></section>
+<section class="section callout-section" id="guardrails-that-matter">
+<h2>Guardrails That Matter</h2>
+<div class="callout rose">
+<div class="eyebrow">Non-negotiables</div>
+<ul><li>Read-only WhatsApp: never send, react, or reply.</li><li>PII-stripped outputs only: no member names, message IDs, or traceable private quotes in backlog or Edition copy.</li><li>Append-only backlog behavior: add candidates at the end; the operator controls order.</li><li>Failed sweep does not block the weekly Edition.</li><li>Do not treat Facebook/WhatsApp/private chatter as automatically publishable evidence.</li></ul>
+</div></section>
+<section class="section cards-section" id="practical-interpretation">
+<h2>Practical Interpretation</h2>
+<p class="section-intro">What this means when actually using the skill.</p>
+<div class="card-grid">
+<article class="card neutral">
+<h3>Best use</h3>
+<ul><li>Run it before drafting when you want fresher local intelligence.</li><li>Use it to keep Move Smarter grounded in repeated real questions.</li><li>Use it to spot events missing from the event database.</li></ul>
+</article>
+<article class="card neutral">
+<h3>Weak use</h3>
+<ul><li>Using it as a replacement for editorial judgment.</li><li>Treating one chat message as a newsletter claim.</li><li>Trying to publish directly from private-channel evidence.</li></ul>
+</article>
+<article class="card neutral">
+<h3>Likely next improvement</h3>
+<ul><li>Make the final sweep report format more explicit.</li><li>Clarify how last-sweep date is tracked.</li><li>Add a small example backlog candidate and event-flag example.</li></ul>
+</article>
+</div></section>
+<section class="section appendix-section" id="source-notes">
+<h2>Source Notes</h2>
+<p class="section-intro">This report is a synthesis of the current skill file, not a live sweep run.</p>
+<div class="appendix-list">
+<article>
+<h3>Primary source</h3>
+<p><code>skills/medellin-edition-sweep/SKILL.md</code></p>
+
+</article>
+<article>
+<h3>Related skills</h3>
+<ul><li><code>skills/medellin-weekly-edition/SKILL.md</code> owns the weekly publishing runbook.</li><li><code>skills/localcms-cli/SKILL.md</code> owns command spelling for <code>edition</code>, <code>newsletter</code>, <code>social</code>, and event operations.</li><li><code>skills/localcms-scraper-site-onboarding/SKILL.md</code> receives missing-source proposals.</li></ul>
+</article>
+</div></section>
+</div></div>
+<footer>Composed from the current repo skill source on 2026-06-17 using html-report; intended for public-obscure noindex publishing.</footer>
+</main>
+</body>
+</html>
