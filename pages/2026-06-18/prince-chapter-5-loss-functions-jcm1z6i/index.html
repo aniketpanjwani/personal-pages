@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Prince Chapter 5: Loss Functions</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 18px 64px;
+      font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    img, video, canvas, svg { max-width: 100%; height: auto; }
+    pre { overflow-x: auto; padding: 12px; border: 1px solid #ddd; }
+    code { font-size: 0.92em; }
+    table { display: block; overflow-x: auto; border-collapse: collapse; }
+    th, td { padding: 0.35rem 0.5rem; border: 1px solid #ddd; }
+  </style>
+
+  <meta charset="utf-8">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #202521;
+      --muted: #626d66;
+      --paper: #fbfcf8;
+      --band: #eef3ee;
+      --line: #d8ded8;
+      --accent: #176b55;
+      --accent-2: #7c3f2c;
+      --good: #1c6b46;
+      --bad: #9a312c;
+      --code: #f4f0e8;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+      line-height: 1.58;
+    }
+
+    main {
+      width: min(100% - 32px, 900px);
+      margin: 0 auto;
+      padding: 44px 0 72px;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 30px;
+      padding-bottom: 24px;
+    }
+
+    .eyebrow {
+      color: var(--accent-2);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      margin: 0 0 12px;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      letter-spacing: 0;
+      line-height: 1.12;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 42px;
+      max-width: 760px;
+    }
+
+    h2 {
+      font-size: 25px;
+      margin-top: 34px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-top: 22px;
+    }
+
+    p {
+      max-width: 740px;
+    }
+
+    .dek {
+      color: var(--muted);
+      font-size: 18px;
+      margin: 14px 0 0;
+      max-width: 760px;
+    }
+
+    .callout {
+      background: var(--band);
+      border-left: 4px solid var(--accent);
+      margin: 22px 0;
+      max-width: 760px;
+      padding: 14px 16px;
+    }
+
+    .formula {
+      background: var(--code);
+      border-left: 4px solid var(--accent-2);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 15px;
+      margin: 18px 0;
+      overflow-x: auto;
+      padding: 14px 16px;
+      white-space: nowrap;
+    }
+
+    .steps {
+      counter-reset: step;
+      display: grid;
+      gap: 10px;
+      margin: 18px 0 8px;
+      max-width: 760px;
+      padding: 0;
+    }
+
+    .steps li {
+      background: var(--white);
+      border: 1px solid var(--line);
+      list-style: none;
+      padding: 12px 14px 12px 48px;
+      position: relative;
+    }
+
+    .steps li::before {
+      color: var(--accent);
+      content: counter(step);
+      counter-increment: step;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      left: 16px;
+      position: absolute;
+      top: 14px;
+    }
+
+    table {
+      border-collapse: collapse;
+      font-size: 15px;
+      margin: 16px 0;
+      width: 100%;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 11px 9px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--accent);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .practice {
+      border-top: 2px solid var(--ink);
+      margin-top: 34px;
+      padding-top: 22px;
+    }
+
+    .prompt {
+      border-bottom: 1px solid var(--line);
+      max-width: 760px;
+      padding: 14px 0;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    input {
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      font: 16px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 360px;
+      padding: 10px 11px;
+      width: 100%;
+    }
+
+    button {
+      align-items: center;
+      background: var(--ink);
+      border: 0;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      display: inline-flex;
+      font: 700 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      gap: 8px;
+      justify-content: center;
+      margin-left: 8px;
+      min-height: 42px;
+      padding: 10px 14px;
+      white-space: nowrap;
+    }
+
+    button:hover {
+      background: var(--accent);
+    }
+
+    .feedback {
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      margin-top: 8px;
+      min-height: 22px;
+    }
+
+    .feedback.good {
+      color: var(--good);
+      font-weight: 700;
+    }
+
+    .feedback.bad {
+      color: var(--bad);
+      font-weight: 700;
+    }
+
+    code {
+      background: var(--code);
+      border-radius: 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+      padding: 0.08em 0.28em;
+    }
+
+    a {
+      color: var(--accent);
+      text-underline-offset: 3px;
+    }
+
+    .fine {
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+    }
+
+    @media (max-width: 720px) {
+      main {
+        width: min(100% - 24px, 900px);
+        padding-top: 30px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      button {
+        margin: 8px 0 0;
+        width: 100%;
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Prince Chapter 5</p>
+      <h1>Loss Functions as Probabilistic Claims</h1>
+      <p class="dek">A short lesson on the key move in Chapter 5: a loss function is not just a penalty. It usually says what kind of probability distribution your model claims generated the target.</p>
+    </header>
+
+    <section>
+      <h2>Why This Matters for LLMs</h2>
+      <p>To train a language model, we repeatedly ask: given the previous tokens, how much probability did the model assign to the actual next token? Chapter 5 gives the general version of that question.</p>
+      <div class="callout">
+        <strong>The bridge:</strong> next-token prediction is multiclass classification over the vocabulary. Cross-entropy is negative log-likelihood for the correct token.
+      </div>
+    </section>
+
+    <section>
+      <h2>The Core Move</h2>
+      <p>Earlier chapters treat a neural network as a function that maps input <code>x</code> to output <code>y</code>. Chapter 5 changes the mental model: the network maps input <code>x</code> to parameters of a distribution over possible outputs.</p>
+      <div class="formula">network output: f(x, phi) = theta<br>probability claim: Pr(y | theta)<br>training objective: choose phi that makes observed y values probable</div>
+      <p>That is why loss functions differ by task. A real-valued target, a class label, a count, an angle, and a token live in different spaces, so they need different distributions.</p>
+    </section>
+
+    <section>
+      <h2>The Recipe</h2>
+      <ol class="steps">
+        <li>Identify the output domain: real number, binary label, class label, count, angle, token, or something more structured.</li>
+        <li>Choose a probability distribution whose support matches that domain.</li>
+        <li>Make the network output the distribution parameters, often using sigmoid, softmax, or another constraint.</li>
+        <li>Train by minimizing negative log-likelihood: <code>-sum_i log Pr(y_i | f(x_i, phi))</code>.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Three Examples to Own</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Distribution</th>
+            <th>Loss</th>
+            <th>LLM Relevance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Predict a real value</td>
+            <td>Normal with predicted mean</td>
+            <td>Squared error, if variance is fixed</td>
+            <td>Shows how familiar losses can be likelihood assumptions</td>
+          </tr>
+          <tr>
+            <td>Predict yes/no</td>
+            <td>Bernoulli with sigmoid probability</td>
+            <td>Binary cross-entropy</td>
+            <td>Useful for classifiers, reward models, and eval heads</td>
+          </tr>
+          <tr>
+            <td>Predict one of K classes</td>
+            <td>Categorical with softmax probabilities</td>
+            <td>Multiclass cross-entropy</td>
+            <td>Exactly the next-token objective, with K = vocabulary size</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>The research habit is to ask: what probability distribution did this loss smuggle into the model? That question turns formulas into modeling assumptions.</p>
+    </section>
+
+    <section>
+      <h2>Cross-Entropy in One Sentence</h2>
+      <p>For supervised learning, cross-entropy and negative log-likelihood are the same training criterion viewed from two angles: maximize probability assigned to observed data, or minimize distance from the empirical data distribution to the model distribution.</p>
+      <div class="formula">LLM token loss = -log probability assigned to the actual next token</div>
+      <p>If the correct next token is <code>deflation</code> and the model assigns it probability <code>0.20</code>, the token loss is <code>-log(0.20)</code>. Better models assign higher probability to the right token, which lowers the loss.</p>
+    </section>
+
+    <section class="practice">
+      <h2>Practice</h2>
+      <p>Do these from memory. Use lowercase words. The page checks for the concept, not exact punctuation.</p>
+
+      <div class="prompt">
+        <label for="q1">1. A model predicts the next wordpiece token from a vocabulary. What distribution family fits?</label>
+        <input id="q1" autocomplete="off" placeholder="type here">
+        <button type="button" data-check="q1">Check</button>
+        <div class="feedback" id="f1"></div>
+      </div>
+
+      <div class="prompt">
+        <label for="q2">2. A model predicts a house price as a real number, and variance is treated as fixed. What familiar loss appears?</label>
+        <input id="q2" autocomplete="off" placeholder="type here">
+        <button type="button" data-check="q2">Check</button>
+        <div class="feedback" id="f2"></div>
+      </div>
+
+      <div class="prompt">
+        <label for="q3">3. A binary classifier outputs one logit. What transform turns it into a probability?</label>
+        <input id="q3" autocomplete="off" placeholder="type here">
+        <button type="button" data-check="q3">Check</button>
+        <div class="feedback" id="f3"></div>
+      </div>
+
+      <div class="prompt">
+        <label for="q4">4. In one phrase, what does training by cross-entropy reward the model for doing?</label>
+        <input id="q4" autocomplete="off" placeholder="type here">
+        <button type="button" data-check="q4">Check</button>
+        <div class="feedback" id="f4"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What to Read</h2>
+      <p>Read Prince Chapter 5 sections 5.1 through 5.7 with one question in mind: for each loss, what is the output domain and what probability distribution is assumed?</p>
+      <p>Keep the <a href="../reference/loss-functions.html">loss-functions reference</a> open while reading. Ask the agent follow-up questions on any derivation that feels like algebra rather than a modeling decision.</p>
+      <p class="fine">Primary source: <a href="../sources/prince-2023-understanding-deep-learning.pdf">Simon J. D. Prince, <em>Understanding Deep Learning</em>, Chapter 5</a>.</p>
+    </section>
+  </main>
+
+  <script>
+    const checks = {
+      q1: {
+        feedback: "f1",
+        ok: value => ["categorical", "multinomial"].some(term => value.includes(term)),
+        good: "Correct. The vocabulary is a finite set of classes, so the distribution is categorical.",
+        bad: "Not quite. A next token is one choice from a finite vocabulary, so use a categorical distribution."
+      },
+      q2: {
+        feedback: "f2",
+        ok: value => value.includes("squared") || value.includes("least squares") || value.includes("mse") || value.includes("mean squared"),
+        good: "Correct. Fixed-variance normal likelihood gives squared error.",
+        bad: "Not quite. A fixed-variance normal model leads to squared error."
+      },
+      q3: {
+        feedback: "f3",
+        ok: value => value.includes("sigmoid") || value.includes("logistic"),
+        good: "Correct. Sigmoid maps one logit to a probability between zero and one.",
+        bad: "Not quite. For a single binary logit, use the sigmoid transform."
+      },
+      q4: {
+        feedback: "f4",
+        ok: value => {
+          const hasProbability = value.includes("prob") || value.includes("likelihood");
+          const hasCorrect = value.includes("correct") || value.includes("observed") || value.includes("actual") || value.includes("true");
+          return hasProbability && hasCorrect;
+        },
+        good: "Correct. Cross-entropy rewards high probability on the observed target.",
+        bad: "Close target: it rewards assigning high probability to the observed/correct target."
+      }
+    };
+
+    function normalize(value) {
+      return value.trim().toLowerCase().replace(/\s+/g, " ");
+    }
+
+    document.querySelectorAll("button[data-check]").forEach(button => {
+      button.addEventListener("click", () => {
+        const id = button.dataset.check;
+        const rule = checks[id];
+        const input = document.getElementById(id);
+        const feedback = document.getElementById(rule.feedback);
+        const value = normalize(input.value);
+        const passed = rule.ok(value);
+        feedback.textContent = passed ? rule.good : rule.bad;
+        feedback.className = "feedback " + (passed ? "good" : "bad");
+      });
+    });
+  </script>
+</body>
+</html>
