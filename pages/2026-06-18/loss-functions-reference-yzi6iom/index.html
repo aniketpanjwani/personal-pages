@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Loss Functions Reference</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 18px 64px;
+      font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    img, video, canvas, svg { max-width: 100%; height: auto; }
+    pre { overflow-x: auto; padding: 12px; border: 1px solid #ddd; }
+    code { font-size: 0.92em; }
+    table { display: block; overflow-x: auto; border-collapse: collapse; }
+    th, td { padding: 0.35rem 0.5rem; border: 1px solid #ddd; }
+  </style>
+
+  <meta charset="utf-8">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1f2522;
+      --muted: #5f6a64;
+      --rule: #d8ded8;
+      --paper: #fbfcf8;
+      --band: #eef3ee;
+      --accent: #176b55;
+      --accent-2: #7c3f2c;
+      --code: #f4f0e8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+      line-height: 1.55;
+    }
+
+    main {
+      width: min(100% - 32px, 980px);
+      margin: 0 auto;
+      padding: 48px 0 64px;
+    }
+
+    h1, h2 {
+      line-height: 1.1;
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: 38px;
+      max-width: 760px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-top: 36px;
+      border-top: 1px solid var(--rule);
+      padding-top: 20px;
+    }
+
+    p {
+      max-width: 760px;
+    }
+
+    .dek {
+      color: var(--muted);
+      font-size: 18px;
+      margin: 14px 0 0;
+    }
+
+    .formula {
+      background: var(--code);
+      border-left: 4px solid var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 15px;
+      margin: 20px 0;
+      padding: 14px 16px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 18px;
+      font-size: 15px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--rule);
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--accent);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    code {
+      background: var(--code);
+      border-radius: 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+      padding: 0.08em 0.28em;
+    }
+
+    ol, ul {
+      max-width: 760px;
+      padding-left: 1.4rem;
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    .note {
+      background: var(--band);
+      border-left: 4px solid var(--accent-2);
+      margin-top: 24px;
+      max-width: 760px;
+      padding: 14px 16px;
+    }
+
+    a {
+      color: var(--accent);
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 720px) {
+      main {
+        width: min(100% - 24px, 980px);
+        padding-top: 32px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Loss Functions Reference</h1>
+    <p class="dek">Prince Chapter 5 compressed into the decision rule: choose an output domain, choose a probability distribution on that domain, train by negative log-likelihood.</p>
+
+    <h2>The Recipe</h2>
+    <ol>
+      <li>Identify the target domain: real number, class label, count, direction, sequence token, or something else.</li>
+      <li>Choose a probability distribution whose support matches that domain.</li>
+      <li>Make the network output the distribution parameters, often through a constraint such as sigmoid, softmax, or exp.</li>
+      <li>Train by minimizing <code>-sum_i log Pr(y_i | f(x_i, phi))</code>.</li>
+      <li>At inference time, either use the full distribution or choose its highest-probability value.</li>
+    </ol>
+
+    <div class="formula">Loss(phi) = - sum_i log Pr(y_i | f(x_i, phi))</div>
+
+    <h2>Common Targets</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Target</th>
+          <th>Distribution</th>
+          <th>Network Output</th>
+          <th>Loss Name</th>
+          <th>Point Prediction</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Real value</td>
+          <td>Normal</td>
+          <td>Mean, optionally variance</td>
+          <td>Squared error when variance is fixed</td>
+          <td>Mean</td>
+        </tr>
+        <tr>
+          <td>Binary label</td>
+          <td>Bernoulli</td>
+          <td>Logit passed through sigmoid</td>
+          <td>Binary cross-entropy</td>
+          <td>Class 1 if probability exceeds threshold</td>
+        </tr>
+        <tr>
+          <td>One of K labels</td>
+          <td>Categorical</td>
+          <td>K logits passed through softmax</td>
+          <td>Multiclass cross-entropy</td>
+          <td>Highest-probability class</td>
+        </tr>
+        <tr>
+          <td>Next token</td>
+          <td>Categorical over vocabulary</td>
+          <td>Vocabulary logits passed through softmax</td>
+          <td>Next-token cross-entropy</td>
+          <td>Sample or choose from token distribution</td>
+        </tr>
+        <tr>
+          <td>Count</td>
+          <td>Poisson</td>
+          <td>Positive rate</td>
+          <td>Poisson negative log-likelihood</td>
+          <td>Rate or nearest count</td>
+        </tr>
+        <tr>
+          <td>Angle</td>
+          <td>Von Mises</td>
+          <td>Mean direction, optionally concentration</td>
+          <td>Circular negative log-likelihood</td>
+          <td>Mean direction</td>
+        </tr>
+        <tr>
+          <td>Several plausible real values</td>
+          <td>Mixture of Gaussians</td>
+          <td>Component weights, means, variances</td>
+          <td>Mixture negative log-likelihood</td>
+          <td>Use full distribution; single best point may mislead</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>LLM Bridge</h2>
+    <p>A language model predicts the next token. The domain is a finite vocabulary, so the natural distribution is categorical. The transformer outputs one logit per vocabulary token; softmax turns logits into probabilities; the training loss is the negative log probability assigned to the actual next token.</p>
+    <div class="formula">next-token loss = - log Pr(correct_next_token | previous_tokens)</div>
+
+    <div class="note">
+      <strong>Research habit:</strong> when you see a new loss, ask what distributional assumption it encodes. If the answer is unclear, the loss may still work, but you should know what modeling claim you are making.
+    </div>
+
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://github.com/udlbook/udlbook/releases/download/v5.0.3/UnderstandingDeepLearning_02_09_26_C.pdf">Prince, <em>Understanding Deep Learning</em>, Chapter 5</a></li>
+      <li><a href="https://www.manning.com/books/how-large-language-models-work">Raff, Farris, and Biderman, <em>How Large Language Models Work</em></a></li>
+    </ul>
+  </main>
+</body>
+</html>
