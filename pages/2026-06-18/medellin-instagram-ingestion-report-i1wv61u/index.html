@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Medellin Instagram Ingestion: How It Works Now</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 18px 64px;
+      font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    img, video, canvas, svg { max-width: 100%; height: auto; }
+    pre { overflow-x: auto; padding: 12px; border: 1px solid #ddd; }
+    code { font-size: 0.92em; }
+    table { display: block; overflow-x: auto; border-collapse: collapse; }
+    th, td { padding: 0.35rem 0.5rem; border: 1px solid #ddd; }
+  </style>
+
+  <meta charset="utf-8">
+  <style>
+:root {
+  color-scheme: light;
+  --bg: #f6f3ee;
+  --paper: #fffdf8;
+  --ink: #171717;
+  --muted: #66645f;
+  --line: #ded7ca;
+  --accent: #176b5d;
+  --accent-soft: #e4f1eb;
+  --blue: #245f91;
+  --blue-soft: #e7eef8;
+  --rose: #94405b;
+  --rose-soft: #f6e7ed;
+  --gold: #8a5a12;
+  --gold-soft: #f7eddb;
+  --shadow: 0 18px 50px rgba(35, 28, 17, 0.08);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  max-width: none;
+  min-width: 0;
+  padding: 0;
+  width: 100%;
+  background:
+    linear-gradient(180deg, rgba(255,253,248,0.86), rgba(246,243,238,1) 360px),
+    var(--bg);
+  color: var(--ink);
+  font: 16px/1.58 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+a { color: var(--accent); }
+p, li, td, th, .field-value, .card, .callout, .appendix-list article {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: rgba(23, 107, 93, 0.08);
+  padding: 0.08rem 0.28rem;
+  border-radius: 5px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+}
+.page {
+  width: min(calc(100% - 48px), 1500px);
+  max-width: none;
+  margin: 0 auto;
+  padding: clamp(28px, 3vw, 46px) 0 72px;
+}
+.hero {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: clamp(24px, 4vw, 48px);
+  box-shadow: var(--shadow);
+}
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+h1, h2, h3 { line-height: 1.12; letter-spacing: 0; }
+h1 { max-width: 920px; margin: 10px 0 12px; font-size: clamp(2.05rem, 5vw, 4.7rem); }
+h2 { margin: 0 0 16px; font-size: clamp(1.35rem, 2.4vw, 2.2rem); }
+h3 { margin: 0 0 8px; font-size: 1.05rem; }
+.subtitle { max-width: 760px; color: var(--muted); font-size: clamp(1.02rem, 1.6vw, 1.22rem); }
+.meta, .stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.pill, .stat {
+  border: 1px solid var(--line);
+  background: #fffaf1;
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: #47433b;
+  font-size: 0.88rem;
+}
+.stat { min-width: 136px; border-radius: 14px; }
+.stat strong { display: block; font-size: 1.15rem; color: var(--ink); }
+.layout {
+  display: grid;
+  grid-template-columns: clamp(190px, 15vw, 260px) minmax(0, 1fr);
+  gap: clamp(20px, 2.8vw, 44px);
+  align-items: start;
+  margin-top: 28px;
+}
+.toc {
+  position: sticky;
+  top: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255,253,248,0.86);
+  padding: 14px;
+}
+.toc a { display: block; color: #4c4944; text-decoration: none; padding: 7px 8px; border-radius: 8px; font-size: 0.9rem; }
+.toc a:hover { background: var(--accent-soft); color: var(--accent); }
+.content { min-width: 0; width: 100%; }
+.section {
+  margin-bottom: 22px;
+  padding: clamp(20px, 2.4vw, 30px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(35, 28, 17, 0.045);
+}
+.section p { max-width: 84ch; }
+.section-intro { color: var(--muted); }
+.callout {
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+}
+.callout.accent, .card.accent { background: var(--accent-soft); }
+.callout.blue, .card.blue { background: var(--blue-soft); }
+.callout.rose, .card.rose { background: var(--rose-soft); }
+.callout.gold, .card.gold { background: var(--gold-soft); }
+.card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.card {
+  min-width: 0;
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+}
+.muted { color: var(--muted); }
+.field { margin-top: 12px; }
+.field-label { color: var(--muted); font-size: 0.73rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.field-value { margin-top: 2px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+table { width: 100%; border-collapse: collapse; min-width: 720px; background: #fffaf1; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+th { color: #423d34; background: #f2eadc; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+tr:last-child td { border-bottom: 0; }
+.steps { counter-reset: step; list-style: none; padding: 0; display: grid; gap: 12px; }
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 14px 14px 14px 52px;
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); gap: 12px; }
+.flow-node {
+  position: relative;
+  min-width: 0;
+  min-height: 124px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fffaf1;
+}
+.flow-label { color: var(--accent); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+.flow-title { margin-top: 8px; font-weight: 800; }
+.flow-body { min-width: 0; margin-top: 6px; color: var(--muted); font-size: 0.92rem; }
+.appendix-list { display: grid; gap: 12px; }
+.appendix-list article { border-top: 1px solid var(--line); padding-top: 14px; }
+footer {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  text-align: center;
+}
+@media (max-width: 860px) {
+  .page { width: min(calc(100% - 24px), 1500px); padding: 16px 0 48px; }
+  .layout { display: block; }
+  .toc { position: static; margin-bottom: 18px; }
+  .toc nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card-grid { grid-template-columns: 1fr; }
+  .section { border-radius: 14px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 15px; }
+  .page { width: min(calc(100% - 20px), 1500px); }
+  .hero { border-radius: 14px; padding: 22px 16px; }
+  .toc nav { grid-template-columns: 1fr; }
+  .meta, .stats { display: grid; }
+  table { min-width: 620px; }
+}
+@media (min-width: 1320px) {
+  .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<div class="eyebrow">LocalCMS / Medellin Insider</div>
+<h1>Medellin Instagram Ingestion: How It Works Now</h1>
+<p class="subtitle">A detailed operator report on the new repo-local Instagram scraping, parsing, triage, and review-gated event candidate workflow.</p>
+<div class="meta">
+<span class="pill"><strong>Branch:</strong> codex/medellin-instagram-local-ingestion</span>
+<span class="pill"><strong>Pilot:</strong> 2026-06-18-pilot</span>
+<span class="pill"><strong>Status:</strong> Implemented and verified</span>
+<span class="pill"><strong>Safety:</strong> No hosted write path, no new Convex tables</span>
+</div>
+<div class="stats">
+<div class="stat"><strong>3</strong>Sources in pilot</div>
+<div class="stat"><strong>29</strong>Normalized posts</div>
+<div class="stat"><strong>24</strong>Event-like scaffolds</div>
+<div class="stat"><strong>2</strong>Ready after Codex review</div>
+<div class="stat"><strong>15</strong>Rejected after review</div>
+</div>
+</header>
+<div class="layout">
+<aside class="toc"><div class="eyebrow">Contents</div><nav>
+<a href="#executive-summary">Executive Summary</a>
+<a href="#system-flow">End-to-End Flow</a>
+<a href="#operator-command">Operator Command Path</a>
+<a href="#artifacts">What The Pilot Writes</a>
+<a href="#parser-details">Parser And Normalizer Details</a>
+<a href="#classification">Classification And Candidate Rules</a>
+<a href="#pilot-results">Pilot Results</a>
+<a href="#review-output">Codex Review Output</a>
+<a href="#cloudflare-comparison">How This Differs From The Cloudflare Agent Worker</a>
+<a href="#implementation-surfaces">Implementation Surfaces</a>
+<a href="#known-limits">Known Limits And Next Improvements</a>
+<a href="#appendix">Appendix: Proof And Validation</a>
+</nav></aside>
+<div class="content">
+<section class="section callout-section" id="executive-summary">
+<h2>Executive Summary</h2>
+<div class="callout accent">
+<div class="eyebrow">What changed</div>
+<p>The new <code>instagram ingest pilot</code> command gives Medellin Insider a local, audit-friendly Instagram ingestion lane. It reads existing LocalCMS Instagram source inventory, fetches recent posts through ScrapeCreators, preserves raw payloads, normalizes captions/media/lineage, creates deterministic classification results, and writes event-candidate scaffolds for Codex/operator review.</p>
+<p>The important architectural decision is that this is not a production write path. It does not dispatch the Cloudflare agent worker, does not call <code>/api/agent/save-event</code>, and does not add Convex tables. It proves the operator workflow between source inventory and a future approved event write.</p>
+<ul><li>The deterministic layer intentionally over-selects; the review layer decides what can become an event.</li><li>The pilot showed exactly why that matters: broad social accounts produced out-of-market, past, duplicate, and recap posts.</li><li>The strongest ready candidates in the sample came from <code>teatropablotobon</code>, where captions and selected images provided enough event detail.</li></ul>
+</div></section>
+<section class="section flow-section" id="system-flow">
+<h2>End-to-End Flow</h2>
+<p class="section-intro">The current workflow is a local review pipeline. It gathers evidence and stops at operator-approved candidates rather than writing directly into the common events database.</p>
+<div class="flow">
+<div class="flow-node">
+<div class="flow-label">1</div>
+<div class="flow-title">Source Inventory</div>
+<div class="flow-body">CLI calls the existing LocalCMS <code>instagram source list</code> API for a source-owner account and active inventory.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">2</div>
+<div class="flow-title">ScrapeCreators Fetch</div>
+<div class="flow-body">For each selected username, the command calls <code>/v2/instagram/user/posts</code> or reads a fixture payload.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">3</div>
+<div class="flow-title">Raw Preservation</div>
+<div class="flow-body">One raw provider JSON file is saved per username under the run directory.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">4</div>
+<div class="flow-title">Normalization</div>
+<div class="flow-body">The parser extracts post refs, URLs, timestamps, captions, media kind, image refs, and lineage.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">5</div>
+<div class="flow-title">Prefilter</div>
+<div class="flow-body">A deterministic score labels posts as <code>clearly_event</code>, <code>ambiguous</code>, or <code>clearly_not_event</code>.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">6</div>
+<div class="flow-title">Candidate Scaffolds</div>
+<div class="flow-body">Event-like posts become incomplete candidate objects marked as operator-review required.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">7</div>
+<div class="flow-title">Codex Review</div>
+<div class="flow-body">Codex/operator review promotes, completes, rejects, or asks for more evidence.</div>
+</div>
+</div></section>
+<section class="section steps-section" id="operator-command">
+<h2>Operator Command Path</h2>
+<ol class="steps">
+<li>
+<strong>Run the pilot command</strong>
+<p><code>bun --cwd packages/cli src/index.ts --env prod instagram ingest pilot --email &lt;source-owner-email&gt; --limit-sources 3 --posts-per-source 12 --since-days 30 --output json</code></p>
+</li>
+<li>
+<strong>Choose scope explicitly</strong>
+<p>Use repeated <code>--source &lt;username&gt;</code> flags for representative accounts, or <code>--limit-sources</code> for a bounded inventory pass. The command defaults to active sources only.</p>
+</li>
+<li>
+<strong>Use fixtures when needed</strong>
+<p><code>--fixture-dir &lt;dir&gt;</code> reads <code>&lt;username&gt;.json</code> payloads instead of spending ScrapeCreators credits. This is how tests prove the artifact contract without network calls.</p>
+</li>
+<li>
+<strong>Keep output repo-root relative</strong>
+<p>The command now detects the repo root before resolving <code>--out</code>, so the standard <code>bun --cwd packages/cli</code> invocation still writes to <code>docs/proofs/...</code> at the repository root.</p>
+</li>
+<li>
+<strong>Review before database writes</strong>
+<p>Generated candidates are not events. They are structured review artifacts that can feed a later approved write path.</p>
+</li>
+</ol></section>
+<section class="section cards-section" id="artifacts">
+<h2>What The Pilot Writes</h2>
+<p class="section-intro">Each run creates a self-contained evidence folder. The pilot folder is <code>docs/proofs/medellin-instagram-ingestion/2026-06-18-pilot/</code>.</p>
+<div class="card-grid">
+<article class="card neutral">
+<div class="eyebrow">Provider evidence</div>
+<h3>raw/</h3>
+<div class="field">
+<div class="field-label">Purpose</div>
+<div class="field-value">Raw ScrapeCreators JSON payloads, one file per selected Instagram username.</div>
+</div>
+<div class="field">
+<div class="field-label">Why it matters</div>
+<div class="field-value">Lets the operator map every normalized or reviewed row back to source material.</div>
+</div>
+
+</article>
+<article class="card neutral">
+<div class="eyebrow">Run manifest</div>
+<h3>raw-manifest.json</h3>
+<div class="field">
+<div class="field-label">Includes</div>
+<div class="field-value">Run ID, source inventory, directory IDs, raw paths, selected source counts, excluded post counts, and artifact map.</div>
+</div>
+
+</article>
+<article class="card neutral">
+<div class="eyebrow">Normalized posts</div>
+<h3>post-summaries.json</h3>
+<div class="field">
+<div class="field-label">Includes</div>
+<div class="field-value">Post URL, media kind, timestamp, caption, preview, image refs, source ID, directory ID, raw payload path, and raw post index.</div>
+</div>
+
+</article>
+<article class="card neutral">
+<div class="eyebrow">Deterministic prefilter</div>
+<h3>classification-results.json</h3>
+<div class="field">
+<div class="field-label">Includes</div>
+<div class="field-value">Per-post classification, confidence, reasons, image-review flag, and review-selection flag.</div>
+</div>
+
+</article>
+<article class="card neutral">
+<div class="eyebrow">Candidate scaffold</div>
+<h3>event-candidates.json</h3>
+<div class="field">
+<div class="field-label">Includes</div>
+<div class="field-value">One candidate per non-<code>clearly_not_event</code> post, with title guess, source URL, image refs, date/time evidence, category guess, and missing required fields.</div>
+</div>
+
+</article>
+<article class="card neutral">
+<div class="eyebrow">Review layer</div>
+<h3>codex-reviewed-candidates.json</h3>
+<div class="field">
+<div class="field-label">Includes</div>
+<div class="field-value">Ready, needs-completion, needs-more-evidence, and rejected dispositions after Codex/operator inspection.</div>
+</div>
+
+</article>
+</div></section>
+<section class="section matrix-section" id="parser-details">
+<h2>Parser And Normalizer Details</h2>
+<p class="section-intro">The parser is deliberately tolerant of provider shape changes. It extracts from common ScrapeCreators/Instagram payload layouts rather than assuming one exact schema.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Concern</th>
+<th>Current behavior</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr>
+<td>Raw post array discovery</td>
+<td>Checks arrays at top-level payload, <code>posts</code>, <code>data.posts</code>, <code>data.items</code>, <code>items</code>, <code>response.posts</code>, and <code>response.items</code>.</td>
+<td>This keeps the local command resilient across ScrapeCreators response variants.</td>
+</tr>
+<tr>
+<td>Post unwrapping</td>
+<td>If a post has a <code>node</code>, the parser uses <code>node</code>; otherwise it uses the post object directly.</td>
+<td>Matches the current hosted worker prompt expectation while tolerating flatter payloads.</td>
+</tr>
+<tr>
+<td>Identity and links</td>
+<td>Uses <code>id</code> or <code>pk</code>, <code>shortcode</code> or <code>code</code>, direct <code>url</code> or <code>permalink</code>, otherwise builds <code>https://www.instagram.com/p/&lt;shortcode&gt;/</code>.</td>
+<td>Every candidate keeps source URL plus source ID, directory ID, raw path, and raw post index.</td>
+</tr>
+<tr>
+<td>Captions</td>
+<td>Reads <code>caption_text</code>, string <code>caption</code>, <code>caption.text</code>, or <code>edge_media_to_caption.edges[].node.text</code>.</td>
+<td>Derived text is sanitized and previews truncate by Unicode code point so generated JSON remains parseable.</td>
+</tr>
+<tr>
+<td>Media kind</td>
+<td>Infers <code>reel</code>, <code>video</code>, <code>carousel</code>, or <code>image</code> from product type, <code>is_video</code>, <code>media_type</code>, sidecar edges, and carousel media.</td>
+<td>Reels/videos are still caption-classified; image review is limited to available image refs.</td>
+</tr>
+<tr>
+<td>Image refs</td>
+<td>Collects display URLs, thumbnails, image-version candidates, sidecar child images, and carousel media images.</td>
+<td>The local pilot references image URLs rather than downloading all images by default.</td>
+</tr>
+<tr>
+<td>Date filtering</td>
+<td>Drops posts older than <code>--since-days</code> when timestamp evidence is available.</td>
+<td>Posts without timestamps are kept, because absence of provider timestamp should not silently erase evidence.</td>
+</tr>
+</tbody></table></div></section>
+<section class="section matrix-section" id="classification">
+<h2>Classification And Candidate Rules</h2>
+<p class="section-intro">The deterministic layer is intentionally a prefilter. It is useful for narrowing review, but it is not allowed to create database events by itself.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Stage</th>
+<th>Rule</th>
+<th>Output</th>
+</tr></thead><tbody>
+<tr>
+<td>Evidence scoring</td>
+<td>Date evidence adds 2 points; time evidence adds 2; event terms add up to 3; image refs add 1; video/reel adds a reason but not a score.</td>
+<td>Score &gt;= 5 becomes <code>clearly_event</code>; score &gt;= 2 becomes <code>ambiguous</code>; otherwise <code>clearly_not_event</code>.</td>
+</tr>
+<tr>
+<td>Date/time evidence</td>
+<td>Regexes detect relative days, weekdays, month names, Spanish dates, numeric dates, and common time formats.</td>
+<td>Evidence strings are kept in candidate JSON, but they are not final parsed event dates.</td>
+</tr>
+<tr>
+<td>Candidate creation</td>
+<td>Every non-<code>clearly_not_event</code> post becomes a candidate scaffold.</td>
+<td>Candidate rows are marked <code>needs_codex_review</code> and include <code>requiredBeforeDatabaseWrite</code>.</td>
+</tr>
+<tr>
+<td>Title/category guesses</td>
+<td>The first non-empty caption line becomes the title guess; category is inferred from terms like music, food, sports, party, workshop, and art.</td>
+<td>These are hints for review, not authoritative metadata.</td>
+</tr>
+<tr>
+<td>Review gate</td>
+<td>Codex/operator review can mark rows ready, incomplete, needs-more-evidence, or rejected.</td>
+<td>Only reviewed and operator-approved rows should feed a future database write path.</td>
+</tr>
+</tbody></table></div></section>
+<section class="section cards-section" id="pilot-results">
+<h2>Pilot Results</h2>
+<p class="section-intro">The pilot intentionally used a mixed sample: a broad community/social source, a Spanglish events source, and a cultural venue.</p>
+<div class="card-grid">
+<article class="card gold">
+<div class="eyebrow">Broad social/community source</div>
+<h3>gringotuesdays</h3>
+<div class="field">
+<div class="field-label">Raw posts</div>
+<div class="field-value">12 fetched, 10 kept after date filter</div>
+</div>
+<div class="field">
+<div class="field-label">Review lesson</div>
+<div class="field-value">High recall but noisy: out-of-market Buenos Aires/Cali posts, recaps, generic recurring posts, and duplicate campaign posts appeared.</div>
+</div>
+
+</article>
+<article class="card blue">
+<div class="eyebrow">Event-focused community source</div>
+<h3>spanglishevents</h3>
+<div class="field">
+<div class="field-label">Raw posts</div>
+<div class="field-value">12 fetched, 9 kept after date filter</div>
+</div>
+<div class="field">
+<div class="field-label">Review lesson</div>
+<div class="field-value">Structurally good event captions, but this sample was mostly past events relative to the pilot date.</div>
+</div>
+
+</article>
+<article class="card accent">
+<div class="eyebrow">Cultural venue</div>
+<h3>teatropablotobon</h3>
+<div class="field">
+<div class="field-label">Raw posts</div>
+<div class="field-value">12 fetched, 10 kept after date filter</div>
+</div>
+<div class="field">
+<div class="field-label">Review lesson</div>
+<div class="field-value">Produced the strongest ready candidates because captions and flyers had concrete venue/date/time evidence.</div>
+</div>
+
+</article>
+</div></section>
+<section class="section matrix-section" id="review-output">
+<h2>Codex Review Output</h2>
+<p class="section-intro">The review layer is where broad scraping becomes editorially safe. It caught false positives before anything could become a database row.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Disposition</th>
+<th>Count</th>
+<th>Examples / meaning</th>
+</tr></thead><tbody>
+<tr>
+<td>Ready for operator approval</td>
+<td>2</td>
+<td><code>Xmosis en Teatro Pablo Tobon Uribe</code> and <code>Ajedrez y Pola</code>; both had enough date/time/venue evidence after caption plus selected image review.</td>
+</tr>
+<tr>
+<td>Needs operator completion</td>
+<td>1</td>
+<td><code>Pedro Pastor - 10 anos de Los Locos Anos Descalzos</code>; likely valid, but missing event time.</td>
+</tr>
+<tr>
+<td>Needs more evidence</td>
+<td>6</td>
+<td>Recurring or programmatic posts where a current venue, next occurrence, individual schedule, or source detail page is still required.</td>
+</tr>
+<tr>
+<td>Rejected</td>
+<td>15</td>
+<td>Out-of-market posts, past events, duplicate announcements, recaps, or non-event recruiting content.</td>
+</tr>
+</tbody></table></div></section>
+<section class="section callout-section" id="cloudflare-comparison">
+<h2>How This Differs From The Cloudflare Agent Worker</h2>
+<div class="callout blue">
+<div class="eyebrow">Architecture boundary</div>
+<p>The hosted Cloudflare worker path fetches Instagram posts inside the worker, builds a compact post summary, classifies candidates, optionally downloads images, and then saves events through <code>/api/agent/save-event</code>.</p>
+<p>The local path deliberately stops earlier. It preserves raw evidence and candidate JSON in the repo, exposes lineage for review, and requires operator approval before any common-event write path. That makes it better for research calibration and safer while the Instagram event extraction rubric is still evolving.</p>
+<ul><li>Hosted worker: extraction agent plus callback write path.</li><li>Local pilot: evidence collection plus review artifacts only.</li><li>Current branch: preserves deterministic webpage scraping, edition sweep, and hosted worker code unchanged.</li></ul>
+</div></section>
+<section class="section cards-section" id="implementation-surfaces">
+<h2>Implementation Surfaces</h2>
+<div class="card-grid">
+<article class="card neutral">
+<h3>CLI command</h3>
+<div class="field">
+<div class="field-label">Files</div>
+<div class="field-value"><code>packages/cli/src/commands/instagram/ingest/index.ts</code>, <code>packages/cli/src/commands/instagram/ingest/pilot.ts</code>, and <code>packages/cli/src/commands/instagram/index.ts</code></div>
+</div>
+<div class="field">
+<div class="field-label">Role</div>
+<div class="field-value">Adds <code>instagram ingest pilot</code> as a first-class operator command.</div>
+</div>
+
+</article>
+<article class="card neutral">
+<h3>Lineage schema fix</h3>
+<div class="field">
+<div class="field-label">Files</div>
+<div class="field-value"><code>packages/cli/src/types/api.ts</code> and <code>packages/cli/src/commands/instagram/source/list.ts</code></div>
+</div>
+<div class="field">
+<div class="field-label">Role</div>
+<div class="field-value">Surfaces <code>directoryId</code> already returned by the backend so local artifacts can preserve source lineage.</div>
+</div>
+
+</article>
+<article class="card neutral">
+<h3>Tests</h3>
+<div class="field">
+<div class="field-label">Files</div>
+<div class="field-value"><code>packages/cli/tests/commands/instagram/ingest.test.ts</code> and a corrected existing <code>instagram/add.test.ts</code> mock.</div>
+</div>
+<div class="field">
+<div class="field-label">Role</div>
+<div class="field-value">Verifies fixture-mode output, repo-root-relative paths, lineage, candidate scaffolds, and audit generation.</div>
+</div>
+
+</article>
+<article class="card neutral">
+<h3>Operator docs</h3>
+<div class="field">
+<div class="field-label">Files</div>
+<div class="field-value"><code>docs/research/medellin-instagram-ingestion/README.md</code> and <code>skills/localcms-cli/SKILL.md</code></div>
+</div>
+<div class="field">
+<div class="field-label">Role</div>
+<div class="field-value">Documents how to run the command and where the review-gated boundary is.</div>
+</div>
+
+</article>
+</div></section>
+<section class="section matrix-section" id="known-limits">
+<h2>Known Limits And Next Improvements</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Limit</th>
+<th>Why it matters</th>
+<th>Likely improvement</th>
+</tr></thead><tbody>
+<tr>
+<td>Broad accounts cross-post outside Medellin</td>
+<td>The pilot caught Buenos Aires and Cali posts from a source in the Medellin inventory.</td>
+<td>Add stronger city/venue heuristics and a city-confidence flag before candidate creation.</td>
+</tr>
+<tr>
+<td>Past-event detection is basic</td>
+<td>Relative dates and old source posts can survive the first pass.</td>
+<td>Add a pilot-date-aware date parser before candidate scaffolding, while still keeping uncertain rows reviewable.</td>
+</tr>
+<tr>
+<td>Images are referenced, not bulk-downloaded</td>
+<td>Some event flyers contain missing time/price details.</td>
+<td>Add an optional bounded <code>--download-images</code> or <code>--image-review-limit</code> mode for selected candidates.</td>
+</tr>
+<tr>
+<td>No automatic database write path yet</td>
+<td>This is intentional for v1 safety, but approved candidates still need a write mechanism later.</td>
+<td>Add an explicit <code>candidate import --approved-file ...</code> command only after the review contract stabilizes.</td>
+</tr>
+<tr>
+<td>No custom Codex subagents yet</td>
+<td>The current foundation is subagent-ready but not subagent-dependent.</td>
+<td>Once the rubric stabilizes, define narrow agents for triage, extraction, and lineage audit.</td>
+</tr>
+</tbody></table></div></section>
+<section class="section appendix-section" id="appendix">
+<h2>Appendix: Proof And Validation</h2>
+<p class="section-intro">The report is based on current branch files and the 2026-06-18 pilot artifacts.</p>
+<div class="appendix-list">
+<article>
+<h3>Pilot artifacts</h3>
+<ul><li><code>docs/proofs/medellin-instagram-ingestion/2026-06-18-pilot/raw-manifest.json</code></li><li><code>docs/proofs/medellin-instagram-ingestion/2026-06-18-pilot/classification-results.json</code></li><li><code>docs/proofs/medellin-instagram-ingestion/2026-06-18-pilot/event-candidates.json</code></li><li><code>docs/proofs/medellin-instagram-ingestion/2026-06-18-pilot/codex-reviewed-candidates.json</code></li><li><code>docs/proofs/medellin-instagram-ingestion/2026-06-18-pilot/audit-report.md</code></li></ul>
+</article>
+<article>
+<h3>Validation commands run</h3>
+<ul><li><code>bun test packages/cli/tests/commands/instagram/add.test.ts packages/cli/tests/commands/instagram/ingest.test.ts</code></li><li><code>bun run typecheck</code></li><li><code>bun run lint</code></li><li><code>./scripts/verify-skills.sh</code></li><li><code>jq empty</code> over raw and derived pilot JSON</li></ul>
+</article>
+<article>
+<h3>Public-obscure publishing note</h3>
+<p>This report intentionally omits API keys, local absolute paths, and raw image URLs. It uses repo-relative proof paths and public Instagram account names only.</p>
+
+</article>
+</div></section>
+</div></div>
+<footer>Composed 2026-06-18 with html-report from current branch code, operator docs, and the 2026-06-18 Medellin Instagram pilot artifacts. Public-obscure/noindex copy contains no secrets or local absolute paths.</footer>
+</main>
+</body>
+</html>
