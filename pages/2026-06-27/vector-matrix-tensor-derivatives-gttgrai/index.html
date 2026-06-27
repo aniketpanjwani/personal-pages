@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Vector, Matrix, and Tensor Derivatives</title>
+
+  <meta charset="utf-8">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f3ee;
+      --paper: #fffdf8;
+      --ink: #171717;
+      --muted: #66645f;
+      --line: #ded7ca;
+      --accent: #176b5d;
+      --soft: #e4f1eb;
+      --code: #20231f;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 17px/1.65 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main {
+      width: min(calc(100% - 32px), 880px);
+      margin: 0 auto;
+      padding: 34px 0 72px;
+    }
+    header, section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: clamp(20px, 4vw, 36px);
+      margin: 0 0 18px;
+      box-shadow: 0 14px 40px rgba(35, 28, 17, 0.06);
+    }
+    h1 {
+      margin: 0 0 0.6rem;
+      font-size: clamp(2rem, 6vw, 3.6rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 0 0 0.8rem;
+      font-size: clamp(1.35rem, 3.5vw, 2rem);
+      line-height: 1.1;
+    }
+    h3 {
+      margin: 1.4rem 0 0.4rem;
+      font-size: 1.05rem;
+    }
+    p { margin: 0.7rem 0; }
+    a { color: var(--accent); }
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 70ch;
+    }
+    .note {
+      border-left: 4px solid var(--accent);
+      background: var(--soft);
+      border-radius: 0 10px 10px 0;
+      padding: 0.8rem 1rem;
+      margin: 1rem 0;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.9em;
+      background: rgba(23, 107, 93, 0.08);
+      border-radius: 5px;
+      padding: 0.1rem 0.3rem;
+    }
+    pre {
+      background: var(--code);
+      color: #f7f3ea;
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+    }
+    ul { padding-left: 1.2rem; }
+    li { margin: 0.35rem 0; }
+    mjx-container[display="true"] {
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.2rem 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      display: block;
+      overflow-x: auto;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 0.55rem 0.65rem;
+      text-align: left;
+      vertical-align: top;
+    }
+  </style>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">CS231n A1 Math Companion</div>
+    <h1>Vector, Matrix, and Tensor Derivatives</h1>
+    <p class="subtitle">
+      A MathJax study companion to Erik Learned-Miller's short derivative notes,
+      focused on the pieces that matter for CS231n softmax gradients and vectorized code.
+    </p>
+    <p>
+      Official PDF:
+      <a href="https://cs231n.stanford.edu/vecDerivs.pdf">cs231n.stanford.edu/vecDerivs.pdf</a>
+    </p>
+  </header>
+
+  <section>
+    <h2>Core Habit</h2>
+    <p>
+      When a matrix derivative feels mysterious, reduce it to one scalar output
+      and one scalar input. Write that scalar output as an explicit sum, take
+      the ordinary one-variable partial derivative, then rebuild the pattern.
+    </p>
+    <div class="note">
+      The main move is: matrix equation $\rightarrow$ one component equation
+      $\rightarrow$ ordinary scalar derivative $\rightarrow$ shape-aware result.
+    </div>
+  </section>
+
+  <section>
+    <h2>Column-Vector Setup</h2>
+    <p>
+      Suppose $x$ is a $D \times 1$ column vector, $W$ is $C \times D$, and
+      $y$ is a $C \times 1$ column vector:
+    </p>
+    $$
+    y = Wx
+    $$
+    <p>
+      The $i$-th output component is:
+    </p>
+    $$
+    y_i = \sum_{j=1}^{D} W_{i,j}x_j
+    $$
+    <p>
+      So the derivative of one output component with respect to one input
+      component is:
+    </p>
+    $$
+    \frac{\partial y_i}{\partial x_j} = W_{i,j}
+    $$
+    <p>
+      Stacking all those partials gives the Jacobian:
+    </p>
+    $$
+    \frac{dy}{dx} = W
+    $$
+  </section>
+
+  <section>
+    <h2>Row-Vector Setup</h2>
+    <p>
+      CS231n assignment code often stores examples as rows. If $x$ is a
+      $1 \times D$ row vector and $W$ is $D \times C$, then:
+    </p>
+    $$
+    y = xW
+    $$
+    <p>
+      The $j$-th output component is:
+    </p>
+    $$
+    y_j = \sum_{k=1}^{D} x_k W_{k,j}
+    $$
+    <p>
+      Therefore:
+    </p>
+    $$
+    \frac{\partial y_j}{\partial x_k} = W_{k,j}
+    $$
+    <div class="note">
+      Same idea, different orientation. Always check whether examples/features
+      live in rows or columns before deciding where transposes go.
+    </div>
+  </section>
+
+  <section>
+    <h2>Derivative With Respect To Weights</h2>
+    <p>
+      For the row-vector version $y = xW$, one output component is:
+    </p>
+    $$
+    y_j = \sum_{k=1}^{D} x_k W_{k,j}
+    $$
+    <p>
+      A weight $W_{a,b}$ only affects output component $y_b$. So:
+    </p>
+    $$
+    \frac{\partial y_j}{\partial W_{a,b}} =
+      \begin{cases}
+        x_a, & j=b \\
+        0, & j \ne b
+      \end{cases}
+    $$
+    <p>
+      This is why gradients with respect to a weight matrix often look like an
+      outer product: an input activation times an upstream gradient.
+    </p>
+  </section>
+
+  <section>
+    <h2>Many Examples At Once</h2>
+    <p>
+      Let $X$ be $N \times D$, where each row is one example. Let $W$ be
+      $D \times C$. The score matrix is:
+    </p>
+    $$
+    Y = XW
+    $$
+    <p>
+      One score is:
+    </p>
+    $$
+    Y_{i,j} = \sum_{k=1}^{D} X_{i,k}W_{k,j}
+    $$
+    <p>
+      Changing row $i$ of $X$ only affects row $i$ of $Y$:
+    </p>
+    $$
+    \frac{\partial Y_{i,j}}{\partial X_{r,k}} = 0
+    \quad \text{when } r \ne i
+    $$
+    <p>
+      For the matching row:
+    </p>
+    $$
+    \frac{\partial Y_{i,j}}{\partial X_{i,k}} = W_{k,j}
+    $$
+  </section>
+
+  <section>
+    <h2>Chain Rule With Matrices</h2>
+    <p>
+      If:
+    </p>
+    $$
+    y = VWx
+    $$
+    <p>
+      define an intermediate:
+    </p>
+    $$
+    m = Wx
+    \qquad
+    y = Vm
+    $$
+    <p>
+      The scalar component form of the chain rule is:
+    </p>
+    $$
+    \frac{\partial y_i}{\partial x_j}
+      =
+      \sum_{k}
+      \frac{\partial y_i}{\partial m_k}
+      \frac{\partial m_k}{\partial x_j}
+    $$
+    <p>
+      Since $\frac{\partial y_i}{\partial m_k}=V_{i,k}$ and
+      $\frac{\partial m_k}{\partial x_j}=W_{k,j}$:
+    </p>
+    $$
+    \frac{\partial y_i}{\partial x_j}
+      =
+      \sum_k V_{i,k}W_{k,j}
+    $$
+    <p>
+      That is exactly the $(i,j)$ entry of $VW$.
+    </p>
+  </section>
+
+  <section>
+    <h2>Softmax Assignment Connection</h2>
+    <p>
+      In Assignment 1 softmax, your score matrix has the row-example shape:
+    </p>
+    $$
+    S = XW
+    $$
+    <p>
+      The softmax-cross-entropy gradient gives an upstream signal with the same
+      shape as $S$:
+    </p>
+    $$
+    dS \in \mathbb{R}^{N \times C}
+    $$
+    <p>
+      Then the vectorized weight gradient has the familiar matrix product form:
+    </p>
+    $$
+    dW = X^T dS
+    $$
+    <p>
+      Shape check:
+    </p>
+    $$
+    X^T: D \times N,
+    \qquad
+    dS: N \times C,
+    \qquad
+    dW: D \times C
+    $$
+    <div class="note">
+      This is the practical payoff: scalar derivative reasoning explains why
+      the vectorized implementation uses transposes and matrix multiplication.
+    </div>
+  </section>
+</main>
+</body>
+</html>
