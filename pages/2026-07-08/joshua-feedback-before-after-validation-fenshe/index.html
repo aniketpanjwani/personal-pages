@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Joshua Feedback Before/After Validation</title>
+
+  <meta charset="utf-8">
+  <style>
+:root {
+  color-scheme: light;
+  --bg: #f6f3ee;
+  --paper: #fffdf8;
+  --ink: #171717;
+  --muted: #66645f;
+  --line: #ded7ca;
+  --accent: #176b5d;
+  --accent-soft: #e4f1eb;
+  --blue: #245f91;
+  --blue-soft: #e7eef8;
+  --rose: #94405b;
+  --rose-soft: #f6e7ed;
+  --gold: #8a5a12;
+  --gold-soft: #f7eddb;
+  --shadow: 0 18px 50px rgba(35, 28, 17, 0.08);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  max-width: none;
+  min-width: 0;
+  padding: 0;
+  width: 100%;
+  background:
+    linear-gradient(180deg, rgba(255,253,248,0.86), rgba(246,243,238,1) 360px),
+    var(--bg);
+  color: var(--ink);
+  font: 16px/1.58 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+a { color: var(--accent); }
+p, li, td, th, .field-value, .card, .callout, .appendix-list article {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: rgba(23, 107, 93, 0.08);
+  padding: 0.08rem 0.28rem;
+  border-radius: 5px;
+}
+.page {
+  width: min(calc(100% - 48px), 1500px);
+  max-width: none;
+  margin: 0 auto;
+  padding: clamp(28px, 3vw, 46px) 0 72px;
+}
+.hero {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: clamp(24px, 4vw, 48px);
+  box-shadow: var(--shadow);
+}
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+h1, h2, h3 { line-height: 1.12; letter-spacing: 0; }
+h1 { max-width: 920px; margin: 10px 0 12px; font-size: clamp(2.05rem, 5vw, 4.7rem); }
+h2 { margin: 0 0 16px; font-size: clamp(1.35rem, 2.4vw, 2.2rem); }
+h3 { margin: 0 0 8px; font-size: 1.05rem; }
+.subtitle { max-width: 760px; color: var(--muted); font-size: clamp(1.02rem, 1.6vw, 1.22rem); }
+.meta, .stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.pill, .stat {
+  border: 1px solid var(--line);
+  background: #fffaf1;
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: #47433b;
+  font-size: 0.88rem;
+}
+.stat { min-width: 136px; border-radius: 14px; }
+.stat strong { display: block; font-size: 1.15rem; color: var(--ink); }
+.layout {
+  display: grid;
+  grid-template-columns: clamp(190px, 15vw, 260px) minmax(0, 1fr);
+  gap: clamp(20px, 2.8vw, 44px);
+  align-items: start;
+  margin-top: 28px;
+}
+.toc {
+  position: sticky;
+  top: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255,253,248,0.86);
+  padding: 14px;
+}
+.toc a { display: block; color: #4c4944; text-decoration: none; padding: 7px 8px; border-radius: 8px; font-size: 0.9rem; }
+.toc a:hover { background: var(--accent-soft); color: var(--accent); }
+.content { min-width: 0; width: 100%; }
+.section {
+  margin-bottom: 22px;
+  padding: clamp(20px, 2.4vw, 30px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(35, 28, 17, 0.045);
+}
+.section p { max-width: 84ch; }
+.section-intro { color: var(--muted); }
+.callout {
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+}
+.callout.accent, .card.accent { background: var(--accent-soft); }
+.callout.blue, .card.blue { background: var(--blue-soft); }
+.callout.rose, .card.rose { background: var(--rose-soft); }
+.callout.gold, .card.gold { background: var(--gold-soft); }
+.card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.card {
+  min-width: 0;
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+}
+.muted { color: var(--muted); }
+.field { margin-top: 12px; }
+.field-label { color: var(--muted); font-size: 0.73rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.field-value { margin-top: 2px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+table { width: 100%; border-collapse: collapse; min-width: 720px; background: #fffaf1; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+th { color: #423d34; background: #f2eadc; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+tr:last-child td { border-bottom: 0; }
+.steps { counter-reset: step; list-style: none; padding: 0; display: grid; gap: 12px; }
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 14px 14px 14px 52px;
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.flow-node {
+  position: relative;
+  min-height: 124px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fffaf1;
+}
+.flow-label { color: var(--accent); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+.flow-title { margin-top: 8px; font-weight: 800; }
+.flow-body { margin-top: 6px; color: var(--muted); font-size: 0.92rem; }
+.appendix-list { display: grid; gap: 12px; }
+.appendix-list article { border-top: 1px solid var(--line); padding-top: 14px; }
+footer {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  text-align: center;
+}
+@media (max-width: 860px) {
+  .page { width: min(calc(100% - 24px), 1500px); padding: 16px 0 48px; }
+  .layout { display: block; }
+  .toc { position: static; margin-bottom: 18px; }
+  .toc nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card-grid { grid-template-columns: 1fr; }
+  .section { border-radius: 14px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 15px; }
+  .page { width: min(calc(100% - 20px), 1500px); }
+  .hero { border-radius: 14px; padding: 22px 16px; }
+  .toc nav { grid-template-columns: 1fr; }
+  .meta, .stats { display: grid; }
+  table { min-width: 620px; }
+}
+@media (min-width: 1320px) {
+  .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<div class="eyebrow">No Bluff Local · Reviewer Draft · 2026-07-08</div>
+<h1>Joshua Feedback Before/After Validation Report</h1>
+<p class="subtitle">A row-by-row audit of every July 5 feedback item, with prior classification, before state, after state, browser/source validation, and send-to-Joshua caveats.</p>
+<div class="meta">
+<span class="pill"><strong>Repository:</strong> /Users/aniketpanjwani/Projects/automation_consulting/joshua</span>
+<span class="pill"><strong>Current commit:</strong> 495476b Merge PR #12</span>
+<span class="pill"><strong>Before baseline:</strong> a459c7f pre-feedback merge baseline</span>
+<span class="pill"><strong>Audit source:</strong> docs/research/2026-07-05-joshua-feedback-audit.html</span>
+<span class="pill"><strong>Dev validation mode:</strong> In-app browser against seed-backed local Next dev app</span>
+</div>
+<div class="stats">
+<div class="stat"><strong>42</strong>Audit rows</div>
+<div class="stat"><strong>26</strong>Fixed by code</div>
+<div class="stat"><strong>3</strong>Code + docs/process</div>
+<div class="stat"><strong>2</strong>Explanation only</div>
+<div class="stat"><strong>1</strong>Deferred</div>
+<div class="stat"><strong>10</strong>Partial/risk/gap/setup</div>
+</div>
+</header>
+<div class="layout">
+<aside class="toc"><div class="eyebrow">Contents</div><nav>
+<a href="#executive-summary">Executive Summary</a>
+<a href="#validation-evidence-base">Validation Evidence Base</a>
+<a href="#what-to-edit-before-sending-joshua">What To Edit Before Sending Joshua</a>
+<a href="#row-level-evidence-matrix">Row-Level Evidence Matrix</a>
+<a href="#appendix">Appendix</a>
+</nav></aside>
+<div class="content">
+<section class="section callout-section" id="executive-summary">
+<h2>Executive Summary</h2>
+<div class="callout accent">
+<div class="eyebrow">Current read</div>
+<p>The implementation is broadly ready to review: the main functional requests for homepage behavior, filters, maps, optional business-detail sections, jobs normalization, event/job cards, submissions, and mobile enquiry are validated in dev. The strongest remaining caveat is exact visual/PDF/icon parity, not data plumbing.</p>
+<p>The current Joshua reply draft is now directionally aligned with the validated state. Before sending, keep the existing caveats around exact PDF/icon parity, About content, and Resend setup; those are still not completed product-code items.</p>
+<ul><li>Clear fixed/code evidence exists for the majority of rows, including browser checks across home, businesses, sub-pillars, business detail, events, jobs, submissions, and mobile.</li><li>Explanation-only decisions are clean: keep same-site Event/Job links same-tab and defer directory multi-select unless Joshua rejects the simpler model.</li><li>Remaining follow-up is concentrated in exact PDF/icon/style parity, Local Operators icons, the missing About route/footer link, and Resend notification setup.</li></ul>
+</div></section>
+<section class="section cards-section" id="validation-evidence-base">
+<h2>Validation Evidence Base</h2>
+<p class="section-intro">These are the sources and checks used to fill the after-state and before-state columns.</p>
+<div class="card-grid">
+<article class="card neutral">
+<div class="eyebrow">Rendered app</div>
+<h3>Browser Dev Checks</h3>
+<p class="muted">Validated through the in-app browser on <code>http://127.0.0.1:3000</code>.</p>
+<ul><li>Initial local-Convex-backed dev server 500ed because <code>127.0.0.1:3210</code> was unavailable; Convex local binary download was slow, so validation restarted the dev app with <code>NEXT_PUBLIC_CONVEX_URL=</code> and used deterministic seed data.</li><li>Home: Featured Local Businesses present, Directory Now absent, same-site Event/Job links same-tab, News links new-tab, newsletter modal spacing good on desktop and mobile.</li><li>Businesses: 828 published businesses, count-backed services with zero zero-count chips, bottom controls, filtered Location/Category/Service path with 27 matches.</li><li>Events: 249 upcoming events, no Past section, category/town filters and chips, event card hierarchy, See more and Back to filters.</li><li>Jobs: 117 open jobs, Location/Category/Type order, chips for all three, Albany/Casual filter gives 13 open roles, normalized card labels.</li><li>Mobile business detail: fixed Enquire dock opens an accessible bottom sheet with enquiry fields.</li></ul>
+</article>
+<article class="card neutral">
+<div class="eyebrow">Code/data</div>
+<h3>Source And Data Checks</h3>
+<p class="muted">Used for before-state and hidden/operator behaviors that browser output alone cannot prove.</p>
+<ul><li><code>git show a459c7f</code> confirmed old duplicate News link, fallback featured-business logic, old first-12 Popular services, old Past events section, raw job type filtering, old job card New badge, old structured submission fields, and old centered job detail layout.</li><li><code>npm run seed:fixtures</code> imported 1971 businesses, 1932 events, 1523 jobs; published snapshot includes 828 businesses, 293 events, 151 jobs, and 669 combo pages.</li><li>Seed projection found 828/828 published businesses with <code>metaDescription</code>, 0 featured businesses in seed, and <code>education-assistant-special-needs</code> normalized to Permanent plus Part-time.</li><li>Docs checked: <code>CONTEXT.md</code>, Google Maps ADR, <code>nbl-ops-setup.md</code>, handoff doc, and Joshua reply draft.</li></ul>
+</article>
+<article class="card neutral">
+<div class="eyebrow">Local checks</div>
+<h3>Automated Gates</h3>
+<p class="muted">The implementation still passes the repo verification surface.</p>
+<ul><li><code>npm run typecheck</code> passed.</li><li><code>npm run seed:fixtures</code> passed and printed the import summary.</li><li><code>npm run test</code> passed: 35 test files, 120 tests.</li></ul>
+</article>
+<article class="card neutral">
+<div class="eyebrow">Not a Joshua row, but relevant</div>
+<h3>Additional Dev Warning Fixed</h3>
+<p class="muted">The duplicate service-slug key warning found during validation is now addressed in the directory helper.</p>
+<ul><li>While loading <code>/businesses</code>, Next had logged duplicate-key warnings for repeated service slugs in the seed taxonomy.</li><li>The presentation helper now deduplicates published services by slug before rendering filter options/chips, and the regression test covers the behavior.</li></ul>
+</article>
+</div></section>
+<section class="section cards-section" id="what-to-edit-before-sending-joshua">
+<h2>What To Edit Before Sending Joshua</h2>
+<p class="section-intro">This section treats the email reply as part of the deliverable, per the grill decision.</p>
+<div class="card-grid">
+<article class="card neutral">
+<div class="eyebrow">Safe to send</div>
+<h3>Keep These Direct Responses</h3>
+<ul><li>Same-site Event/Job links should stay same-tab; News can open new-tab because it is external.</li><li>Directory multi-select should be deferred unless Joshua rejects the current one-value-per-dimension model.</li><li>Airtable is a field/UX reference only; public submissions write to Convex and are processed through nbl-ops with human review.</li><li>Google Maps should be standard embeds, with raw Place IDs/admin fields hidden.</li><li>Business detail optional sections now hide when real public data is absent; it is safe to keep that fixed-item claim in the reply.</li></ul>
+</article>
+<article class="card neutral">
+<div class="eyebrow">Do not overclaim</div>
+<h3>Revise These Claims</h3>
+<ul><li>Keep exact PDF/icon/style parity framed as a follow-up visual pass, not fully completed work.</li><li>Keep Resend as setup/outstanding, not product code done.</li><li>Keep About footer link deferred until an About page exists.</li></ul>
+</article>
+</div></section>
+<section class="section matrix-section" id="row-level-evidence-matrix">
+<h2>Row-Level Evidence Matrix</h2>
+<p class="section-intro">Every distinct item from the July 5 audit appears exactly once below. The before-state column uses the audit plus pre-merge <code>a459c7f</code> source checks when available; the after-state column uses current code/docs/dev-browser validation.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Item</th>
+<th>Joshua request + prior classification</th>
+<th>Before state</th>
+<th>After state</th>
+<th>Validation evidence</th>
+<th>Disposition</th>
+</tr></thead><tbody>
+<tr>
+<td>G0.1</td>
+<td>General Setup And Attachment
+Resend API key and GitHub profile supplied.
+Prior classification: Operational setup</td>
+<td>Handoff listed <code>RESEND_API_KEY</code>, <code>SUBMISSION_NOTIFY_FROM</code>, and <code>SUBMISSION_NOTIFY_TO</code> as setup gaps; this was never a UI bug.</td>
+<td>Still treated as launch/setup work. Beehiiv is configured separately; Resend notification variables remain on the outstanding setup checklist.</td>
+<td>Source/doc check: <code>docs/HANDOFF_FOR_JOSHUA.md</code> outstanding setup checklist still lists Resend notification variables; no secret values were read or written.</td>
+<td>Setup/docs, not product code</td>
+</tr>
+<tr>
+<td>G0.2</td>
+<td>General Setup And Attachment
+The PDF style guide and annotations were not implemented.
+Prior classification: Regression from mockup/live-build expectations</td>
+<td>Audit classified this as a regression from approved mockup/PDF expectations.</td>
+<td>Implementation improved several layouts/icons, but exact PDF/style-guide parity is not fully proven or complete.</td>
+<td>Source/browser checks found two-column event/job detail and SVG filter icons, but Local Operators still use letter tiles and business detail still has placeholder sections. Treat as focused visual parity follow-up.</td>
+<td>Partial / remaining visual parity risk</td>
+</tr>
+<tr>
+<td>G0.3</td>
+<td>General Setup And Attachment
+Many content/design updates were lost in live build.
+Prior classification: Regression from mockup/live-build expectations</td>
+<td>Audit umbrella covered lost design/content updates such as duplicate news link, placeholder icons, past events, thin pillar pages, and optional sections.</td>
+<td>Most concrete functional rows under this umbrella are addressed. Remaining caveat is exact visual/icon/PDF parity rather than the previously validated optional-section gap.</td>
+<td>Matrix rows below identify the closed items and the remaining gaps separately; do not mark this umbrella as fully done.</td>
+<td>Partial / remaining visual parity risk</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>A. Home Page
+Newsletter popup spacing is cramped at the bottom edge.
+Prior classification: New but reasonable</td>
+<td>Audit said newsletter popup existed but bottom spacing was a new polish complaint.</td>
+<td>Newsletter modal opens with substantial bottom gap on desktop and phone-sized viewport.</td>
+<td>Browser: opened hero newsletter trigger. Desktop 720px viewport: modal height 284px, bottom gap 218px. Mobile 390x844: modal height 383px, bottom gap 230px.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>A. Home Page
+Remove duplicate <code>Open No Bluff News</code> link.
+Prior classification: Consistent with prior mockup/requirements</td>
+<td>Pre-merge home page had an extra aside note link labelled <code>Open No Bluff News</code> in addition to News card links.</td>
+<td>The extra home-page duplicate link is removed. One footer <code>Open No Bluff News</code> link remains as normal footer navigation.</td>
+<td>Old commit <code>a459c7f</code> showed the aside <code>Open No Bluff News</code> block. Browser home check found no duplicate home aside link; footer still has one expected News link.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>A3</td>
+<td>A. Home Page
+Mini feed event/job items should open new tabs like news.
+Prior classification: New/weird or scope-expanding</td>
+<td>Joshua wanted same-site Event/Job mini-feed items to open like external News.</td>
+<td>Same-site Event and Job links remain same-tab; external News links open new tab.</td>
+<td>Browser home check: 6 same-site event/job mini links, 0 <code>_blank</code>; external News links all <code>_blank</code>. Response should directly explain this is deliberate because same-site new tabs fight normal expectations.</td>
+<td>Explanation only / recommend against</td>
+</tr>
+<tr>
+<td>A4</td>
+<td>A. Home Page
+Add About page link in the footer.
+Prior classification: Consistent with prior mockup/requirements</td>
+<td>Round-two feedback asked to consider an About footer link; current/footer still lacks an About route target.</td>
+<td>No blind footer About link added because there is no implemented About page/route/content.</td>
+<td>Source check: <code>Footer.tsx</code> has Businesses, Events, Jobs, News, Submit links and no About link. Report should ask for/about-page content before adding it.</td>
+<td>Intentionally deferred</td>
+</tr>
+<tr>
+<td>A5</td>
+<td>A. Home Page
+Explain why Directory Now only shows businesses and what makes a listing appear there.
+Prior classification: Consistent with prior mockup/requirements</td>
+<td>Pre-merge home selected featured/premium businesses and then fell back to arbitrary published businesses; label was <code>In the directory now</code>.</td>
+<td>Renamed to <code>Featured Local Businesses</code>; only explicitly <code>featured</code> businesses display. Empty seed state shows curation copy instead of arbitrary cards. Ops docs tell Joshua how to feature a business.</td>
+<td>Browser home: <code>Featured Local Businesses</code> present, <code>Directory Now</code> absent, 0 featured cards in seed and fallback text shown. Source/docs: <code>business promote --state featured</code> controls the section.</td>
+<td>Fixed by code + docs/process</td>
+</tr>
+<tr>
+<td>A6</td>
+<td>A. Home Page
+Restore Local Operators icons to pre-build design.
+Prior classification: Regression from mockup/live-build expectations</td>
+<td>Audit said Local Operators icons regressed from the pre-build/PDF design.</td>
+<td>Not fully restored. The home use-case/local operator tiles still render letter-style glyphs.</td>
+<td>Browser home check found use-case glyph text <code>[B, E, J, N]</code>; exact Local Operators icon set needs focused visual parity work.</td>
+<td>Partial / remaining visual parity risk</td>
+</tr>
+<tr>
+<td>B1</td>
+<td>B. Business Pillar
+Restore filter bar icons from pre-build design.
+Prior classification: Regression from mockup/live-build expectations</td>
+<td>Audit said business filter bar used placeholder symbol icons.</td>
+<td>Business filter fields now render inline SVG icons, but exact PDF icon parity is not established.</td>
+<td>Browser <code>/businesses</code>: 5 field SVGs. Source: <code>InlineIcon.tsx</code> provides named SVGs. Remaining risk is asset/style parity, not absence of icons.</td>
+<td>Partial / remaining visual parity risk</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>B. Business Pillar
+Category/service select boxes are cramped for long labels.
+Prior classification: Consistent with prior mockup/requirements</td>
+<td>Audit said long category/service labels were cramped and service taxonomy has 253 services.</td>
+<td>Filter layout uses select fields and responsive CSS; long service labels render in real options/chips without breaking the browser check.</td>
+<td>Browser <code>/businesses</code>: service chip samples include long labels such as <code>Construction Companies &amp; Project Management</code>; filters remain usable and bottom controls render. Follow-up smoke confirmed no duplicate service option values after slug dedupe.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>B3</td>
+<td>B. Business Pillar
+Pill filtering should support selecting/deselecting multiples with AND logic.
+Prior classification: New/weird or scope-expanding</td>
+<td>Joshua requested multi-select pills with AND logic, but audit found current behavior is one value per dimension, AND across dimensions.</td>
+<td>Multi-select intentionally not added. Current single-select cross-facet model is kept and explained.</td>
+<td>Browser filtered <code>/businesses?location=albany-wa&amp;category=hospitality-and-food&amp;service=hotels-accommodation</code> shows selected Location/Category/Service and 27 matching businesses. Reply should ask Joshua to accept this before expanding scope.</td>
+<td>Explanation only / recommend against</td>
+</tr>
+<tr>
+<td>B4</td>
+<td>B. Business Pillar
+Popular services feel arbitrary and include services with no listings.
+Prior classification: Regression from mockup/live-build expectations</td>
+<td>Old <code>DirectoryFilters</code> rendered the first 12 sorted services as <code>Popular services</code>, regardless of listing count.</td>
+<td>Service strip is count-backed, sorted by listing count, and excludes zero-listing services.</td>
+<td>Browser <code>/businesses</code>: 12 popular-service chips, min count 16, zero zero-count chips, and no duplicate service option values after dedupe. Old commit showed <code>services.slice(0, 12)</code> with no count filter.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>B5</td>
+<td>B. Business Pillar
+Restore icons for count, Featured, and Premium listing states.
+Prior classification: Regression from mockup/live-build expectations</td>
+<td>Audit requested specific count/Featured/Premium state icons from PDF page 3.</td>
+<td>Rank key and Featured/Premium/Standard/Free pills are visible, and Featured uses a star marker, but exact PDF icon treatment is not proven.</td>
+<td>Browser <code>/businesses</code>: rank key present for Featured/Premium/Standard/Free. Source <code>BusinessCard</code> has tier pills. Keep as partial visual parity item.</td>
+<td>Partial / remaining visual parity risk</td>
+</tr>
+<tr>
+<td>B6</td>
+<td>B. Business Pillar
+Business cards should use Meta Description instead of placeholder/about text.
+Prior classification: Consistent with prior mockup/requirements</td>
+<td>Old <code>BusinessCard</code> summary used <code>about</code>, then category, then generic fallback.</td>
+<td>Business cards now use <code>metaDescription</code>, then <code>about</code>, then category/generic fallback.</td>
+<td>Source: <code>BusinessCard.tsx</code> summary order is <code>metaDescription ?? about ?? categoryName</code>. Seed/projection check: 828/828 published businesses have meta descriptions.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>B7</td>
+<td>B. Business Pillar
+Explore by town/category may be poor UX; prefer button back to top.
+Prior classification: New but reasonable</td>
+<td>Business page ended with Explore by town/category and no continuation/recovery action when truncated.</td>
+<td>Discovery links remain for browse/SEO, and bottom controls add See more plus Back to filters.</td>
+<td>Browser <code>/businesses</code>: 828 businesses, See more businesses, Back to filters, Explore by town, Explore by category all present.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>C. Business Sub-pillar Pages
+Sub-pillar pages feel incomplete and need filtering/sorting plus CTA/navigation to full business page.
+Prior classification: Previously agreed</td>
+<td>Audit said sub-pillars felt like isolated SEO shells without filtering/sorting or a route back to the full directory.</td>
+<td>Sub-pillar pages now include a full-directory link, result cards, and bottom recovery/continuation controls.</td>
+<td>Browser <code>/businesses/albany-wa</code>: shows 36 of 639, full-directory link, See more, Back to top. Combo route shows full-directory link too.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>C. Business Sub-pillar Pages
+<code>Showing X of Y publishable businesses</code> is unclear when users cannot reach all Y.
+Prior classification: New but reasonable</td>
+<td><code>Showing X of Y</code> was unclear because users could not reach all Y.</td>
+<td>Where results exceed the limit, See more is available; pages also link to full filtered directory.</td>
+<td>Browser <code>/businesses/albany-wa</code>: Showing 36 of 639 plus See more and full-directory link. Combo route with 27 of 27 correctly has no See more.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>C. Business Sub-pillar Pages
+Town plus service combo pages may not be built or navigable.
+Prior classification: Previously agreed</td>
+<td>Audit said town+service combo pages were planned but not obvious/navigable.</td>
+<td>Combo route coverage exists through generated service/location slug paths and the page links back to the filtered directory.</td>
+<td>Browser combo check resolved <code>/businesses/hotels-accommodation/albany-wa</code>, heading <code>Hotels &amp; Accommodation – Albany</code>, 27 cards, full-directory link.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>D1</td>
+<td>D. Business Detail
+Return to pre-live business detail design; services/expertise separate; opening hours cleaner.
+Prior classification: Regression from mockup/live-build expectations</td>
+<td>Audit requested business detail return closer to pre-live design, with services/expertise separate and cleaner opening hours.</td>
+<td>Services offered, opening hours, map/location, desktop enquiry, and mobile dock are present; expertise is conditional. Exact detail design remains only partial because placeholders still render.</td>
+<td>Browser/source <code>/business/3-ross-court</code>: Services offered, Opening Hours, Map &amp; Location, enquiry surfaces present; after follow-up, placeholder Gallery/Owner sections are absent when real data is absent.</td>
+<td>Partial / remaining visual parity risk</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>D. Business Detail
+Only render sections when data exists, including gallery and owner profile.
+Prior classification: Previously agreed</td>
+<td>Audit said populated-only optional sections were required, including gallery and owner profile.</td>
+<td>Fixed. Business detail no longer renders hard-coded <code>Photo Gallery</code> or <code>Owner Profile</code> placeholders when no real public gallery/owner-profile data exists.</td>
+<td>Browser smoke <code>/business/3-ross-court</code>: <code>Photo Gallery</code>, <code>photo 1/2</code>, <code>Owner Profile</code>, and owner placeholder text are absent; Services offered and Map &amp; Location still render.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>D3</td>
+<td>D. Business Detail
+Embed a Google Map using Google Maps Place ID instead of linking out.
+Prior classification: New/weird or scope-expanding</td>
+<td>Audit approved Google Maps embeds while hiding raw/admin Place IDs.</td>
+<td>Business detail renders a standard Google Maps iframe when embed data is available and does not show Place ID text publicly.</td>
+<td>Browser <code>/business/3-ross-court</code>: map iframe present, src starts <code>https://www.google.com/maps</code>, visible Place ID text false. Source/tests strip <code>googleMapsPlaceId</code> from public projection.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>E1</td>
+<td>E. Events Pillar
+Restore event filter bar icons.
+Prior classification: Regression from mockup/live-build expectations</td>
+<td>Audit said event filter bar icons regressed from PDF design.</td>
+<td>Event filter fields now have inline SVG icons; exact PDF icon/style parity remains unverified.</td>
+<td>Browser <code>/events</code>: 5 field SVGs. Treat as icon-presence fixed but visual parity still open.</td>
+<td>Partial / remaining visual parity risk</td>
+</tr>
+<tr>
+<td>E2</td>
+<td>E. Events Pillar
+Event filter bar is broken.
+Prior classification: Regression from mockup/live-build expectations</td>
+<td>Audit said event filters were not totally mechanically broken, but visible UX was incomplete/confusing.</td>
+<td>Events filter by location/category/date fields, and the listing displays upcoming results only.</td>
+<td>Browser <code>/events?location=Albany&amp;category=Arts%20and%20culture</code>: selected Location Albany, Category Arts and culture, count 51 upcoming events, 36 rendered cards.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>E3</td>
+<td>E. Events Pillar
+Event pills should include category as well as town.
+Prior classification: Consistent with prior mockup/requirements</td>
+<td>Audit requested event pills include category as well as town.</td>
+<td>Event cards show location and category pills.</td>
+<td>Browser <code>/events</code>: first sampled event cards each had 2 pills; text samples include Albany plus category labels.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>E4</td>
+<td>E. Events Pillar
+Event search/filtering should be consistent with business pillar.
+Prior classification: Consistent with prior mockup/requirements</td>
+<td>Audit wanted event search/filtering consistent with business pillar.</td>
+<td>Events page has keyword, location, category, date range fields plus browse-by-town/category chips and bottom controls.</td>
+<td>Browser <code>/events</code>: select labels Location and Category, Browse by town/category present, See more events and Back to filters present.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>E5</td>
+<td>E. Events Pillar
+Past events should be removed.
+Prior classification: Previously agreed</td>
+<td>Old events page explicitly rendered a <code>Past events</code> section.</td>
+<td>Public Events page renders upcoming events and no Past section text.</td>
+<td>Old commit showed <code>past = ...</code> and <code>Past events</code>. Browser <code>/events</code>: count 249 upcoming events, <code>Past</code> text false.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>E6</td>
+<td>E. Events Pillar
+Event cards should drop Upcoming pill and show location/category, organiser, time, overview, divider, price, Details CTA.
+Prior classification: Consistent with prior mockup/requirements</td>
+<td>Audit said event cards needed location/category, organiser, time, overview, divider/footer, price/date, Details CTA instead of Upcoming/Past pill emphasis.</td>
+<td>Event cards now emphasize location/category pills, organiser/time, summary, and a footer with cost/date plus Details.</td>
+<td>Browser <code>/events</code>: sampled card text shows category/location, organiser/time, summary, and Details; no Past text on page.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>E7</td>
+<td>E. Events Pillar
+Event pagination should have See more and Back up top controls.
+Prior classification: New but reasonable</td>
+<td>Events lacked See more and Back up top/recovery controls.</td>
+<td>Events page has See more events and Back to filters.</td>
+<td>Browser <code>/events</code>: both controls present.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>F1</td>
+<td>F. Event Detail
+Event detail design should return to pre-live build / PDF reference.
+Prior classification: Regression from mockup/live-build expectations</td>
+<td>Audit wanted event detail returned to pre-live/PDF reference.</td>
+<td>Event detail now uses <code>split-detail-layout</code> with main content and facts/action rail, but exact PDF parity is not proven.</td>
+<td>Source/browser <code>/event/albany-is</code>: <code>split-detail-layout</code>, About this event, Where, aside facts/actions, Submit/Back pathways. Keep exact visual match as a focused pass.</td>
+<td>Partial / remaining visual parity risk</td>
+</tr>
+<tr>
+<td>G1</td>
+<td>G. Jobs Pillar
+Jobs filters are broken; filter bar should be Location, Category, Type.
+Prior classification: Consistent with prior mockup/requirements</td>
+<td>Audit said jobs filters mechanically submitted but UX/data quality were the real issues; desired order Location, Category, Type.</td>
+<td>Jobs filter bar is ordered Location, Category, Type and direct filter URLs narrow results.</td>
+<td>Browser <code>/jobs</code>: select labels Location, Category, Type. <code>/jobs?location=Albany&amp;type=Casual</code>: selected Albany/Casual and 13 open roles.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>G2</td>
+<td>G. Jobs Pillar
+Restore jobs filter bar icons.
+Prior classification: Regression from mockup/live-build expectations</td>
+<td>Audit requested jobs filter bar icons restored from PDF design.</td>
+<td>Jobs filter fields now have inline SVG icons; exact PDF icon/style parity remains unverified.</td>
+<td>Browser <code>/jobs</code>: 4 field SVGs. Treat as icon-presence fixed, visual parity still open.</td>
+<td>Partial / remaining visual parity risk</td>
+</tr>
+<tr>
+<td>G3</td>
+<td>G. Jobs Pillar
+Filtering pills should reflect location/category/type.
+Prior classification: Consistent with prior mockup/requirements</td>
+<td>Jobs quick chips were type-only despite three filter dimensions.</td>
+<td>Jobs chips now reflect Location, Category, and Type.</td>
+<td>Browser <code>/jobs</code>: chip labels are Location, Category, Type.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>G4</td>
+<td>G. Jobs Pillar
+Use consolidated employment type and work schedule fields because type data is messy.
+Prior classification: Approved implementation clarification</td>
+<td>Old jobs filtering/card display used raw <code>term</code> or <code>fteLoading</code>; source data was messy.</td>
+<td>Schema/import/public display include normalized <code>employmentType</code> and <code>workSchedule</code>, preserving raw source as fallback/internal context.</td>
+<td>Source/data: <code>jobNormalization.ts</code>, schema fields, ops write fields, tests. Seed check for <code>education-assistant-special-needs</code>: Employment Type Permanent, Work Schedule Part-time, raw FTE not shown on public detail.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>G5</td>
+<td>G. Jobs Pillar
+Jobs search/filtering should be consistent with business pillar.
+Prior classification: Consistent with prior mockup/requirements</td>
+<td>Audit said jobs filtering should match business pillar conventions.</td>
+<td>Jobs page now uses search, Location/Category/Type selects, matching chips, count bar, Submit CTA, and bottom controls.</td>
+<td>Browser <code>/jobs</code>: 117 open roles, select labels Location/Category/Type, chips for all three, See more jobs, Back to filters.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>G6</td>
+<td>G. Jobs Pillar
+Job cards need a richer layout: title, employer/location, employment type, work schedule, salary/benefits, days ago, open/closes date, CTA.
+Prior classification: Approved aggregation-page card update</td>
+<td>Old JobCard showed title/employer/location/raw term/remuneration, a static New badge, and less structured date/CTA hierarchy.</td>
+<td>Job cards show title, employer/location, normalized type/schedule, remuneration, benefits/closing info, days-since-posted, and View Role.</td>
+<td>Browser <code>/jobs</code> sampled cards include Permanent/Full-time or Casual, remuneration, Benefits listed, closes dates, <code>9 days ago</code>, and View Role. Old commit had static <code>New</code> pill.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>G7</td>
+<td>G. Jobs Pillar
+Jobs pagination should have See more and Back up top controls.
+Prior classification: Approved cross-pillar consistency</td>
+<td>Jobs lacked See more and Back up top/recovery controls.</td>
+<td>Jobs page has See more jobs and Back to filters.</td>
+<td>Browser <code>/jobs</code>: both controls present.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>F2/G8</td>
+<td>F2. Jobs Detail Labelled As F In Email
+Jobs detail design should return to pre-live build / PDF page 6 reference.
+Prior classification: Approved visual-regression fix</td>
+<td>Old job detail was a centered/simple facts layout with limited narrative architecture.</td>
+<td>Job detail uses two-column <code>split-detail-layout</code> with narrative role content, facts/action rail, normalized type/schedule, Back to all jobs, and Hiring locally note.</td>
+<td>Browser/source <code>/job/education-assistant-special-needs</code>: About the role, What to know, Permanent, Part-time, Back to all jobs, Hiring locally. Exact PDF visual parity remains a visual caveat, not a missing architecture.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>H1</td>
+<td>H. Submission Pages
+Submission pages need work; at minimum replicate the existing Airtable submission form.
+Prior classification: Approved as field/UX reference only</td>
+<td>Old forms were structured editors; audit clarified Airtable should be a field/UX reference only, not the runtime backend.</td>
+<td>Public submission forms are lightweight Convex intake; Airtable remains seed/import/reference only.</td>
+<td>Browser <code>/submit/business</code>, <code>/submit/event</code>, <code>/submit/job</code> show lightweight forms. Docs <code>CONTEXT.md</code>, <code>HANDOFF_FOR_JOSHUA.md</code>, and <code>nbl-ops-setup.md</code> preserve Convex-only runtime boundary.</td>
+<td>Fixed by code + docs/process</td>
+</tr>
+<tr>
+<td>H2</td>
+<td>H. Submission Pages
+Submission forms should collect contact details, owner/representative status, free text, images/logo upload, and featured/promoted interest.
+Prior classification: Approved intake fields</td>
+<td>Old forms lacked explicit owner/representative status and public file uploads.</td>
+<td>Business/event/job forms collect relationship, contact, title/link, free text, attachments where relevant, and featured/promoted interest.</td>
+<td>Browser forms: business has Images/logo; event has Images/flyer; job has Attachments; all three have Your relationship and featured/promoted interest.</td>
+<td>Fixed by code</td>
+</tr>
+<tr>
+<td>H3</td>
+<td>H. Submission Pages
+Do not ask for category, town, date, start/end time, etc.; infer from URL/attachments/content.
+Prior classification: Approved with human-reviewed processing</td>
+<td>Old public forms asked for structured publish fields like category/town/date/time/job type.</td>
+<td>Public forms avoid structured publish-ready fields; nbl-ops documentation describes human-reviewed processing from raw submissions to drafts.</td>
+<td>Browser forms: structured publish-field regex false for business/event/job. Docs: submission processing flow lists review, draft creation, dry-run, and human approval.</td>
+<td>Fixed by code + docs/process</td>
+</tr>
+<tr>
+<td>I1</td>
+<td>I. Mobile
+Business-detail mobile floating button should persist and scroll/open a slide-up form; current behavior does not work.
+Prior classification: Previously agreed</td>
+<td>Audit said mobile business-detail Enquire should be persistent and open a sheet/dialog rather than jump to an inline form.</td>
+<td>Mobile detail has a fixed Enquire dock that opens an accessible bottom-sheet dialog with enquiry form fields.</td>
+<td>Browser mobile 390x844 <code>/business/3-ross-court</code>: dock display block, position fixed, one Enquire button; after click <code>.mobile-enquiry-sheet[role=dialog]</code> opens with Name, Email, Phone, Message fields and body overflow locked.</td>
+<td>Fixed by code</td>
+</tr>
+</tbody></table></div></section>
+<section class="section appendix-section" id="appendix">
+<h2>Appendix</h2>
+<p class="section-intro">Operational notes for reproducing or extending this report.</p>
+<div class="appendix-list">
+<article>
+<h3>Commands Run</h3>
+<ul><li><code>npm run typecheck</code> from <code>app/</code>.</li><li><code>npm run seed:fixtures</code> from <code>app/</code>.</li><li><code>npm run test</code> from <code>app/</code>.</li><li><code>NEXT_PUBLIC_CONVEX_URL= CONVEX_DEPLOYMENT= npm run dev -- -p 3000</code> from <code>app/</code> for seed-backed browser validation.</li><li>Targeted browser checks across <code>/</code>, <code>/businesses</code>, <code>/businesses/albany-wa</code>, <code>/businesses/hotels-accommodation/albany-wa</code>, <code>/business/3-ross-court</code>, <code>/events</code>, filtered <code>/events</code>, <code>/jobs</code>, filtered <code>/jobs</code>, <code>/job/education-assistant-special-needs</code>, <code>/submit/business</code>, <code>/submit/event</code>, <code>/submit/job</code>.</li><li>Browser smoke after easy fixes: <code>/businesses</code> had no duplicate service option values and no duplicate-key warnings in the dev log; <code>/business/3-ross-court</code> hid empty Gallery/Owner placeholders.</li></ul>
+</article>
+<article>
+<h3>Known Limits</h3>
+<ul><li>This report validates dev against deterministic seed data, not a fresh production browser pass. Production had already been deployed earlier, but this goal specifically rechecked dev.</li><li>The local Convex server was not used because the dev app initially failed against <code>127.0.0.1:3210</code> and the Convex backend binary download was not worth blocking on for read-only browser validation.</li><li>No product behavior, runtime data, deployment config, secrets, or reply-draft text was changed while producing this report.</li><li>Duplicate service-slug warnings found during the first validation pass were fixed by deduplicating published services before rendering filters.</li></ul>
+</article>
+</div></section>
+</div></div>
+<footer>Composed 2026-07-08T17:41:35Z with html-report.</footer>
+</main>
+</body>
+</html>
