@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Social Connectedness Index Summary</title>
+
+  <meta charset="utf-8">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17202a;
+      --muted: #5d6976;
+      --line: #d7dee7;
+      --soft: #f4f7fa;
+      --accent: #0b6f85;
+      --accent-2: #8a4d15;
+      --good: #287a4c;
+      --warn: #9a5c00;
+      --paper: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+      color: var(--ink);
+      background: #eef2f6;
+    }
+
+    main {
+      max-width: 880px;
+      margin: 0 auto;
+      background: var(--paper);
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 34px 22px 26px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0%, #f7fafc 100%);
+    }
+
+    section {
+      padding: 24px 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.18;
+      margin: 0 0 12px;
+      color: #101820;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 8vw, 3.25rem);
+      max-width: 11ch;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      margin-top: 2px;
+    }
+
+    h3 {
+      font-size: 1.08rem;
+      margin-top: 20px;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    ul,
+    ol {
+      margin: 10px 0 0;
+      padding-left: 1.35rem;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    a {
+      color: var(--accent);
+      text-underline-offset: 2px;
+    }
+
+    .dek {
+      max-width: 680px;
+      font-size: 1.08rem;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+
+    .byline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+    }
+
+    .callout {
+      border: 1px solid #b8dbe3;
+      border-left: 5px solid var(--accent);
+      background: #f0fbfd;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .callout.warning {
+      border-color: #e3c27b;
+      border-left-color: var(--warn);
+      background: #fff8e8;
+    }
+
+    .formula {
+      overflow-x: auto;
+      padding: 14px 16px;
+      background: #101820;
+      color: #f7fbff;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      white-space: nowrap;
+      margin: 14px 0;
+    }
+
+    .formula small {
+      color: #c7d2de;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .mini {
+      border: 1px solid var(--line);
+      background: var(--soft);
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .mini strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #101820;
+    }
+
+    .two-col {
+      columns: 2 260px;
+      column-gap: 30px;
+    }
+
+    .checklist li::marker {
+      color: var(--good);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+      font-size: 0.96rem;
+    }
+
+    th,
+    td {
+      text-align: left;
+      vertical-align: top;
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      background: #f7fafc;
+      color: #101820;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .source-list {
+      font-size: 0.95rem;
+    }
+
+    footer {
+      padding: 22px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 640px) {
+      header,
+      section,
+      footer {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>The Social Connectedness Index</h1>
+      <p class="dek">
+        A teaching summary of Johnston, Kuchler, Kulkarni, and Stroebel's 2026 paper on measuring real-world social ties between places using aggregated Facebook friendship links.
+      </p>
+      <div class="byline">
+        <span class="pill">Paper: 6 pages</span>
+        <span class="pill">Data: Facebook friendship links</span>
+        <span class="pill">Coverage: 178 countries</span>
+        <span class="pill">Focus: places, not income classes</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>One-Sentence Takeaway</h2>
+      <p>
+        The <strong>Social Connectedness Index</strong>, or <strong>SCI</strong>, measures how socially tied two geographic places are by asking: after adjusting for how many Facebook users live in each place, how likely is a user in place <em>i</em> to be Facebook friends with a user in place <em>j</em>?
+      </p>
+      <div class="callout">
+        <strong>Plain English:</strong> SCI is a map of friendship intensity between places. A higher SCI means people in two places are unusually likely to be friends, relative to the size of their Facebook-user populations.
+      </div>
+    </section>
+
+    <section>
+      <h2>The Basic Idea</h2>
+      <p>
+        Suppose you want to know whether Los Angeles is more socially connected to New York, Mexico City, Seoul, or a nearby California county. Counting raw Facebook friendships is not enough, because large places mechanically have more people and therefore more possible friendships.
+      </p>
+      <p>
+        The SCI fixes this by normalizing the number of friendship links by the number of Facebook users in each location. That turns the measure into something like a relative friendship probability.
+      </p>
+      <div class="formula">
+        SCI<sub>i,j</sub> = Friendships<sub>i,j</sub> / (Pop<sub>i</sub> x Pop<sub>j</sub>)<br>
+        <small>Friendships are Facebook friendship links between locations; Pop is the Facebook-user population in each location.</small>
+      </div>
+      <p>
+        If the SCI between A and B is twice the SCI between A and C, then a randomly chosen Facebook user in A is roughly twice as likely to be friends with a randomly chosen Facebook user in B as with one in C. The key word is <strong>relative</strong>: the published values are scaled inside each dataset, so ratios and rankings are the meaningful interpretation.
+      </p>
+    </section>
+
+    <section>
+      <h2>What the Paper Contributes</h2>
+      <p>
+        This paper describes a new release of the SCI data as of <strong>January 25, 2026</strong>. Compared with earlier versions, it expands global coverage and adds finer geographic resolution.
+      </p>
+      <div class="grid">
+        <div class="mini">
+          <strong>Broader global coverage</strong>
+          The sample includes Facebook users from 178 countries who were recently active and had more than 20 friends.
+        </div>
+        <div class="mini">
+          <strong>More granular places</strong>
+          The release supports country-to-country, region-to-region, and country-to-region connectedness.
+        </div>
+        <div class="mini">
+          <strong>Privacy protections</strong>
+          Small geographic units are excluded and published statistics are protected with differential privacy.
+        </div>
+        <div class="mini">
+          <strong>Research-ready stability</strong>
+          The authors report a 0.97 correlation with the 2021 release at both country and U.S. county levels.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What Data Go Into It?</h2>
+      <p>
+        The paper uses Facebook friendships as a proxy for offline social ties. A Facebook friendship is useful for this purpose because it is undirected and requires mutual confirmation by both users.
+      </p>
+      <ul class="checklist">
+        <li><strong>User sample:</strong> active Facebook users in the 30 days before January 25, 2026.</li>
+        <li><strong>Friendship threshold:</strong> users must have more than 20 Facebook friends.</li>
+        <li><strong>Location assignment:</strong> users are assigned to estimated home locations using signals such as self-reported location, IP addresses, and platform activity patterns.</li>
+        <li><strong>Minimum geography size:</strong> units with fewer than 500 users are excluded.</li>
+        <li><strong>Privacy:</strong> released statistics use differential privacy, so researchers work with aggregate protected data, not individual-level friendship records.</li>
+      </ul>
+      <p class="muted">
+        The authors are careful that Facebook is not a perfect map of all social relationships. It is large enough to be unusually useful, but not universal or identical across countries.
+      </p>
+    </section>
+
+    <section>
+      <h2>How to Interpret a Map</h2>
+      <p>
+        Pick one focal location. The SCI map colors other places by how strongly they are connected to that focal location. Darker or higher values mean a stronger relative likelihood of friendship.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Pattern</th>
+              <th>What it means</th>
+              <th>Why it matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Distance decay</td>
+              <td>Nearby places usually have stronger ties.</td>
+              <td>Social networks are still geographically grounded.</td>
+            </tr>
+            <tr>
+              <td>Border effects</td>
+              <td>Connections often drop at state or national borders, even after accounting for distance.</td>
+              <td>Political and administrative boundaries shape social life.</td>
+            </tr>
+            <tr>
+              <td>Historical ties</td>
+              <td>Migration, settlement, and trade patterns can leave visible network traces.</td>
+              <td>Today's social ties can encode older economic and cultural relationships.</td>
+            </tr>
+            <tr>
+              <td>Network concentration</td>
+              <td>Some places' networks are highly local; others are spread across many regions.</td>
+              <td>Different places may be exposed to different information, opportunities, shocks, and norms.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>What This Is Useful For</h2>
+      <p>
+        The SCI is useful whenever the researcher thinks relationships between places matter, but geographic distance alone is too crude.
+      </p>
+      <div class="two-col">
+        <ul>
+          <li>Migration and diaspora ties</li>
+          <li>International trade and regional commerce</li>
+          <li>Spread of beliefs, behaviors, or health information</li>
+          <li>Disaster response and displacement prediction</li>
+          <li>Housing markets and location choices</li>
+          <li>Access to capital and investor networks</li>
+          <li>Policy diffusion across regions</li>
+          <li>Community clustering and regional identity</li>
+        </ul>
+      </div>
+      <div class="callout">
+        <strong>Teaching example:</strong> If two regions are far apart but have high SCI, distance alone would miss something important. That "something" might be a migration corridor, shared language, colonial history, trade relationship, or another social bridge.
+      </div>
+    </section>
+
+    <section>
+      <h2>SCI vs. Economic Connectedness</h2>
+      <p>
+        This is the distinction that matters for the earlier Opportunity Insights question.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Concept</th>
+              <th>Question it answers</th>
+              <th>Unit of comparison</th>
+              <th>Typical interpretation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Social Connectedness Index</strong></td>
+              <td>How socially tied are two places?</td>
+              <td>Geographic locations</td>
+              <td>People in place A are more or less likely to be friends with people in place B.</td>
+            </tr>
+            <tr>
+              <td><strong>Economic connectedness</strong></td>
+              <td>How often do lower-SES and higher-SES people become friends?</td>
+              <td>Income or socioeconomic groups</td>
+              <td>Low-income people have more or fewer high-income friends.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Both concepts use friendship-network data, but they study different dimensions. SCI is about <strong>where</strong> social ties go. Economic connectedness is about <strong>who</strong> is connected across class lines.
+      </p>
+    </section>
+
+    <section>
+      <h2>Limitations to Remember</h2>
+      <ul>
+        <li><strong>Facebook users are not everyone.</strong> Coverage varies by country, internet access, age, and platform adoption.</li>
+        <li><strong>A friendship link is not tie strength.</strong> SCI counts whether a friendship link exists, not how often people interact or how emotionally close they are.</li>
+        <li><strong>Norms differ across places.</strong> Some cultures or age groups may add Facebook friends more broadly than others.</li>
+        <li><strong>It is relative, not causal by itself.</strong> SCI can reveal network structure, but additional research design is needed to claim that connectedness caused an outcome.</li>
+        <li><strong>Aggregation requires care.</strong> Combining small regions into larger regions should use population-weighted aggregation, not a simple average.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How to Explain It to Someone Else</h2>
+      <ol>
+        <li>Start with the problem: social ties matter, but normal datasets rarely measure them at large scale.</li>
+        <li>Define the object: SCI measures friendship intensity between geographic places.</li>
+        <li>Explain the normalization: raw friendship counts are divided by the product of the two Facebook-user populations.</li>
+        <li>Give the ratio interpretation: twice the SCI means about twice the likelihood of friendship between random users from those places.</li>
+        <li>State the caveat: this is Facebook-based, aggregate, privacy-protected, and relative.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Quick Self-Check</h2>
+      <div class="grid">
+        <div class="mini">
+          <strong>Why not just count friendships?</strong>
+          Big places have more possible friendships. SCI adjusts for the number of Facebook users in both places.
+        </div>
+        <div class="mini">
+          <strong>What does "twice as high" mean?</strong>
+          A random user in the focal place is about twice as likely to be friends with a random user in the comparison place.
+        </div>
+        <div class="mini">
+          <strong>Does SCI measure class mixing?</strong>
+          No. That is economic connectedness. SCI measures geographic connectedness.
+        </div>
+        <div class="mini">
+          <strong>Is it individual-level data?</strong>
+          No. The public release is aggregate and privacy-protected.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Sources</h2>
+      <ul class="source-list">
+        <li>Johnston, Drew; Kuchler, Theresa; Kulkarni, Manas; and Stroebel, Johannes. <em>The Social Connectedness Index</em>. 2026 working paper / Data in Brief article.</li>
+        <li><a href="https://pages.stern.nyu.edu/~jstroebe/PDF/JKKS_SCI.pdf">Downloaded PDF mirror from NYU Stern</a>.</li>
+        <li><a href="https://social-connectedness.org/">Social Connectedness Index tools and citation page</a>.</li>
+        <li><a href="https://data.humdata.org/dataset/social-connectedness-index">Facebook Social Connectedness Index on the Humanitarian Data Exchange</a>.</li>
+        <li>Related background: Bailey, Cao, Kuchler, Stroebel, and Wong. "Social Connectedness: Measurement, Determinants, and Effects." <em>Journal of Economic Perspectives</em>, 2018.</li>
+      </ul>
+    </section>
+
+    <footer>
+      Prepared as a pedagogical summary from the downloaded paper and public SCI documentation. This page is a summary, not a reproduction of the paper.
+    </footer>
+  </main>
+</body>
+</html>
