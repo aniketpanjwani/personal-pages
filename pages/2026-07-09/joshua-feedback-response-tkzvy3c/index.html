@@ -1,0 +1,1311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>How Joshua’s Feedback Was Addressed</title>
+
+  <meta charset="utf-8">
+  <style>
+:root {
+  color-scheme: light;
+  --bg: #f3f4f1;
+  --paper: #ffffff;
+  --ink: #1d2421;
+  --muted: #5f6863;
+  --line: #d9dfda;
+  --accent: #176b5d;
+  --accent-soft: #e5f2ed;
+  --blue: #245f91;
+  --blue-soft: #e9f0f8;
+  --rose: #8b3f57;
+  --rose-soft: #f7e9ee;
+  --gold: #7c5618;
+  --gold-soft: #f8efdc;
+  --gray-soft: #f5f6f4;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.58 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+a { color: var(--accent); }
+button, summary { font: inherit; }
+code {
+  padding: 0.08rem 0.28rem;
+  border-radius: 4px;
+  background: rgba(23, 107, 93, 0.08);
+  font: 0.88em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  overflow-wrap: anywhere;
+}
+h1, h2, h3, h4 { margin-top: 0; line-height: 1.2; letter-spacing: 0; }
+h1 { max-width: 820px; margin-bottom: 12px; font-size: clamp(2rem, 4vw, 3.4rem); }
+h2 { margin-bottom: 8px; font-size: clamp(1.45rem, 2.2vw, 2rem); }
+h3 { margin-bottom: 14px; font-size: 1.18rem; }
+h4 { margin-bottom: 6px; font-size: 0.78rem; text-transform: uppercase; }
+p { margin: 0 0 12px; }
+.page { width: min(calc(100% - 40px), 1320px); margin: 0 auto; padding: 34px 0 64px; }
+.hero {
+  padding: clamp(24px, 4vw, 48px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+}
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.subtitle { max-width: 780px; color: var(--muted); font-size: 1.08rem; }
+.meta, .stats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.pill, .stat {
+  min-width: 0;
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--gray-soft);
+  color: #444d48;
+  font-size: 0.88rem;
+}
+.stat { min-width: 145px; background: var(--paper); }
+.stat strong { display: block; color: var(--ink); font-size: 1.2rem; }
+.layout { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 30px; align-items: start; margin-top: 26px; }
+.toc {
+  position: sticky;
+  top: 18px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+}
+.toc a { display: block; padding: 7px 8px; border-radius: 5px; color: #48514c; text-decoration: none; font-size: 0.9rem; }
+.toc a:hover, .toc a:focus-visible { background: var(--accent-soft); color: var(--accent); outline: none; }
+.content { min-width: 0; }
+.report-section { margin-bottom: 34px; scroll-margin-top: 20px; }
+.summary-panel {
+  padding: clamp(22px, 3vw, 32px);
+  border-left: 5px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  background: var(--paper);
+}
+.summary-panel p { max-width: 78ch; }
+.summary-list { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+.summary-list li { position: relative; padding-left: 24px; }
+.summary-list li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
+.decision-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.decision-card { padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+.decision-card h3 { margin-bottom: 8px; }
+.section-heading { display: flex; justify-content: space-between; gap: 20px; align-items: end; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 2px solid var(--line); }
+.section-heading p:not(.eyebrow) { max-width: 72ch; margin: 0; color: var(--muted); }
+.section-count { flex: 0 0 auto; color: var(--muted); font-size: 0.88rem; }
+.feedback-list { display: grid; gap: 12px; }
+.feedback-item { padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); scroll-margin-top: 20px; }
+.item-topline { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 9px; }
+.item-id { color: var(--muted); font: 700 0.78rem ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.status { padding: 4px 8px; border: 1px solid transparent; border-radius: 999px; font-size: 0.76rem; font-weight: 800; }
+.status-done { border-color: #b9d9cc; background: var(--accent-soft); color: #13574b; }
+.status-followup { border-color: #ead6a9; background: var(--gold-soft); color: var(--gold); }
+.status-recommendation { border-color: #bfd1e3; background: var(--blue-soft); color: var(--blue); }
+.status-waiting { border-color: #e4bdc9; background: var(--rose-soft); color: var(--rose); }
+.status-setup { border-color: #ccd2ce; background: var(--gray-soft); color: #4e5752; }
+.plain-answer { max-width: 86ch; }
+.plain-answer p:last-child { margin-bottom: 0; }
+.decision { margin-top: 14px; padding: 11px 13px; border-left: 3px solid var(--blue); background: var(--blue-soft); color: #304b62; }
+.technical { margin-top: 16px; border-top: 1px solid var(--line); }
+.technical summary { display: flex; justify-content: space-between; align-items: center; padding: 13px 0 0; color: var(--accent); cursor: pointer; font-size: 0.9rem; font-weight: 800; list-style: none; }
+.technical summary::-webkit-details-marker { display: none; }
+.technical summary::after { content: "+"; width: 24px; height: 24px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); }
+.technical[open] summary::after { content: "-"; }
+.technical-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.technical-grid > div { min-width: 0; padding: 14px; border-radius: 6px; background: var(--gray-soft); color: #46504a; font-size: 0.9rem; }
+.technical-grid p { margin: 0; }
+.technical-wide { grid-column: 1 / -1; }
+.classification { margin: 12px 0 0; color: var(--muted); font-size: 0.82rem; }
+.evidence-controls { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+.evidence-toggle { padding: 9px 12px; border: 1px solid var(--accent); border-radius: 6px; background: var(--paper); color: var(--accent); cursor: pointer; font-weight: 800; }
+.evidence-toggle:hover, .evidence-toggle:focus-visible { background: var(--accent-soft); outline: 2px solid transparent; }
+.appendix-list { display: grid; gap: 12px; }
+.appendix-list article { padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+.appendix-list ul { margin-bottom: 0; }
+footer { margin-top: 34px; color: var(--muted); text-align: center; font-size: 0.84rem; }
+@media (max-width: 980px) {
+  .page { width: min(calc(100% - 24px), 1320px); padding-top: 18px; }
+  .layout { display: block; }
+  .toc { position: static; margin-bottom: 24px; }
+  .toc nav { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 4px; }
+  .toc a { flex: 0 0 auto; }
+}
+@media (max-width: 700px) {
+  body { font-size: 15px; }
+  .page { width: min(calc(100% - 18px), 1320px); }
+  .hero { padding: 22px 17px; }
+  .meta, .stats { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .decision-grid, .technical-grid { grid-template-columns: 1fr; }
+  .technical-wide { grid-column: auto; }
+  .section-heading { align-items: start; }
+  .section-count { margin-top: 28px; }
+  .feedback-item { padding: 17px; }
+  .item-topline { align-items: flex-start; }
+}
+@media print {
+  body { background: white; }
+  .page { width: 100%; padding: 0; }
+  .toc, .evidence-controls { display: none; }
+  .technical { break-inside: avoid; }
+  .technical:not([open]) > *:not(summary) { display: block; }
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="hero">
+    <p class="eyebrow">No Bluff Local · Feedback response · Updated 9 July 2026</p>
+    <h1>How Joshua’s feedback was addressed</h1>
+    <p class="subtitle">A plain-language response to every item from the 5 July feedback, including what changed, what we recommend keeping, and what still needs follow-up. Technical proof is available inside each item.</p>
+    <div class="meta">
+      <span class="pill"><strong>Feedback received:</strong> 5 July 2026</span>
+      <span class="pill"><strong>Latest validation:</strong> 9 July 2026</span>
+      <span class="pill"><strong>Coverage:</strong> All 42 feedback items</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong>29</strong>Changes completed</div>
+      <div class="stat"><strong>2</strong>Recommendations to confirm</div>
+      <div class="stat"><strong>11</strong>Setup or visual follow-ups</div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="toc" aria-label="Report contents">
+      <p class="eyebrow">Contents</p>
+      <nav>
+        <a href="#summary">Summary</a>
+        <a href="#decisions">Decisions and follow-up</a>
+        <a href="#setup">Setup and overall design</a>
+        <a href="#home">Homepage</a>
+        <a href="#directory">Business directory</a>
+        <a href="#business-pages">Business pages</a>
+        <a href="#events">Events</a>
+        <a href="#jobs">Jobs</a>
+        <a href="#submissions">Submissions</a>
+        <a href="#appendix">Technical appendix</a>
+      </nav>
+    </aside>
+
+    <div class="content">
+      <section class="report-section summary-panel" id="summary">
+        <p class="eyebrow">At a glance</p>
+        <h2>Most requested changes are complete</h2>
+        <p>This report responds to every point in Joshua’s feedback. Twenty-nine requested changes have been implemented and checked. Two requests are recommendations to keep the current behavior, and eleven items are setup tasks or visual details that remain open.</p>
+        <ul class="summary-list">
+          <li>The main directory, event, job, submission, map, and mobile-enquiry behavior has been addressed.</li>
+          <li>We recommend keeping normal same-tab navigation for internal links and postponing multi-select filters unless the simpler model is rejected.</li>
+          <li>The main remaining design work is exact matching to the supplied PDF and icon references.</li>
+          <li>Resend configuration and About-page content remain separate follow-up items.</li>
+        </ul>
+      </section>
+
+      <section class="report-section" id="decisions">
+        <p class="eyebrow">What still needs attention</p>
+        <h2>Decisions and follow-up</h2>
+        <div class="decision-grid">
+          <article class="decision-card">
+            <h3>Two recommendations to confirm</h3>
+            <p>Keep event and job links in the same tab because they stay within No Bluff Local. Keep one selection per filter for launch, while combining location, category, and service together.</p>
+          </article>
+          <article class="decision-card">
+            <h3>Visual comparison pass</h3>
+            <p>Several layouts and icons have been improved, but the report does not claim a pixel-for-pixel match to every PDF annotation. The remaining visual items are identified below.</p>
+          </article>
+          <article class="decision-card">
+            <h3>About-page content</h3>
+            <p>The footer link should be added once there is an About page or another confirmed destination. Adding an empty link now would create a dead end.</p>
+          </article>
+          <article class="decision-card">
+            <h3>Access and email setup</h3>
+            <p>The GitHub invitation has been sent and awaits acceptance. Resend notifications still need secure deployment configuration.</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="evidence-controls">
+        <button class="evidence-toggle" type="button" aria-pressed="false">Expand all technical evidence</button>
+      </div>
+
+      <section class="report-section feedback-group" id="setup">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Feedback area</p>
+      <h2>Setup and overall design</h2>
+      <p>Access, deployment setup, and the broad design concerns that apply across the site.</p>
+    </div>
+    <span class="section-count">3 items</span>
+  </div>
+  <div class="feedback-list">
+    <article class="feedback-item" id="item-g0-1">
+  <div class="item-topline">
+    <span class="item-id">G0.1</span>
+    <span class="status status-setup">Setup required</span>
+  </div>
+  <h3>Resend setup and GitHub access</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The remaining handoff should use the supplied Resend setup details and GitHub profile.</p>
+    <p><strong>Our response:</strong> The GitHub invitation has been sent and will provide read access once it is accepted. Resend remains a launch setup task: its notification settings must be added securely in deployment, rather than placed in the website or documentation.</p>
+  </div>
+  <div class="decision"><strong>Next step:</strong> Joshua only needs to accept the GitHub invitation. Resend still needs to be completed as part of deployment setup.</div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>The handoff listed the Resend notification settings as setup gaps; this was never a website-interface bug.</p></div>
+      <div><h4>Current implementation</h4><p>Still treated as launch/setup work. Beehiiv is configured separately; Resend notification variables remain on the outstanding setup checklist.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Source/doc check: <code>docs/HANDOFF_FOR_JOSHUA.md</code> outstanding setup checklist still lists Resend notification variables; no secret values were read or written.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Operational setup</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-g0-2">
+  <div class="item-topline">
+    <span class="item-id">G0.2</span>
+    <span class="status status-followup">Visual follow-up</span>
+  </div>
+  <h3>Match the supplied design guide</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The live build did not fully reflect the PDF style guide and its annotations.</p>
+    <p><strong>Our response:</strong> Several layouts and icons have been restored, but we cannot yet claim an exact match to every PDF annotation. This remains a focused visual follow-up.</p>
+  </div>
+  <div class="decision"><strong>Next step:</strong> No product decision is needed. The remaining work is a visual comparison pass.</div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit classified this as a regression from approved mockup/PDF expectations.</p></div>
+      <div><h4>Current implementation</h4><p>Implementation improved several layouts/icons, but exact PDF/style-guide parity is not fully proven or complete.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Source/browser checks found two-column event/job detail and SVG filter icons, but Local Operators still use letter tiles and business detail still has placeholder sections. Treat as focused visual parity follow-up.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Difference from the approved design or live-build expectations</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-g0-3">
+  <div class="item-topline">
+    <span class="item-id">G0.3</span>
+    <span class="status status-followup">Visual follow-up</span>
+  </div>
+  <h3>Restore changes lost in the live build</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> A number of content and design improvements appeared to have been lost between the approved mockup and the live build.</p>
+    <p><strong>Our response:</strong> Most of the specific behavior and content differences identified in the feedback have now been corrected. The remaining differences are mainly exact icons and styling, which are called out separately below.</p>
+  </div>
+  <div class="decision"><strong>Next step:</strong> The functional fixes are in place; the remaining work is visual refinement.</div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit umbrella covered lost design/content updates such as duplicate news link, placeholder icons, past events, thin pillar pages, and optional sections.</p></div>
+      <div><h4>Current implementation</h4><p>Most concrete functional rows under this umbrella are addressed. Remaining caveat is exact visual/icon/PDF parity rather than the previously validated optional-section gap.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Matrix rows below identify the closed items and the remaining gaps separately; do not mark this umbrella as fully done.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Difference from the approved design or live-build expectations</p>
+  </details>
+</article>
+
+  </div>
+</section>
+
+<section class="report-section feedback-group" id="home">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Feedback area</p>
+      <h2>Homepage</h2>
+      <p>Homepage content, navigation, featured businesses, and newsletter behavior.</p>
+    </div>
+    <span class="section-count">6 items</span>
+  </div>
+  <div class="feedback-list">
+    <article class="feedback-item" id="item-a1">
+  <div class="item-topline">
+    <span class="item-id">A1</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Give the newsletter popup more breathing room</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The newsletter popup felt cramped against the bottom edge of the screen.</p>
+    <p><strong>Our response:</strong> The popup spacing has been increased and checked on both desktop and mobile-sized screens.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit said newsletter popup existed but bottom spacing was a new polish complaint.</p></div>
+      <div><h4>Current implementation</h4><p>Newsletter modal opens with substantial bottom gap on desktop and phone-sized viewport.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser: opened hero newsletter trigger. Desktop 720px viewport: modal height 284px, bottom gap 218px. Mobile 390x844: modal height 383px, bottom gap 230px.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> New, reasonable request</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-a2">
+  <div class="item-topline">
+    <span class="item-id">A2</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Remove the duplicate News link</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The homepage displayed an unnecessary second “Open No Bluff News” link.</p>
+    <p><strong>Our response:</strong> The duplicate homepage link has been removed. The normal News link in the footer remains.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Pre-merge home page had an extra aside note link labelled <code>Open No Bluff News</code> in addition to News card links.</p></div>
+      <div><h4>Current implementation</h4><p>The extra home-page duplicate link is removed. One footer <code>Open No Bluff News</code> link remains as normal footer navigation.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>The earlier implementation showed the extra <code>Open No Bluff News</code> block. The browser check found no duplicate homepage link; the footer still has one expected News link.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Consistent with prior mockup/requirements</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-a3">
+  <div class="item-topline">
+    <span class="item-id">A3</span>
+    <span class="status status-recommendation">Recommendation</span>
+  </div>
+  <h3>Keep internal links in the same tab</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Homepage event and job links could open in new tabs, as the external News links do.</p>
+    <p><strong>Our response:</strong> We recommend keeping event and job links in the same tab because they lead to pages within No Bluff Local. Opening a new tab for normal internal navigation conflicts with common website expectations. External News links still open in a new tab.</p>
+  </div>
+  <div class="decision"><strong>Next step:</strong> Please confirm that keeping normal same-site navigation is acceptable.</div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Joshua wanted same-site Event/Job mini-feed items to open like external News.</p></div>
+      <div><h4>Current implementation</h4><p>Same-site Event and Job links remain same-tab; external News links open new tab.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser home check: 6 same-site event/job mini links, 0 <code>_blank</code>; external News links all <code>_blank</code>. Response should directly explain this is deliberate because same-site new tabs fight normal expectations.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> New request or scope expansion</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-a4">
+  <div class="item-topline">
+    <span class="item-id">A4</span>
+    <span class="status status-waiting">Waiting on content</span>
+  </div>
+  <h3>Add an About link when the page exists</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> An About link should be added to the footer.</p>
+    <p><strong>Our response:</strong> We have not added a link to a page that does not yet exist. Once About-page content and a destination are agreed, the footer link is straightforward to add.</p>
+  </div>
+  <div class="decision"><strong>Next step:</strong> About-page content or a confirmed destination is needed before this can be completed.</div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Round-two feedback asked to consider an About footer link; current/footer still lacks an About route target.</p></div>
+      <div><h4>Current implementation</h4><p>No blind footer About link added because there is no implemented About page/route/content.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Source check: <code>Footer.tsx</code> has Businesses, Events, Jobs, News, Submit links and no About link. Report should ask for/about-page content before adding it.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Consistent with prior mockup/requirements</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-a5">
+  <div class="item-topline">
+    <span class="item-id">A5</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Make featured businesses intentional</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> It should be clear why the homepage business section shows particular listings and how those listings are chosen.</p>
+    <p><strong>Our response:</strong> The section is now called “Featured Local Businesses.” It only shows businesses deliberately marked as featured, rather than filling empty spaces with arbitrary directory listings. Joshua can feature or unfeature a business through the supplied operator workflow.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Pre-merge home selected featured/premium businesses and then fell back to arbitrary published businesses; label was <code>In the directory now</code>.</p></div>
+      <div><h4>Current implementation</h4><p>Renamed to <code>Featured Local Businesses</code>; only explicitly <code>featured</code> businesses display. Empty seed state shows curation copy instead of arbitrary cards. Ops docs tell Joshua how to feature a business.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser home: <code>Featured Local Businesses</code> present, <code>Directory Now</code> absent, 0 featured cards in seed and fallback text shown. Source/docs: <code>business promote --state featured</code> controls the section.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Consistent with prior mockup/requirements</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-a6">
+  <div class="item-topline">
+    <span class="item-id">A6</span>
+    <span class="status status-followup">Visual follow-up</span>
+  </div>
+  <h3>Restore the Local Operators icons</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The Local Operators tiles no longer matched the icon treatment in the approved design.</p>
+    <p><strong>Our response:</strong> The section still uses letter-style markers rather than the exact approved icon set. This item remains open as part of the visual comparison pass.</p>
+  </div>
+  <div class="decision"><strong>Next step:</strong> The original icon assets or a confirmed replacement set should be applied in the visual pass.</div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit said Local Operators icons regressed from the pre-build/PDF design.</p></div>
+      <div><h4>Current implementation</h4><p>Not fully restored. The home use-case/local operator tiles still render letter-style glyphs.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser home check found use-case glyph text <code>[B, E, J, N]</code>; exact Local Operators icon set needs focused visual parity work.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Difference from the approved design or live-build expectations</p>
+  </details>
+</article>
+
+  </div>
+</section>
+
+<section class="report-section feedback-group" id="directory">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Feedback area</p>
+      <h2>Business directory</h2>
+      <p>Filtering, listing cards, popular services, and the end-of-list experience.</p>
+    </div>
+    <span class="section-count">7 items</span>
+  </div>
+  <div class="feedback-list">
+    <article class="feedback-item" id="item-b1">
+  <div class="item-topline">
+    <span class="item-id">B1</span>
+    <span class="status status-followup">Visual follow-up</span>
+  </div>
+  <h3>Restore icons in the business filters</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The business filter bar used placeholder-style symbols rather than the intended icons.</p>
+    <p><strong>Our response:</strong> The filters now use proper icons. The only remaining question is whether every icon exactly matches the PDF reference.</p>
+  </div>
+  <div class="decision"><strong>Next step:</strong> Functionally complete; exact visual matching remains part of the design pass.</div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit said business filter bar used placeholder symbol icons.</p></div>
+      <div><h4>Current implementation</h4><p>Business filter fields now render inline SVG icons, but exact PDF icon parity is not established.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/businesses</code>: 5 field SVGs. Source: <code>InlineIcon.tsx</code> provides named SVGs. Remaining risk is asset/style parity, not absence of icons.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Difference from the approved design or live-build expectations</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-b2">
+  <div class="item-topline">
+    <span class="item-id">B2</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Make long filter labels readable</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Long category and service names were cramped inside the business filters.</p>
+    <p><strong>Our response:</strong> The filter layout now accommodates long real-world labels and remains usable at smaller screen sizes.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit said long category/service labels were cramped and service taxonomy has 253 services.</p></div>
+      <div><h4>Current implementation</h4><p>Filter layout uses select fields and responsive CSS; long service labels render in real options/chips without breaking the browser check.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/businesses</code>: service chip samples include long labels such as <code>Construction Companies &amp; Project Management</code>; filters remain usable and bottom controls render. Follow-up smoke confirmed no duplicate service option values after slug dedupe.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Consistent with prior mockup/requirements</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-b3">
+  <div class="item-topline">
+    <span class="item-id">B3</span>
+    <span class="status status-recommendation">Recommendation</span>
+  </div>
+  <h3>Keep one selection per filter for now</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> A filter could allow multiple selections and combine them using AND logic.</p>
+    <p><strong>Our response:</strong> The directory currently supports one location, one category, and one service at a time, while combining those three filters together. We recommend keeping this simpler behavior for launch and postponing multi-select unless it proves necessary in real use.</p>
+  </div>
+  <div class="decision"><strong>Next step:</strong> Please confirm that the current one-value-per-filter behavior is acceptable for launch.</div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Joshua requested multi-select pills with AND logic, but audit found current behavior is one value per dimension, AND across dimensions.</p></div>
+      <div><h4>Current implementation</h4><p>Multi-select intentionally not added. Current single-select cross-facet model is kept and explained.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser filtered <code>/businesses?location=albany-wa&amp;category=hospitality-and-food&amp;service=hotels-accommodation</code> shows selected Location/Category/Service and 27 matching businesses. Reply should ask Joshua to accept this before expanding scope.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> New request or scope expansion</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-b4">
+  <div class="item-topline">
+    <span class="item-id">B4</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Show genuinely popular services</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The Popular Services list felt arbitrary and included services with no matching businesses.</p>
+    <p><strong>Our response:</strong> Popular Services are now ranked by the number of matching listings. Services with no listings are excluded.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Old <code>DirectoryFilters</code> rendered the first 12 sorted services as <code>Popular services</code>, regardless of listing count.</p></div>
+      <div><h4>Current implementation</h4><p>Service strip is count-backed, sorted by listing count, and excludes zero-listing services.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/businesses</code>: 12 popular-service chips, min count 16, zero zero-count chips, and no duplicate service option values after dedupe. Old commit showed <code>services.slice(0, 12)</code> with no count filter.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Difference from the approved design or live-build expectations</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-b5">
+  <div class="item-topline">
+    <span class="item-id">B5</span>
+    <span class="status status-followup">Visual follow-up</span>
+  </div>
+  <h3>Clarify listing levels visually</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The visual treatment for listing counts and Featured, Premium, Standard, and Free listings should be restored.</p>
+    <p><strong>Our response:</strong> The listing-level key and labels are present, including a star for Featured listings. Exact matching to the PDF icon treatment still needs a final visual check.</p>
+  </div>
+  <div class="decision"><strong>Next step:</strong> Functionally complete; exact icon styling remains part of the design pass.</div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit requested specific count/Featured/Premium state icons from PDF page 3.</p></div>
+      <div><h4>Current implementation</h4><p>Rank key and Featured/Premium/Standard/Free pills are visible, and Featured uses a star marker, but exact PDF icon treatment is not proven.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/businesses</code>: rank key present for Featured/Premium/Standard/Free. Source <code>BusinessCard</code> has tier pills. Keep as partial visual parity item.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Difference from the approved design or live-build expectations</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-b6">
+  <div class="item-topline">
+    <span class="item-id">B6</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Use the business meta description on cards</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Business cards should use the supplied Meta Description instead of placeholder or generic About text.</p>
+    <p><strong>Our response:</strong> Business cards now prefer the Meta Description. They only fall back to other text when a Meta Description is unavailable.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Old <code>BusinessCard</code> summary used <code>about</code>, then category, then generic fallback.</p></div>
+      <div><h4>Current implementation</h4><p>Business cards now use <code>metaDescription</code>, then <code>about</code>, then category/generic fallback.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Source: <code>BusinessCard.tsx</code> summary order is <code>metaDescription ?? about ?? categoryName</code>. Seed/projection check: 828/828 published businesses have meta descriptions.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Consistent with prior mockup/requirements</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-b7">
+  <div class="item-topline">
+    <span class="item-id">B7</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Add clear controls at the end of the list</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The Explore by Town and Explore by Category area was not a strong ending, and the page needed a way back to the top.</p>
+    <p><strong>Our response:</strong> The browse links remain because they are useful for discovery, and the page now also provides “See more” and “Back to filters” controls.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Business page ended with Explore by town/category and no continuation/recovery action when truncated.</p></div>
+      <div><h4>Current implementation</h4><p>Discovery links remain for browse/SEO, and bottom controls add See more plus Back to filters.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/businesses</code>: 828 businesses, See more businesses, Back to filters, Explore by town, Explore by category all present.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> New, reasonable request</p>
+  </details>
+</article>
+
+  </div>
+</section>
+
+<section class="report-section feedback-group" id="business-pages">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Feedback area</p>
+      <h2>Business discovery and profiles</h2>
+      <p>Town and service pages, individual business profiles, maps, and mobile enquiry.</p>
+    </div>
+    <span class="section-count">7 items</span>
+  </div>
+  <div class="feedback-list">
+    <article class="feedback-item" id="item-c1">
+  <div class="item-topline">
+    <span class="item-id">C1</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Make town and category pages feel complete</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Filtered business pages felt isolated and needed clearer navigation, sorting or filtering, and a route back to the full directory.</p>
+    <p><strong>Our response:</strong> These pages now show business results, link back to the full filtered directory, and provide continuation and return controls.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit said sub-pillars felt like isolated SEO shells without filtering/sorting or a route back to the full directory.</p></div>
+      <div><h4>Current implementation</h4><p>Sub-pillar pages now include a full-directory link, result cards, and bottom recovery/continuation controls.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/businesses/albany-wa</code>: shows 36 of 639, full-directory link, See more, Back to top. Combo route shows full-directory link too.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Previously agreed</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-c2">
+  <div class="item-topline">
+    <span class="item-id">C2</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Make “Showing X of Y” useful</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The result count was confusing when a page said more businesses existed but gave no way to reach them.</p>
+    <p><strong>Our response:</strong> When more results are available, the page now provides a “See more” control and a link to the full filtered directory.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p><code>Showing X of Y</code> was unclear because users could not reach all Y.</p></div>
+      <div><h4>Current implementation</h4><p>Where results exceed the limit, See more is available; pages also link to full filtered directory.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/businesses/albany-wa</code>: Showing 36 of 639 plus See more and full-directory link. Combo route with 27 of 27 correctly has no See more.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> New, reasonable request</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-c3">
+  <div class="item-topline">
+    <span class="item-id">C3</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Support town-and-service pages</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Combined town and service pages should exist and be reachable.</p>
+    <p><strong>Our response:</strong> Combined town-and-service pages are available and link back to the equivalent full-directory results.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit said town+service combo pages were planned but not obvious/navigable.</p></div>
+      <div><h4>Current implementation</h4><p>Combo route coverage exists through generated service/location slug paths and the page links back to the filtered directory.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser combo check resolved <code>/businesses/hotels-accommodation/albany-wa</code>, heading <code>Hotels &amp; Accommodation – Albany</code>, 27 cards, full-directory link.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Previously agreed</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-d1">
+  <div class="item-topline">
+    <span class="item-id">D1</span>
+    <span class="status status-followup">Visual follow-up</span>
+  </div>
+  <h3>Bring business profiles closer to the approved design</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Business profiles should return to the pre-live layout, with cleaner opening hours and clearer separation of services and expertise.</p>
+    <p><strong>Our response:</strong> Business profiles now include services, opening hours, location, map, and enquiry tools, while expertise appears only when data exists. The structure is improved, but exact visual matching still needs a final design pass.</p>
+  </div>
+  <div class="decision"><strong>Next step:</strong> The functional structure is present; remaining work is visual refinement.</div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit requested business detail return closer to pre-live design, with services/expertise separate and cleaner opening hours.</p></div>
+      <div><h4>Current implementation</h4><p>Services offered, opening hours, map/location, desktop enquiry, and mobile dock are present; expertise is conditional. Exact detail design remains only partial because placeholders still render.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser/source <code>/business/3-ross-court</code>: Services offered, Opening Hours, Map &amp; Location, enquiry surfaces present; after follow-up, placeholder Gallery/Owner sections are absent when real data is absent.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Difference from the approved design or live-build expectations</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-d2">
+  <div class="item-topline">
+    <span class="item-id">D2</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Hide empty profile sections</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Gallery, owner profile, and other optional areas should only appear when real information exists.</p>
+    <p><strong>Our response:</strong> Empty Gallery and Owner Profile placeholders have been removed. Optional sections now appear only when public data is available.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit said populated-only optional sections were required, including gallery and owner profile.</p></div>
+      <div><h4>Current implementation</h4><p>Fixed. Business detail no longer renders hard-coded <code>Photo Gallery</code> or <code>Owner Profile</code> placeholders when no real public gallery/owner-profile data exists.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser smoke <code>/business/3-ross-court</code>: <code>Photo Gallery</code>, <code>photo 1/2</code>, <code>Owner Profile</code>, and owner placeholder text are absent; Services offered and Map &amp; Location still render.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Previously agreed</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-d3">
+  <div class="item-topline">
+    <span class="item-id">D3</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Use an embedded Google Map</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Business profiles should use a standard embedded Google Map rather than showing a Place ID or sending users elsewhere.</p>
+    <p><strong>Our response:</strong> Business profiles now display a standard Google Maps embed when map information is available. Internal location identifiers are not shown publicly.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit approved Google Maps embeds while hiding raw/admin Place IDs.</p></div>
+      <div><h4>Current implementation</h4><p>Business detail renders a standard Google Maps iframe when embed data is available and does not show Place ID text publicly.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/business/3-ross-court</code>: map iframe present, src starts <code>https://www.google.com/maps</code>, visible Place ID text false. Source/tests strip <code>googleMapsPlaceId</code> from public projection.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> New request or scope expansion</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-i1">
+  <div class="item-topline">
+    <span class="item-id">I1</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Make mobile enquiry persistent and usable</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The mobile Enquire button should remain available and open a slide-up form rather than failing or jumping awkwardly on the page.</p>
+    <p><strong>Our response:</strong> Mobile business profiles now have a fixed Enquire control that opens an accessible slide-up form with the expected contact fields.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit said mobile business-detail Enquire should be persistent and open a sheet/dialog rather than jump to an inline form.</p></div>
+      <div><h4>Current implementation</h4><p>Mobile detail has a fixed Enquire dock that opens an accessible bottom-sheet dialog with enquiry form fields.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser mobile 390x844 <code>/business/3-ross-court</code>: dock display block, position fixed, one Enquire button; after click <code>.mobile-enquiry-sheet[role=dialog]</code> opens with Name, Email, Phone, Message fields and body overflow locked.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Previously agreed</p>
+  </details>
+</article>
+
+  </div>
+</section>
+
+<section class="report-section feedback-group" id="events">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Feedback area</p>
+      <h2>Events</h2>
+      <p>Event filters, cards, lists, and individual event pages.</p>
+    </div>
+    <span class="section-count">8 items</span>
+  </div>
+  <div class="feedback-list">
+    <article class="feedback-item" id="item-e1">
+  <div class="item-topline">
+    <span class="item-id">E1</span>
+    <span class="status status-followup">Visual follow-up</span>
+  </div>
+  <h3>Restore icons in the event filters</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The event filter bar had lost the intended icon treatment.</p>
+    <p><strong>Our response:</strong> The event filters now use proper icons. Exact matching to the PDF reference remains part of the final visual pass.</p>
+  </div>
+  <div class="decision"><strong>Next step:</strong> Functionally complete; exact visual matching remains open.</div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit said event filter bar icons regressed from PDF design.</p></div>
+      <div><h4>Current implementation</h4><p>Event filter fields now have inline SVG icons; exact PDF icon/style parity remains unverified.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/events</code>: 5 field SVGs. Treat as icon-presence fixed but visual parity still open.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Difference from the approved design or live-build expectations</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-e2">
+  <div class="item-topline">
+    <span class="item-id">E2</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Repair event filtering</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The event filter bar was not working correctly.</p>
+    <p><strong>Our response:</strong> Events can now be filtered by location, category, and date, and the public list shows upcoming events only.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit said event filters were not totally mechanically broken, but visible UX was incomplete/confusing.</p></div>
+      <div><h4>Current implementation</h4><p>Events filter by location/category/date fields, and the listing displays upcoming results only.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/events?location=Albany&amp;category=Arts%20and%20culture</code>: selected Location Albany, Category Arts and culture, count 51 upcoming events, 36 rendered cards.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Difference from the approved design or live-build expectations</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-e3">
+  <div class="item-topline">
+    <span class="item-id">E3</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Show both category and town on event cards</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Event cards should make both the event category and location visible.</p>
+    <p><strong>Our response:</strong> Event cards now display both category and location labels.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit requested event pills include category as well as town.</p></div>
+      <div><h4>Current implementation</h4><p>Event cards show location and category pills.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/events</code>: first sampled event cards each had 2 pills; text samples include Albany plus category labels.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Consistent with prior mockup/requirements</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-e4">
+  <div class="item-topline">
+    <span class="item-id">E4</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Make event search consistent with businesses</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The events page should follow the same general search and filtering pattern as the business directory.</p>
+    <p><strong>Our response:</strong> The events page now includes search, location, category, and date filters, along with browse shortcuts and clear controls at the bottom.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit wanted event search/filtering consistent with business pillar.</p></div>
+      <div><h4>Current implementation</h4><p>Events page has keyword, location, category, date range fields plus browse-by-town/category chips and bottom controls.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/events</code>: select labels Location and Category, Browse by town/category present, See more events and Back to filters present.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Consistent with prior mockup/requirements</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-e5">
+  <div class="item-topline">
+    <span class="item-id">E5</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Remove past events from the public list</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Past events should not appear on the main public Events page.</p>
+    <p><strong>Our response:</strong> The public Events page now shows upcoming events only and no longer includes a Past Events section.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Old events page explicitly rendered a <code>Past events</code> section.</p></div>
+      <div><h4>Current implementation</h4><p>Public Events page renders upcoming events and no Past section text.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Old commit showed <code>past = ...</code> and <code>Past events</code>. Browser <code>/events</code>: count 249 upcoming events, <code>Past</code> text false.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Previously agreed</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-e6">
+  <div class="item-topline">
+    <span class="item-id">E6</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Improve the information shown on event cards</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Event cards should remove the generic Upcoming label and instead show useful details such as location, category, organiser, time, summary, price, and a clear Details action.</p>
+    <p><strong>Our response:</strong> Event cards now emphasize those practical details and use a clearer footer for cost, date, and the Details action.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit said event cards needed location/category, organiser, time, overview, divider/footer, price/date, Details CTA instead of Upcoming/Past pill emphasis.</p></div>
+      <div><h4>Current implementation</h4><p>Event cards now emphasize location/category pills, organiser/time, summary, and a footer with cost/date plus Details.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/events</code>: sampled card text shows category/location, organiser/time, summary, and Details; no Past text on page.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Consistent with prior mockup/requirements</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-e7">
+  <div class="item-topline">
+    <span class="item-id">E7</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Add event-list continuation controls</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Long event lists should provide “See more” and an easy way back to the filters.</p>
+    <p><strong>Our response:</strong> The Events page now includes “See more events” and “Back to filters” controls.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Events lacked See more and Back up top/recovery controls.</p></div>
+      <div><h4>Current implementation</h4><p>Events page has See more events and Back to filters.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/events</code>: both controls present.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> New, reasonable request</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-f1">
+  <div class="item-topline">
+    <span class="item-id">F1</span>
+    <span class="status status-followup">Visual follow-up</span>
+  </div>
+  <h3>Bring event details closer to the approved design</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Event detail pages should return to the stronger pre-live or PDF layout.</p>
+    <p><strong>Our response:</strong> Event details now use a two-column layout with the main description and a separate facts and actions area. Exact PDF matching still needs a final visual comparison.</p>
+  </div>
+  <div class="decision"><strong>Next step:</strong> The improved structure is in place; precise styling remains open.</div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit wanted event detail returned to pre-live/PDF reference.</p></div>
+      <div><h4>Current implementation</h4><p>Event detail now uses <code>split-detail-layout</code> with main content and facts/action rail, but exact PDF parity is not proven.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Source/browser <code>/event/albany-is</code>: <code>split-detail-layout</code>, About this event, Where, aside facts/actions, Submit/Back pathways. Keep exact visual match as a focused pass.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Difference from the approved design or live-build expectations</p>
+  </details>
+</article>
+
+  </div>
+</section>
+
+<section class="report-section feedback-group" id="jobs">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Feedback area</p>
+      <h2>Jobs</h2>
+      <p>Job filters, cleaned data, cards, lists, and individual job pages.</p>
+    </div>
+    <span class="section-count">8 items</span>
+  </div>
+  <div class="feedback-list">
+    <article class="feedback-item" id="item-g1">
+  <div class="item-topline">
+    <span class="item-id">G1</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Repair and reorder the job filters</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Job filters were broken and should appear in the order Location, Category, then Type.</p>
+    <p><strong>Our response:</strong> The filters now work in that order and correctly narrow the results.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit said jobs filters mechanically submitted but UX/data quality were the real issues; desired order Location, Category, Type.</p></div>
+      <div><h4>Current implementation</h4><p>Jobs filter bar is ordered Location, Category, Type and direct filter URLs narrow results.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/jobs</code>: select labels Location, Category, Type. <code>/jobs?location=Albany&amp;type=Casual</code>: selected Albany/Casual and 13 open roles.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Consistent with prior mockup/requirements</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-g2">
+  <div class="item-topline">
+    <span class="item-id">G2</span>
+    <span class="status status-followup">Visual follow-up</span>
+  </div>
+  <h3>Restore icons in the job filters</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The job filter bar had lost the intended icon treatment.</p>
+    <p><strong>Our response:</strong> The job filters now use proper icons. Exact matching to the PDF reference remains part of the final visual pass.</p>
+  </div>
+  <div class="decision"><strong>Next step:</strong> Functionally complete; exact visual matching remains open.</div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit requested jobs filter bar icons restored from PDF design.</p></div>
+      <div><h4>Current implementation</h4><p>Jobs filter fields now have inline SVG icons; exact PDF icon/style parity remains unverified.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/jobs</code>: 4 field SVGs. Treat as icon-presence fixed, visual parity still open.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Difference from the approved design or live-build expectations</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-g3">
+  <div class="item-topline">
+    <span class="item-id">G3</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Show all active job filters clearly</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The selected-filter labels should reflect location, category, and employment type.</p>
+    <p><strong>Our response:</strong> The page now displays active labels for all three filter types.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Jobs quick chips were type-only despite three filter dimensions.</p></div>
+      <div><h4>Current implementation</h4><p>Jobs chips now reflect Location, Category, and Type.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/jobs</code>: chip labels are Location, Category, Type.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Consistent with prior mockup/requirements</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-g4">
+  <div class="item-topline">
+    <span class="item-id">G4</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Clean up inconsistent employment-type data</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The source job data used inconsistent labels, so employment type and work schedule needed to be standardized.</p>
+    <p><strong>Our response:</strong> Jobs are now translated into consistent employment-type and work-schedule fields for filtering and display. The original source text is retained internally when it is needed for reference.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Old jobs filtering/card display used raw <code>term</code> or <code>fteLoading</code>; source data was messy.</p></div>
+      <div><h4>Current implementation</h4><p>Schema/import/public display include normalized <code>employmentType</code> and <code>workSchedule</code>, preserving raw source as fallback/internal context.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Source/data: <code>jobNormalization.ts</code>, schema fields, ops write fields, tests. Seed check for <code>education-assistant-special-needs</code>: Employment Type Permanent, Work Schedule Part-time, raw FTE not shown on public detail.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Approved implementation clarification</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-g5">
+  <div class="item-topline">
+    <span class="item-id">G5</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Make job search consistent with businesses</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> The Jobs page should follow the same general search and filtering pattern as the business directory.</p>
+    <p><strong>Our response:</strong> The page now includes search, Location, Category, and Type filters, selected-filter labels, result counts, submission access, and bottom controls.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Audit said jobs filtering should match business pillar conventions.</p></div>
+      <div><h4>Current implementation</h4><p>Jobs page now uses search, Location/Category/Type selects, matching chips, count bar, Submit CTA, and bottom controls.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/jobs</code>: 117 open roles, select labels Location/Category/Type, chips for all three, See more jobs, Back to filters.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Consistent with prior mockup/requirements</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-g6">
+  <div class="item-topline">
+    <span class="item-id">G6</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Show richer information on job cards</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Job cards should include title, employer, location, employment type, schedule, pay or benefits, age of the listing, closing information, and a clear action.</p>
+    <p><strong>Our response:</strong> Job cards now show those details when the source data provides them, with a clear “View role” action.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Old JobCard showed title/employer/location/raw term/remuneration, a static New badge, and less structured date/CTA hierarchy.</p></div>
+      <div><h4>Current implementation</h4><p>Job cards show title, employer/location, normalized type/schedule, remuneration, benefits/closing info, days-since-posted, and View Role.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/jobs</code> sampled cards include Permanent/Full-time or Casual, remuneration, Benefits listed, closes dates, <code>9 days ago</code>, and View Role. Old commit had static <code>New</code> pill.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Approved aggregation-page card update</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-g7">
+  <div class="item-topline">
+    <span class="item-id">G7</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Add job-list continuation controls</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Long job lists should provide “See more” and an easy way back to the filters.</p>
+    <p><strong>Our response:</strong> The Jobs page now includes “See more jobs” and “Back to filters” controls.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Jobs lacked See more and Back up top/recovery controls.</p></div>
+      <div><h4>Current implementation</h4><p>Jobs page has See more jobs and Back to filters.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/jobs</code>: both controls present.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Approved cross-pillar consistency</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-f2-g8">
+  <div class="item-topline">
+    <span class="item-id">F2/G8</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Restore the stronger job-detail layout</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Job detail pages should return to the pre-live or PDF layout.</p>
+    <p><strong>Our response:</strong> Job details now use a two-column layout with the role description, key facts, actions, standardized type and schedule, navigation back to all jobs, and the local-hiring note.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Old job detail was a centered/simple facts layout with limited narrative architecture.</p></div>
+      <div><h4>Current implementation</h4><p>Job detail uses two-column <code>split-detail-layout</code> with narrative role content, facts/action rail, normalized type/schedule, Back to all jobs, and Hiring locally note.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser/source <code>/job/education-assistant-special-needs</code>: About the role, What to know, Permanent, Part-time, Back to all jobs, Hiring locally. Exact PDF visual parity remains a visual caveat, not a missing architecture.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Approved visual-regression fix</p>
+  </details>
+</article>
+
+  </div>
+</section>
+
+<section class="report-section feedback-group" id="submissions">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Feedback area</p>
+      <h2>Submissions</h2>
+      <p>What the public forms collect and how Joshua processes a submission afterward.</p>
+    </div>
+    <span class="section-count">3 items</span>
+  </div>
+  <div class="feedback-list">
+    <article class="feedback-item" id="item-h1">
+  <div class="item-topline">
+    <span class="item-id">H1</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Use Airtable as a reference, not the live form system</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Submission pages needed improvement and should at least cover the useful fields from the existing Airtable form.</p>
+    <p><strong>Our response:</strong> The public forms now provide a lightweight intake experience based on those useful fields. Submissions are stored in the website’s own system; Airtable remains a reference and import source rather than an ongoing live dependency.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Old forms were structured editors; audit clarified Airtable should be a field/UX reference only, not the runtime backend.</p></div>
+      <div><h4>Current implementation</h4><p>Public submission forms are lightweight Convex intake; Airtable remains seed/import/reference only.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser <code>/submit/business</code>, <code>/submit/event</code>, <code>/submit/job</code> show lightweight forms. Docs <code>CONTEXT.md</code>, <code>HANDOFF_FOR_JOSHUA.md</code>, and <code>nbl-ops-setup.md</code> preserve Convex-only runtime boundary.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Approved as field/UX reference only</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-h2">
+  <div class="item-topline">
+    <span class="item-id">H2</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Collect the information needed for review</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Forms should collect contact details, the submitter’s relationship to the listing, free-text context, relevant files, and interest in featured or promoted placement.</p>
+    <p><strong>Our response:</strong> Business, event, and job forms now collect the appropriate contact, relationship, description, link, attachment, and promotional-interest information.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Old forms lacked explicit owner/representative status and public file uploads.</p></div>
+      <div><h4>Current implementation</h4><p>Business/event/job forms collect relationship, contact, title/link, free text, attachments where relevant, and featured/promoted interest.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser forms: business has Images/logo; event has Images/flyer; job has Attachments; all three have Your relationship and featured/promoted interest.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Approved intake fields</p>
+  </details>
+</article>
+
+<article class="feedback-item" id="item-h3">
+  <div class="item-topline">
+    <span class="item-id">H3</span>
+    <span class="status status-done">Done</span>
+  </div>
+  <h3>Keep public forms simple and process them with human review</h3>
+  <div class="plain-answer">
+    <p><strong>Joshua asked:</strong> Public forms should not force people to understand the site’s publishing schema or enter every structured field themselves.</p>
+    <p><strong>Our response:</strong> The forms accept straightforward descriptions and supporting material. Joshua can then use the operator workflow to review each submission, clean it into the site’s structure, and create a draft before anything is published.</p>
+  </div>
+
+  <details class="technical">
+    <summary>Technical evidence</summary>
+    <div class="technical-grid">
+      <div><h4>Before</h4><p>Old public forms asked for structured publish fields like category/town/date/time/job type.</p></div>
+      <div><h4>Current implementation</h4><p>Public forms avoid structured publish-ready fields; nbl-ops documentation describes human-reviewed processing from raw submissions to drafts.</p></div>
+      <div class="technical-wide"><h4>How it was checked</h4><p>Browser forms: structured publish-field regex false for business/event/job. Docs: submission processing flow lists review, draft creation, dry-run, and human approval.</p></div>
+    </div>
+    <p class="classification"><strong>Earlier assessment:</strong> Approved with human-reviewed processing</p>
+  </details>
+</article>
+
+  </div>
+</section>
+
+
+      <section class="report-section" id="appendix">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">For technical reviewers</p>
+            <h2>Technical appendix</h2>
+            <p>The checks behind the plain-language conclusions above.</p>
+          </div>
+        </div>
+        <div class="appendix-list">
+          <article>
+            <h3>Automated checks</h3>
+            <ul>
+              <li>Type checking passed.</li>
+              <li>The full fixture import completed successfully.</li>
+              <li>All 120 automated tests across 35 test files passed.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Browser checks</h3>
+            <p>The working site was checked across the homepage, business directory and filtered business pages, business profiles, events, jobs, all three submission forms, and the mobile enquiry experience. The final easy fixes were also smoke-checked after deployment.</p>
+          </article>
+          <article>
+            <h3>Validation boundary</h3>
+            <p>Functional behavior was checked against deterministic project data. Exact visual parity with every supplied PDF annotation remains a separate visual review task, which is why those items are labelled “Visual follow-up” rather than “Done.”</p>
+          </article>
+        </div>
+      </section>
+    </div>
+  </div>
+  <footer>Prepared 9 July 2026 · Public-obscure link · Search indexing disabled</footer>
+</main>
+<script>
+  const toggle = document.querySelector('.evidence-toggle');
+  const evidence = Array.from(document.querySelectorAll('details.technical'));
+  toggle.addEventListener('click', () => {
+    const shouldOpen = !evidence.every((item) => item.open);
+    evidence.forEach((item) => { item.open = shouldOpen; });
+    toggle.setAttribute('aria-pressed', String(shouldOpen));
+    toggle.textContent = shouldOpen ? 'Collapse all technical evidence' : 'Expand all technical evidence';
+  });
+</script>
+</body>
+</html>
