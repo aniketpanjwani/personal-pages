@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>What academics actually think of Overleaf</title>
+
+  <meta charset="utf-8">
+  <style>
+:root {
+  color-scheme: light;
+  --bg: #f6f3ee;
+  --paper: #fffdf8;
+  --ink: #171717;
+  --muted: #66645f;
+  --line: #ded7ca;
+  --accent: #176b5d;
+  --accent-soft: #e4f1eb;
+  --blue: #245f91;
+  --blue-soft: #e7eef8;
+  --rose: #94405b;
+  --rose-soft: #f6e7ed;
+  --gold: #8a5a12;
+  --gold-soft: #f7eddb;
+  --shadow: 0 18px 50px rgba(35, 28, 17, 0.08);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  max-width: none;
+  min-width: 0;
+  padding: 0;
+  width: 100%;
+  background:
+    linear-gradient(180deg, rgba(255,253,248,0.86), rgba(246,243,238,1) 360px),
+    var(--bg);
+  color: var(--ink);
+  font: 16px/1.58 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+a { color: var(--accent); }
+p, li, td, th, .field-value, .card, .callout, .appendix-list article {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: rgba(23, 107, 93, 0.08);
+  padding: 0.08rem 0.28rem;
+  border-radius: 5px;
+}
+.page {
+  width: min(calc(100% - 48px), 1500px);
+  max-width: none;
+  margin: 0 auto;
+  padding: clamp(28px, 3vw, 46px) 0 72px;
+}
+.hero {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: clamp(24px, 4vw, 48px);
+  box-shadow: var(--shadow);
+}
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+h1, h2, h3 { line-height: 1.12; letter-spacing: 0; }
+h1 { max-width: 920px; margin: 10px 0 12px; font-size: clamp(2.05rem, 5vw, 4.7rem); }
+h2 { margin: 0 0 16px; font-size: clamp(1.35rem, 2.4vw, 2.2rem); }
+h3 { margin: 0 0 8px; font-size: 1.05rem; }
+.subtitle { max-width: 760px; color: var(--muted); font-size: clamp(1.02rem, 1.6vw, 1.22rem); }
+.meta, .stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.pill, .stat {
+  border: 1px solid var(--line);
+  background: #fffaf1;
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: #47433b;
+  font-size: 0.88rem;
+}
+.stat { min-width: 136px; border-radius: 14px; }
+.stat strong { display: block; font-size: 1.15rem; color: var(--ink); }
+.layout {
+  display: grid;
+  grid-template-columns: clamp(190px, 15vw, 260px) minmax(0, 1fr);
+  gap: clamp(20px, 2.8vw, 44px);
+  align-items: start;
+  margin-top: 28px;
+}
+.toc {
+  position: sticky;
+  top: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255,253,248,0.86);
+  padding: 14px;
+}
+.toc a { display: block; color: #4c4944; text-decoration: none; padding: 7px 8px; border-radius: 8px; font-size: 0.9rem; }
+.toc a:hover { background: var(--accent-soft); color: var(--accent); }
+.content { min-width: 0; width: 100%; }
+.section {
+  margin-bottom: 22px;
+  padding: clamp(20px, 2.4vw, 30px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(35, 28, 17, 0.045);
+}
+.section p { max-width: 84ch; }
+.section-intro { color: var(--muted); }
+.callout {
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+}
+.callout.accent, .card.accent { background: var(--accent-soft); }
+.callout.blue, .card.blue { background: var(--blue-soft); }
+.callout.rose, .card.rose { background: var(--rose-soft); }
+.callout.gold, .card.gold { background: var(--gold-soft); }
+.card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.card {
+  min-width: 0;
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+}
+.muted { color: var(--muted); }
+.field { margin-top: 12px; }
+.field-label { color: var(--muted); font-size: 0.73rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.field-value { margin-top: 2px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+table { width: 100%; border-collapse: collapse; min-width: 720px; background: #fffaf1; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+th { color: #423d34; background: #f2eadc; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+tr:last-child td { border-bottom: 0; }
+.steps { counter-reset: step; list-style: none; padding: 0; display: grid; gap: 12px; }
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 14px 14px 14px 52px;
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.flow-node {
+  position: relative;
+  min-height: 124px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fffaf1;
+}
+.flow-label { color: var(--accent); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+.flow-title { margin-top: 8px; font-weight: 800; }
+.flow-body { margin-top: 6px; color: var(--muted); font-size: 0.92rem; }
+.appendix-list { display: grid; gap: 12px; }
+.appendix-list article { border-top: 1px solid var(--line); padding-top: 14px; }
+footer {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  text-align: center;
+}
+@media (max-width: 860px) {
+  .page { width: min(calc(100% - 24px), 1500px); padding: 16px 0 48px; }
+  .layout { display: block; }
+  .toc { position: static; margin-bottom: 18px; }
+  .toc nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card-grid { grid-template-columns: 1fr; }
+  .section { border-radius: 14px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 15px; }
+  .page { width: min(calc(100% - 20px), 1500px); }
+  .hero { border-radius: 14px; padding: 22px 16px; }
+  .toc nav { grid-template-columns: 1fr; }
+  .meta, .stats { display: grid; }
+  table { min-width: 620px; }
+}
+@media (min-width: 1320px) {
+  .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<div class="eyebrow">Academic workflow research</div>
+<h1>What academics actually think of Overleaf</h1>
+<p class="subtitle">A research synthesis on why academics keep using it, where the workflow breaks, and what economists reveal about the opportunity for an agent-native replacement.</p>
+<div class="meta">
+<span class="pill"><strong>Published:</strong> 10 July 2026</span>
+<span class="pill"><strong>Evidence:</strong> Broad web + economist-heavy X research</span>
+<span class="pill"><strong>Audience:</strong> Product and research collaborators</span>
+<span class="pill"><strong>Access:</strong> Public-obscure, noindex, 14-day TTL</span>
+</div>
+<div class="stats">
+<div class="stat"><strong>4</strong>economist user segments</div>
+<div class="stat"><strong>6</strong>recurring pain clusters</div>
+<div class="stat"><strong>15+</strong>economist voices reviewed</div>
+<div class="stat"><strong>1</strong>critical assumption to test</div>
+</div>
+</header>
+<div class="layout">
+<aside class="toc"><div class="eyebrow">Contents</div><nav>
+<a href="#thesis">Overleaf is valuable collaboration infrastructure with increasingly costly seams</a>
+<a href="#system-map">The manuscript is part of a research system</a>
+<a href="#why-overleaf-wins">Overleaf solves coordination, not just typesetting</a>
+<a href="#pain-points">Six recurring pain clusters</a>
+<a href="#economists">The economist evidence is unusually concrete</a>
+<a href="#deeper-problem">The problem is not “How can Claude edit a .tex file?”</a>
+<a href="#segments">Four economist user segments coexist on the same paper</a>
+<a href="#product-implications">A replacement needs parity above and differentiation below</a>
+<a href="#critical-assumption">Do not assume asynchronous collaboration is enough</a>
+<a href="#next-research">The next research should move from opinions to observed behavior</a>
+<a href="#sources">Selected sources</a>
+</nav></aside>
+<div class="content">
+<section class="section callout-section" id="thesis">
+<div class="eyebrow">The answer in one minute</div><h2>Overleaf is valuable collaboration infrastructure with increasingly costly seams</h2>
+<div class="callout accent">
+<div class="eyebrow">Executive synthesis</div>
+<p>The dominant academic impression is not that Overleaf is a bad product. Academics keep using it because a coauthor can open a link, install nothing, compile the same project, and start editing immediately.</p>
+<p>The pain begins when a paper stops being a self-contained document and becomes one output of a larger research system. Code, data, figures, tables, review metadata, git history, and AI agents then have to cross boundaries that Overleaf was not designed to make seamless.</p>
+<p>For economists, the opportunity is clear: <strong>git-canonical and agent-native underneath, with Overleaf-level coauthor simplicity and human review above it</strong>.</p>
+
+</div></section>
+<section class="section flow-section" id="system-map">
+<div class="eyebrow">A useful mental model</div><h2>The manuscript is part of a research system</h2>
+<p class="section-intro">Economists do not merely write text. They move continuously between analysis, generated artifacts, manuscript claims, and coauthor review. Overleaf is strongest at the final step and weakest at the seams between steps.</p>
+<div class="flow">
+<div class="flow-node">
+<div class="flow-label">1</div>
+<div class="flow-title">Analysis</div>
+<div class="flow-body">Code, data, models, and reruns produce evidence.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">2</div>
+<div class="flow-title">Artifacts</div>
+<div class="flow-body">Tables, figures, and scalar results are generated elsewhere.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">3</div>
+<div class="flow-title">Manuscript</div>
+<div class="flow-body">LaTeX lives in Overleaf or in a separate synced folder.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">4</div>
+<div class="flow-title">Collaboration</div>
+<div class="flow-body">Coauthors comment, revise, compile, and negotiate wording.</div>
+</div>
+</div></section>
+<section class="section cards-section" id="why-overleaf-wins">
+<div class="eyebrow">Why academics stay</div><h2>Overleaf solves coordination, not just typesetting</h2>
+<p class="section-intro">The strongest positive evidence converges on three benefits. Any replacement has to preserve all three at once.</p>
+<div class="card-grid">
+<article class="card accent">
+<div class="eyebrow">Adoption</div>
+<h3>Zero setup</h3>
+<ul><li>A collaborator opens a link and starts working.</li><li>No TeX installation, package management, or editor setup.</li><li>Works on managed university devices and across multiple machines.</li></ul>
+</article>
+<article class="card blue">
+<div class="eyebrow">Execution</div>
+<h3>One compile environment</h3>
+<ul><li>Everyone sees the same packages and compiler behavior.</li><li>The PDF is always available without sending build artifacts.</li><li>Less-technical collaborators never debug a local toolchain.</li></ul>
+</article>
+<article class="card gold">
+<div class="eyebrow">Social moat</div>
+<h3>Coauthor fluency</h3>
+<ul><li>Live editing, comments, sharing, and review are familiar.</li><li>No team-wide agreement on git is required.</li><li>The weakest technical collaborator remains productive.</li></ul>
+</article>
+</div></section>
+<section class="section cards-section" id="pain-points">
+<div class="eyebrow">Where the workflow breaks</div><h2>Six recurring pain clusters</h2>
+<p class="section-intro">These problems are not evenly distributed. They become most visible on serious, long-lived, multi-author, computational papers.</p>
+<div class="card-grid">
+<article class="card rose">
+<div class="eyebrow">Source of truth</div>
+<h3>Stale synchronization</h3>
+<p class="muted">Dropbox, GitHub, local files, and Overleaf can disagree.</p>
+<ul><li>Human edits can be overwritten by an agent working from an older copy.</li><li>Workarounds depend on timing and careful user behavior.</li></ul>
+</article>
+<article class="card rose">
+<div class="eyebrow">Research pipeline</div>
+<h3>Paper and analysis are separated</h3>
+<p class="muted">Figures and tables are generated outside the manuscript project.</p>
+<ul><li>Users copy outputs, maintain sync scripts, or create submodules and symlinks.</li><li>The PDF can drift from the code that produced its results.</li></ul>
+</article>
+<article class="card gold">
+<div class="eyebrow">Version control</div>
+<h3>Git is only a translation layer</h3>
+<p class="muted">Overleaf history is translated into commits on demand.</p>
+<ul><li>No branches, tags, LFS, or nested submodules.</li><li>Authorship and rename semantics do not behave like a normal repository.</li></ul>
+</article>
+<article class="card gold">
+<div class="eyebrow">Review</div>
+<h3>Comments do not cross boundaries</h3>
+<p class="muted">Local and cloud review metadata do not compose safely.</p>
+<ul><li>Git pushes can lose or displace comments and tracked changes.</li><li>Review provenance becomes fragile precisely when agents need it most.</li></ul>
+</article>
+<article class="card blue">
+<div class="eyebrow">Economics</div>
+<h3>Serious use becomes premium</h3>
+<p class="muted">The free plan is a weak fit for complex team projects.</p>
+<ul><li>Current free compile timeout: 10 seconds; premium: 240 seconds.</li><li>History, integrations, track changes, and larger collaborator counts are paid features.</li></ul>
+</article>
+<article class="card blue">
+<div class="eyebrow">Resilience</div>
+<h3>The browser is a dependency</h3>
+<p class="muted">Service incidents can become deadline incidents.</p>
+<ul><li>Writing, compiling, and syncing can depend on one hosted service.</li><li>Users are advised to keep local backups, but local work is not the default model.</li></ul>
+</article>
+</div></section>
+<section class="section matrix-section" id="economists">
+<div class="eyebrow">What economists said</div><h2>The economist evidence is unusually concrete</h2>
+<p class="section-intro">One public thread around Peter Ganong&#x27;s lost edits captured the central tensions: coordination, safety, and the limits of today&#x27;s hybrid workarounds.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Voice</th>
+<th>Observed view</th>
+<th>Product signal</th>
+</tr></thead><tbody>
+<tr>
+<td>Peter Ganong</td>
+<td>Claude overwrote manual edits because Dropbox had not synced; switching to git meant more coauthor coordination.</td>
+<td>The source-of-truth problem is real, but social migration cost dominates.</td>
+</tr>
+<tr>
+<td>Rebecca Diamond</td>
+<td>Had experienced the same stale-sync problem; recommended making both human and agent edits locally.</td>
+<td>The failure is not isolated, and the current fix is behavioral discipline.</td>
+</tr>
+<tr>
+<td>Scott Kominers</td>
+<td>Recommended routing both author and agent through Overleaf&#x27;s git integration.</td>
+<td>Technical users can route around the problem, but the hybrid remains.</td>
+</tr>
+<tr>
+<td>Stefanie Stantcheva</td>
+<td>Expected cloning through git or GitHub to keep human and agent in the same files.</td>
+<td>Users may assume the integration is more complete than it is.</td>
+</tr>
+<tr>
+<td>Joe Vavra</td>
+<td>Wanted insulation between agents, active analysis, and manuscript text.</td>
+<td>Agent changes should be proposed and attributable by default.</td>
+</tr>
+<tr>
+<td>Peter Ganong, again</td>
+<td>Preferred speed and direct editing despite the safety objection.</td>
+<td>Insulation should be a default, not a cage.</td>
+</tr>
+</tbody></table></div></section>
+<section class="section callout-section" id="deeper-problem">
+<div class="eyebrow">The deeper diagnosis</div><h2>The problem is not “How can Claude edit a .tex file?”</h2>
+<div class="callout blue">
+<div class="eyebrow">Reframe</div>
+<p>Joseph Steinberg praised agents for turning half-hour LaTeX chores into seconds, but still liked Overleaf for manual writing and collaboration. The friction was fitting the manuscript into a larger research repository without size limits, slow sync, copied assets, or a second paper-only repo.</p>
+<p>The real problem is: <strong>How can the manuscript become a safe, collaborative view over a reproducible research repository?</strong></p>
+
+</div></section>
+<section class="section matrix-section" id="segments">
+<div class="eyebrow">Who the product must serve</div><h2>Four economist user segments coexist on the same paper</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Segment</th>
+<th>What they optimize</th>
+<th>What loses them</th>
+</tr></thead><tbody>
+<tr>
+<td>Collaboration-first pragmatist</td>
+<td>A link, a browser, and no coauthor setup</td>
+<td>Any workflow that requires teammates to learn git</td>
+</tr>
+<tr>
+<td>Reproducibility-first git user</td>
+<td>One history for code, artifacts, and paper</td>
+<td>Lock-in, manual copying, weak diffs, and browser-only work</td>
+</tr>
+<tr>
+<td>Agent-first hybrid user</td>
+<td>Fast automated edits with full project context</td>
+<td>Stale sync, multiple sources of truth, and missing provenance</td>
+</tr>
+<tr>
+<td>Safety-first senior author</td>
+<td>Human control over manuscript claims</td>
+<td>Silent edits, automatic propagation, and unreviewed agent changes</td>
+</tr>
+</tbody></table></div></section>
+<section class="section cards-section" id="product-implications">
+<div class="eyebrow">What the evidence supports</div><h2>A replacement needs parity above and differentiation below</h2>
+<div class="card-grid">
+<article class="card accent">
+<div class="eyebrow">Non-negotiable parity</div>
+<h3>Keep the social workflow effortless</h3>
+<ul><li>Open a URL; edit, comment, and compile immediately.</li><li>Use one shared compile environment.</li><li>Share and manage permissions without git vocabulary.</li><li>Keep comments and suggestions durably anchored.</li><li>Survive deadline behavior and mixed technical ability.</li></ul>
+</article>
+<article class="card blue">
+<div class="eyebrow">Differentiation</div>
+<h3>Make the repository canonical</h3>
+<ul><li>Paper, code, figures, tables, and build scripts share context.</li><li>Agents work in isolated branches and propose attributable changes.</li><li>Direct mode exists without erasing provenance.</li><li>Local, web, and agent edits share one history.</li><li>Offline work and full export are ordinary capabilities.</li></ul>
+</article>
+</div></section>
+<section class="section callout-section" id="critical-assumption">
+<div class="eyebrow">The product risk</div><h2>Do not assume asynchronous collaboration is enough</h2>
+<div class="callout rose">
+<div class="eyebrow">Critical assumption to test</div>
+<p>The current plan defers real-time keystroke collaboration. Yet effortless co-editing is one of Overleaf&#x27;s clearest perceived advantages.</p>
+<p>Economists may rarely edit the exact same paragraph simultaneously, but they do value opening the same paper during a call and working naturally without merge rituals. Observe real coauthor sessions before treating save-and-merge as sufficient.</p>
+
+</div></section>
+<section class="section steps-section" id="next-research">
+<div class="eyebrow">Recommended validation</div><h2>The next research should move from opinions to observed behavior</h2>
+<ol class="steps">
+<li>
+<strong>Recruit across all four segments</strong>
+<p>Interview 10–15 economists, making sure technically strong git users do not dominate the sample.</p>
+</li>
+<li>
+<strong>Observe two real coauthor sessions</strong>
+<p>Watch how authors divide work, compile, comment, and resolve simultaneous edits during an actual call or deadline push.</p>
+</li>
+<li>
+<strong>Test the weakest-coauthor migration</strong>
+<p>Give a browser-only collaborator a link and measure time to read, edit, comment, compile, and recover a prior version.</p>
+</li>
+<li>
+<strong>Prototype both safety modes</strong>
+<p>Compare suggestion-by-default with direct agent edits while preserving attribution in both modes.</p>
+</li>
+<li>
+<strong>Run the two-hour replacement test</strong>
+<p>Ask whether remaining resistance is product preference or only switching and coauthor coordination cost.</p>
+</li>
+</ol></section>
+<section class="section appendix-section" id="sources">
+<div class="eyebrow">Evidence and provenance</div><h2>Selected sources</h2>
+<p class="section-intro">The report combines current product documentation, independent academic discussion, and a convenience sample of public X posts. X overrepresents technically engaged and agent-curious academics; claims about prevalence require interviews or survey work.</p>
+<div class="appendix-list">
+<article>
+<h3>Current Overleaf behavior</h3>
+<ul><li>Git integration and known limitations — <a href="https://docs.overleaf.com/integrations-and-add-ons/git-integration-and-github-synchronization/git-integration" target="_blank" rel="noopener noreferrer">Open source ↗</a></li><li>Plan limits — <a href="https://docs.overleaf.com/getting-started/free-and-premium-plans/plan-limits" target="_blank" rel="noopener noreferrer">Open source ↗</a></li><li>Track changes — <a href="https://docs.overleaf.com/collaborating/track-changes" target="_blank" rel="noopener noreferrer">Open source ↗</a></li><li>Service status — <a href="https://status.overleaf.com/" target="_blank" rel="noopener noreferrer">Open source ↗</a></li><li>Privacy and terms — <a href="https://www.overleaf.com/legal" target="_blank" rel="noopener noreferrer">Open source ↗</a></li></ul>
+</article>
+<article>
+<h3>Broad academic perspectives</h3>
+<ul><li>TeX Stack Exchange: What is the appeal of Overleaf? — <a href="https://tex.stackexchange.com/questions/573627/whats-the-appeal-of-overleaf" target="_blank" rel="noopener noreferrer">Open source ↗</a></li><li>YY Ahn: Leaving Overleaf — <a href="https://yyahn.com/wiki/Leaving-Overleaf/" target="_blank" rel="noopener noreferrer">Open source ↗</a></li><li>GitHub issue: comments do not cross the git boundary — <a href="https://github.com/overleaf/overleaf/issues/1474" target="_blank" rel="noopener noreferrer">Open source ↗</a></li></ul>
+</article>
+<article>
+<h3>Economist-heavy X evidence</h3>
+<ul><li>Peter Ganong stale-sync thread — <a href="https://x.com/p_ganong/status/2061932140451823946" target="_blank" rel="noopener noreferrer">Open source ↗</a></li><li>Joseph Steinberg on the paper/code split — <a href="https://x.com/jbsteinberg/status/2051659223965069560" target="_blank" rel="noopener noreferrer">Open source ↗</a></li><li>Paul Novosad on track changes — <a href="https://x.com/paulnovosad/status/1702676511533252653" target="_blank" rel="noopener noreferrer">Open source ↗</a></li><li>Kevin Bryan on a git-plus-Overleaf graduate workflow — <a href="https://x.com/Afinetheorem/status/1835042345651233200" target="_blank" rel="noopener noreferrer">Open source ↗</a></li><li>Andrey Fradkin on copying generated artifacts — <a href="https://x.com/AndreyFradkin/status/1076601952878788608" target="_blank" rel="noopener noreferrer">Open source ↗</a></li><li>Chris Blattman on collaborative writing — <a href="https://x.com/cblatts/status/1445431449860050944" target="_blank" rel="noopener noreferrer">Open source ↗</a></li><li>Joshua Gans asking for an agent connector — <a href="https://x.com/joshgans/status/1946911016601718860" target="_blank" rel="noopener noreferrer">Open source ↗</a></li></ul>
+</article>
+<article>
+<h3>Evidence caveats</h3>
+<ul><li>Search surfaces complaints more readily than quiet satisfaction.</li><li>Older posts were used for stable workflow patterns; current limits were checked against present documentation.</li><li>A small 2022 usability thesis was excluded from decision-grade evidence because its abstract and conclusion conflict.</li><li>No private messages, credentials, or client-confidential material are included.</li></ul>
+</article>
+</div></section>
+</div></div>
+<footer>Composed from the sourced research memo dated 9 July 2026. Public-obscure HTML; noindex, nofollow, noarchive; expires after 14 days.</footer>
+</main>
+</body>
+</html>
