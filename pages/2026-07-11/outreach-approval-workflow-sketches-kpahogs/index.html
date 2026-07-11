@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Outreach Approval Workflow Sketches</title>
+
+  <meta charset="utf-8">
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5f6878;
+      --line: #d9dee8;
+      --soft: #f5f7fa;
+      --white: #ffffff;
+      --teal: #087f78;
+      --teal-soft: #e7f5f3;
+      --amber: #986400;
+      --amber-soft: #fff5d6;
+      --red: #b42318;
+      --red-soft: #fff0ee;
+      --blue: #2457a7;
+      --blue-soft: #edf3fc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--white);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      line-height: 1.45;
+      letter-spacing: 0;
+    }
+
+    header {
+      padding: 28px 20px 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    header > div,
+    section > div {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 7px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 750;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 760px;
+      margin: 12px 0 0;
+      color: var(--muted);
+    }
+
+    section {
+      padding: 34px 20px 40px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:nth-of-type(even) { background: var(--soft); }
+
+    .direction-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 390px);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .direction-copy {
+      margin: 7px 0 0;
+      color: var(--muted);
+    }
+
+    .best-for {
+      margin: 0;
+      padding-left: 14px;
+      border-left: 3px solid var(--teal);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .mock {
+      overflow: hidden;
+      border: 1px solid #bec6d4;
+      border-radius: 6px;
+      background: var(--white);
+      box-shadow: 0 8px 24px rgba(23, 32, 51, 0.08);
+    }
+
+    .appbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      min-height: 50px;
+      padding: 10px 14px;
+      color: var(--white);
+      background: #172033;
+    }
+
+    .appbar strong { font-size: 14px; }
+
+    .appbar-meta {
+      color: #d7deea;
+      font-size: 12px;
+      text-align: right;
+    }
+
+    .queue-layout {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.85fr) minmax(380px, 1.4fr);
+      min-height: 480px;
+    }
+
+    .queue {
+      border-right: 1px solid var(--line);
+      background: #fbfcfe;
+    }
+
+    .queue-summary,
+    .pane,
+    .review-body,
+    .batch-body { padding: 16px; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .stat {
+      min-width: 0;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--white);
+    }
+
+    .stat strong,
+    .stat span { display: block; }
+    .stat strong { font-size: 18px; }
+    .stat span { color: var(--muted); font-size: 11px; }
+
+    .row {
+      padding: 13px 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .row.active {
+      border-left: 4px solid var(--blue);
+      padding-left: 12px;
+      background: var(--blue-soft);
+    }
+
+    .row-top,
+    .toolbar,
+    .review-nav,
+    .actionbar,
+    .batch-top,
+    .exception-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .row strong { font-size: 13px; }
+    .row small { display: block; margin-top: 3px; color: var(--muted); }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 2px 7px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge.white-glove { color: var(--blue); background: var(--blue-soft); border-color: #bfd2ef; }
+    .badge.batch { color: var(--teal); background: var(--teal-soft); border-color: #a9d9d4; }
+    .badge.warn { color: var(--amber); background: var(--amber-soft); border-color: #e9cf83; }
+    .badge.block { color: var(--red); background: var(--red-soft); border-color: #f0b7b1; }
+
+    .toolbar {
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .toolbar h3,
+    .review-nav h3,
+    .batch-top h3 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .meta {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--soft);
+    }
+
+    .meta label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .meta span { display: block; margin-top: 3px; font-size: 13px; }
+
+    .evidence {
+      padding: 11px;
+      border-left: 3px solid var(--amber);
+      background: var(--amber-soft);
+      font-size: 13px;
+    }
+
+    .email {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--white);
+    }
+
+    .email .subject {
+      padding-bottom: 9px;
+      border-bottom: 1px solid var(--line);
+      font-weight: 700;
+    }
+
+    .email p { margin: 11px 0 0; }
+    .email mark { background: #dce9fb; color: inherit; }
+
+    button {
+      min-height: 36px;
+      padding: 7px 11px;
+      border: 1px solid #aeb7c5;
+      border-radius: 4px;
+      color: var(--ink);
+      background: var(--white);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    button.primary { color: var(--white); border-color: var(--teal); background: var(--teal); }
+    button.danger { color: var(--red); border-color: #e5aaa4; background: var(--red-soft); }
+
+    .actionbar {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .actionbar small { max-width: 250px; color: var(--muted); }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+
+    .single-review { width: min(760px, 100%); margin: 0 auto; }
+
+    .review-nav {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfe;
+    }
+
+    .progress {
+      width: 120px;
+      height: 6px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #dfe4ec;
+    }
+
+    .progress > span { display: block; width: 42%; height: 100%; background: var(--blue); }
+
+    .reason-list {
+      display: grid;
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .reason {
+      display: grid;
+      grid-template-columns: 105px minmax(0, 1fr);
+      gap: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .reason strong { color: var(--muted); }
+
+    .batch-layout {
+      display: grid;
+      grid-template-columns: minmax(300px, 1.1fr) minmax(320px, 0.9fr);
+    }
+
+    .batch-body { border-right: 1px solid var(--line); }
+
+    .sample-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .sample {
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--soft);
+      font-size: 12px;
+    }
+
+    .sample strong { display: block; margin-bottom: 5px; }
+
+    .exceptions { padding: 16px; background: #fbfcfe; }
+    .exceptions h3 { margin: 0 0 12px; font-size: 16px; }
+
+    .exception {
+      margin-bottom: 10px;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--white);
+    }
+
+    .exception p { margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+
+    .flow-note {
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid #bfd2ef;
+      border-radius: 4px;
+      background: var(--blue-soft);
+      color: #214a83;
+      font-size: 13px;
+    }
+
+    footer {
+      padding: 26px 20px 34px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 760px) {
+      header { padding-top: 22px; }
+      h1 { font-size: 26px; }
+      section { padding: 28px 14px 34px; }
+      .direction-head { grid-template-columns: 1fr; gap: 12px; }
+      .queue-layout,
+      .batch-layout { grid-template-columns: 1fr; }
+      .queue,
+      .batch-body { border-right: 0; border-bottom: 1px solid var(--line); }
+      .queue-layout { min-height: 0; }
+      .queue .row:not(.active) { display: none; }
+      .meta-grid,
+      .sample-grid { grid-template-columns: 1fr; }
+      .actionbar { align-items: flex-start; flex-direction: column; }
+      .actions { width: 100%; justify-content: stretch; }
+      .actions button { flex: 1 1 auto; }
+      .reason { grid-template-columns: 1fr; gap: 3px; }
+      .appbar { align-items: flex-start; }
+      .appbar-meta { max-width: 145px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">Directional visual probe</p>
+      <h1>How should human-agent campaign approval feel?</h1>
+      <p class="intro">Three rough workflow shapes using fictional prospects. Judge scanning speed, confidence, and how naturally white-glove and batch work fit together. Ignore final branding and styling.</p>
+    </div>
+  </header>
+
+  <section>
+    <div>
+      <div class="direction-head">
+        <div>
+          <p class="eyebrow">Direction A</p>
+          <h2>Queue with detail pane</h2>
+          <p class="direction-copy">A compact operating desk. Move through prospects while keeping campaign status, evidence, and the exact message visible together.</p>
+        </div>
+        <p class="best-for"><strong>Best for:</strong> desktop operations, mixed review tiers, and quickly comparing neighboring leads.</p>
+      </div>
+
+      <div class="mock">
+        <div class="appbar">
+          <strong>Academic Econ / Review queue</strong>
+          <span class="appbar-meta">Synced 8 min ago / No remote drift</span>
+        </div>
+        <div class="queue-layout">
+          <aside class="queue">
+            <div class="queue-summary">
+              <div class="stats">
+                <div class="stat"><strong>28</strong><span>prospects</span></div>
+                <div class="stat"><strong>11</strong><span>ready</span></div>
+                <div class="stat"><strong>3</strong><span>blocked</span></div>
+              </div>
+            </div>
+            <div class="row active">
+              <div class="row-top"><strong>Dr. Maya Chen</strong><span class="badge white-glove">White-glove</span></div>
+              <small>Northbridge University / strong research hook</small>
+            </div>
+            <div class="row">
+              <div class="row-top"><strong>Prof. Luis Romero</strong><span class="badge batch">Batch</span></div>
+              <small>Instituto Central / methods director</small>
+            </div>
+            <div class="row">
+              <div class="row-top"><strong>Dr. Lena Fischer</strong><span class="badge block">Drift</span></div>
+              <small>Westland Institute / remote copy changed</small>
+            </div>
+            <div class="row">
+              <div class="row-top"><strong>Prof. David Okafor</strong><span class="badge warn">Review</span></div>
+              <small>Lakeview Economics / connection claim</small>
+            </div>
+          </aside>
+
+          <main class="pane">
+            <div class="toolbar">
+              <h3>Dr. Maya Chen</h3>
+              <span class="badge white-glove">Individual approval required</span>
+            </div>
+            <div class="meta-grid">
+              <div class="meta"><label>Why this person</label><span>Runs the applied micro methods workshop</span></div>
+              <div class="meta"><label>Proof route</label><span>Calgary + UCLouvain</span></div>
+              <div class="meta"><label>Connection</label><span>No named connection used</span></div>
+              <div class="meta"><label>Source check</label><span>3 public sources verified</span></div>
+            </div>
+            <div class="evidence"><strong>Agent note:</strong> White-glove is recommended because the opening references her recent methods initiative directly.</div>
+            <div class="email">
+              <div class="subject">Subject: Agentic coding for economics research</div>
+              <p>Hi Maya,</p>
+              <p><mark>I saw that you are coordinating Northbridge's applied micro methods workshop this year.</mark> I have been running hands-on sessions for economists on using Claude Code and Codex in research workflows...</p>
+              <p>Would a short conversation about whether this could be useful for your group make sense?</p>
+            </div>
+            <div class="actionbar">
+              <small>Approval freezes this exact version. Publishing and launching remain separate.</small>
+              <div class="actions"><button>Request revision</button><button class="danger">Reject</button><button class="primary">Approve version</button></div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <div class="direction-head">
+        <div>
+          <p class="eyebrow">Direction B</p>
+          <h2>Sequential white-glove review</h2>
+          <p class="direction-copy">One prospect at a time, with the agent's reasoning before the message. Designed for focused judgment instead of campaign-level scanning.</p>
+        </div>
+        <p class="best-for"><strong>Best for:</strong> phone review, sensitive peers, strong connection paths, and moments where every message deserves attention.</p>
+      </div>
+
+      <div class="mock single-review">
+        <div class="appbar">
+          <strong>White-glove review</strong>
+          <span class="appbar-meta">5 of 12 / Saved locally</span>
+        </div>
+        <div class="review-nav">
+          <h3>Dr. Maya Chen</h3>
+          <div class="progress"><span></span></div>
+        </div>
+        <div class="review-body">
+          <div class="reason-list">
+            <div class="reason"><strong>Agent rationale</strong><span>Methods-program leadership makes a workshop conversation plausible.</span></div>
+            <div class="reason"><strong>Mechanism used</strong><span>Public-work hook + peer proof + low-pressure workshop CTA.</span></div>
+            <div class="reason"><strong>Not used</strong><span>No network claim; no private correspondence borrowed.</span></div>
+            <div class="reason"><strong>Risk check</strong><span>Low factual risk; moderate reputational sensitivity.</span></div>
+          </div>
+          <div class="email">
+            <div class="subject">Subject: Agentic coding for economics research</div>
+            <p>Hi Maya,</p>
+            <p>I saw that you are coordinating Northbridge's applied micro methods workshop this year. I have been running hands-on sessions for economists on using Claude Code and Codex in research workflows...</p>
+            <p>Would a short conversation about whether this could be useful for your group make sense?</p>
+          </div>
+          <div class="actionbar">
+            <small>Any edit creates a new version and invalidates this approval.</small>
+            <div class="actions"><button>Skip</button><button>Revise</button><button class="primary">Approve and next</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <div class="direction-head">
+        <div>
+          <p class="eyebrow">Direction C</p>
+          <h2>Exception-first batch review</h2>
+          <p class="direction-copy">Approve the stable majority as a batch, then spend attention only where the agent detects a reputational, factual, or synchronization exception.</p>
+        </div>
+        <p class="best-for"><strong>Best for:</strong> scaling moderate personalization without giving up control or hiding meaningful differences.</p>
+      </div>
+
+      <div class="mock">
+        <div class="appbar">
+          <strong>Academic Econ / Batch review</strong>
+          <span class="appbar-meta">18 clean / 4 exceptions / 2 blocked</span>
+        </div>
+        <div class="batch-layout">
+          <main class="batch-body">
+            <div class="batch-top">
+              <h3>Moderate-personalization batch</h3>
+              <span class="badge batch">18 ready</span>
+            </div>
+            <div class="meta-grid">
+              <div class="meta"><label>Shared structure</label><span>Peer opening + workshop proof + conversation CTA</span></div>
+              <div class="meta"><label>Allowed differences</label><span>Role, public initiative, research area, proof route</span></div>
+              <div class="meta"><label>Quality floor</label><span>All hooks verified; no private claims</span></div>
+              <div class="meta"><label>Sync state</label><span>Checkpoint current; zero remote drift</span></div>
+            </div>
+            <h3>Representative samples</h3>
+            <div class="sample-grid">
+              <div class="sample"><strong>Methods director</strong>References graduate methods programming and Calgary proof.</div>
+              <div class="sample"><strong>Department chair</strong>References faculty research workflows and UCLouvain proof.</div>
+              <div class="sample"><strong>Research center</strong>References repeated empirical projects and Navarra proof.</div>
+              <div class="sample"><strong>Weakest included hook</strong>Uses role relevance only; no invented personal note.</div>
+            </div>
+            <div class="flow-note"><strong>Batch approval:</strong> freezes the shared structure and all 18 rendered messages. Any later change reopens only the affected records.</div>
+            <div class="actionbar">
+              <small>Approval creates publish-ready versions but does not upload them.</small>
+              <div class="actions"><button>Expand all 18</button><button>Revise rules</button><button class="primary">Approve clean batch</button></div>
+            </div>
+          </main>
+
+          <aside class="exceptions">
+            <h3>Needs individual judgment</h3>
+            <div class="exception">
+              <div class="exception-top"><strong>Prof. David Okafor</strong><span class="badge warn">Connection</span></div>
+              <p>Draft mentions a shared collaborator. Verify whether naming the connection is appropriate.</p>
+            </div>
+            <div class="exception">
+              <div class="exception-top"><strong>Dr. Lena Fischer</strong><span class="badge block">Remote drift</span></div>
+              <p>Instantly differs from the approved local version. Sending remains blocked.</p>
+            </div>
+            <div class="exception">
+              <div class="exception-top"><strong>Prof. Arun Mehta</strong><span class="badge warn">Weak hook</span></div>
+              <p>Only segment-level relevance was found. Decide whether to include or deepen research.</p>
+            </div>
+            <div class="exception">
+              <div class="exception-top"><strong>Dr. Sofia Alvarez</strong><span class="badge white-glove">High value</span></div>
+              <p>Strong follow-on implementation potential moves this prospect to white-glove review.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Disposable sketch. Reply in chat with A, B, C, or a mix, plus anything that feels off.
+  </footer>
+</body>
+</html>
