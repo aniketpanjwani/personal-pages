@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>AI Economist Content Strategy Guide</title>
+
+<meta charset="utf-8">
+<style>
+  :root {
+    --ground: #F7F8F6;
+    --surface: #FFFFFF;
+    --ink: #1C2422;
+    --muted: #5C6763;
+    --line: #D9DED9;
+    --accent: #0E6B5C;
+    --accent-soft: #E3EFEB;
+    --amber: #A85E24;
+    --amber-soft: #F6EADD;
+    --code-bg: #EEF1EE;
+    --shadow: 0 1px 3px rgba(28,36,34,.07);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #141B19;
+      --surface: #1C2421;
+      --ink: #E5EAE6;
+      --muted: #96A29B;
+      --line: #2E3833;
+      --accent: #4FC2A6;
+      --accent-soft: #1E312C;
+      --amber: #D99C5F;
+      --amber-soft: #33271B;
+      --code-bg: #232D29;
+      --shadow: none;
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #F7F8F6; --surface: #FFFFFF; --ink: #1C2422; --muted: #5C6763;
+    --line: #D9DED9; --accent: #0E6B5C; --accent-soft: #E3EFEB;
+    --amber: #A85E24; --amber-soft: #F6EADD; --code-bg: #EEF1EE;
+    --shadow: 0 1px 3px rgba(28,36,34,.07);
+  }
+  :root[data-theme="dark"] {
+    --ground: #141B19; --surface: #1C2421; --ink: #E5EAE6; --muted: #96A29B;
+    --line: #2E3833; --accent: #4FC2A6; --accent-soft: #1E312C;
+    --amber: #D99C5F; --amber-soft: #33271B; --code-bg: #232D29; --shadow: none;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    line-height: 1.65;
+    margin: 0;
+    font-size: 16.5px;
+  }
+  .wrap { max-width: 46rem; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+  .wide { max-width: 60rem; margin-left: auto; margin-right: auto; }
+
+  h1, h2, h3 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    line-height: 1.2;
+    text-wrap: balance;
+    font-weight: 600;
+  }
+  h1 { font-size: 2.3rem; margin: .4rem 0 0; }
+  h2 { font-size: 1.55rem; margin: 0 0 .9rem; }
+  h3 { font-size: 1.15rem; margin: 1.6rem 0 .5rem; }
+  p { margin: 0 0 1rem; }
+  a { color: var(--accent); }
+
+  .eyebrow {
+    font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin: 0;
+  }
+  .subtitle { color: var(--muted); font-size: 1.05rem; margin-top: .6rem; max-width: 38rem; }
+  .meta { color: var(--muted); font-size: .82rem; margin-top: 1.2rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .meta span strong { color: var(--ink); font-weight: 600; }
+
+  section { margin-top: 3.2rem; }
+  .sec-head { display: flex; align-items: baseline; gap: .8rem; border-top: 2px solid var(--ink); padding-top: 1rem; margin-bottom: 1.1rem; }
+  .sec-head .eyebrow { color: var(--muted); }
+
+  .lede { font-size: 1.12rem; }
+
+  .callout {
+    background: var(--accent-soft); border-left: 3px solid var(--accent);
+    padding: .9rem 1.1rem; border-radius: 0 6px 6px 0; margin: 1.2rem 0;
+  }
+  .callout.warn { background: var(--amber-soft); border-left-color: var(--amber); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .tag { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--accent); display: block; margin-bottom: .3rem; }
+  .callout.warn .tag { color: var(--amber); }
+
+  .scroll { overflow-x: auto; margin: 1.2rem 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .88rem; background: var(--surface); box-shadow: var(--shadow); border-radius: 8px; overflow: hidden; }
+  th, td { text-align: left; padding: .55rem .8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: .72rem; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); background: var(--code-bg); }
+  tr:last-child td { border-bottom: none; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .good { color: var(--accent); font-weight: 600; }
+  .hot { color: var(--amber); font-weight: 600; }
+
+  code, .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .85em; background: var(--code-bg); padding: .1em .35em; border-radius: 4px; }
+
+  .pills { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0 1.2rem; }
+  .pill { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: .25rem .8rem; font-size: .8rem; box-shadow: var(--shadow); }
+  .pill b { color: var(--accent); font-variant-numeric: tabular-nums; }
+
+  /* state machine */
+  .flow { display: flex; flex-direction: column; gap: .45rem; margin: 1.3rem 0; }
+  .frow { display: flex; align-items: center; gap: .55rem; flex-wrap: wrap; }
+  .state {
+    background: var(--surface); border: 1.5px solid var(--line); border-radius: 6px;
+    padding: .32rem .75rem; font-family: ui-monospace, Menlo, monospace; font-size: .78rem;
+    box-shadow: var(--shadow); white-space: nowrap;
+  }
+  .state.core { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+  .state.exit { border-style: dashed; color: var(--muted); }
+  .arrow { color: var(--muted); font-size: .85rem; }
+  .fnote { color: var(--muted); font-size: .78rem; margin-left: .3rem; }
+
+  /* decision matrix */
+  .matrix { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin: 1.3rem 0; }
+  .cell { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: .85rem 1rem; box-shadow: var(--shadow); }
+  .cell h4 { margin: 0 0 .3rem; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .cell p { margin: 0; font-size: .9rem; }
+  .cell.go { border-top: 3px solid var(--accent); }
+  .cell.stop { border-top: 3px solid var(--amber); }
+  .verdict { font-weight: 700; }
+  .cell.go .verdict { color: var(--accent); }
+  .cell.stop .verdict { color: var(--amber); }
+
+  /* phases */
+  .phase { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1.1rem 1.3rem; margin: .9rem 0; box-shadow: var(--shadow); }
+  .phase h3 { margin: 0 0 .2rem; }
+  .phase .why { color: var(--muted); font-size: .88rem; margin-bottom: .8rem; }
+  .unit { display: grid; grid-template-columns: 3.2rem 1fr; gap: .6rem; padding: .55rem 0; border-top: 1px solid var(--line); font-size: .92rem; }
+  .unit .uid { font-family: ui-monospace, Menlo, monospace; font-size: .78rem; color: var(--accent); font-weight: 700; padding-top: .15rem; }
+  .unit p { margin: 0; }
+  .unit .dep { color: var(--muted); font-size: .8rem; }
+
+  .qa { margin: 1.1rem 0; }
+  .qa dt { font-weight: 700; margin-top: 1rem; }
+  .qa dd { margin: .25rem 0 0; color: inherit; }
+  dd { margin-left: 0; }
+
+  ol.toc { list-style: none; counter-reset: toc; padding: 0; margin: 1.2rem 0 0; column-count: 2; column-gap: 2.5rem; font-size: .95rem; }
+  ol.toc li { counter-increment: toc; padding: .3rem 0; border-bottom: 1px solid var(--line); break-inside: avoid; }
+  ol.toc li::before { content: counter(toc, decimal-leading-zero); font-family: ui-monospace, Menlo, monospace; color: var(--accent); font-size: .78rem; margin-right: .7rem; }
+  ol.toc a { text-decoration: none; color: var(--ink); }
+  ol.toc a:hover { color: var(--accent); }
+
+  ul { padding-left: 1.2rem; }
+  li { margin-bottom: .4rem; }
+
+  .decision-list { counter-reset: dec; list-style: none; padding: 0; }
+  .decision-list li { counter-increment: dec; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: .8rem 1rem .8rem 3rem; margin-bottom: .7rem; position: relative; box-shadow: var(--shadow); font-size: .93rem; }
+  .decision-list li::before { content: counter(dec); position: absolute; left: 1rem; top: .85rem; font-family: ui-monospace, Menlo, monospace; font-weight: 700; color: var(--accent); }
+  .decision-list b { display: block; margin-bottom: .15rem; }
+  .decision-list .who { color: var(--muted); font-size: .78rem; }
+
+  footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }
+  @media (max-width: 640px) {
+    ol.toc { column-count: 1; }
+    .matrix { grid-template-columns: 1fr; }
+    h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">The AI Economist · aieconomist.io</p>
+  <h1>The Content Strategy, Explained</h1>
+  <p class="subtitle">A reader's guide to the plan: what the evidence says, what gets built, how the twin pipeline runs itself, and how you'll know by January whether the bet paid off.</p>
+  <div class="meta">
+    <span>Plan <strong>2026-07-11-001</strong></span>
+    <span>Origin brainstorm <strong>2026-07-11</strong></span>
+    <span>Checkpoint <strong>January 2027</strong></span>
+  </div>
+  <ol class="toc">
+    <li><a href="#bet">The bet in one paragraph</a></li>
+    <li><a href="#evidence">What the evidence actually says</a></li>
+    <li><a href="#strategy">The two-part strategy</a></li>
+    <li><a href="#pipeline">How the twin pipeline works</a></li>
+    <li><a href="#build">What gets built, in what order</a></li>
+    <li><a href="#backfill">The backfill queue</a></li>
+    <li><a href="#checkpoint">Measurement &amp; the January decision</a></li>
+    <li><a href="#open">Six open design decisions</a></li>
+    <li><a href="#risks">Guardrails and honest risks</a></li>
+  </ol>
+</header>
+
+<section id="bet">
+  <div class="sec-head"><p class="eyebrow">01</p><h2>The bet in one paragraph</h2></div>
+  <p class="lede">Every client you've ever closed arrived warm — through YouTube, X, talks, and referrals. SEO is therefore <em>not</em> your acquisition engine, and this plan doesn't pretend it is. Instead it does two cheaper things: <strong>(A)</strong> makes the website excellent at the job it already has — convincing buyers who found you elsewhere and are quietly vetting you — and <strong>(B)</strong> runs a low-effort experiment: every piece of content you already make gets an economist-framed written twin on the site, targeting real search queries and, just as importantly, being quotable by ChatGPT and Claude. The experiment has a hard checkpoint in January 2027. If the data says it isn't working, part B freezes and you've lost almost nothing.</p>
+</section>
+
+<section id="evidence">
+  <div class="sec-head"><p class="eyebrow">02</p><h2>What the evidence actually says</h2></div>
+
+  <p>Three research passes fed this plan: your client history (16+ engagements reconstructed from the relationship docs and Gmail), your live traffic (PostHog), and the keyword market (DataForSEO, July 2026).</p>
+
+  <h3>Who buys, and how they found you</h3>
+  <p>Three buyer archetypes recur: <strong>academic conveners</strong> (professors organizing department workshops, $1–5k), <strong>research leaders with budgets</strong> (the biggest deals — Opportunity Insights at $20.5k, Monash, Case Western's Associate Dean), and <strong>central-bank / government economists</strong> (Bundesbank $5k, ONS's Chief Economist, Banco de la República).</p>
+  <div class="pills">
+    <span class="pill">YouTube <b>2</b></span>
+    <span class="pill">VoxDev talk <b>1</b></span>
+    <span class="pill">X <b>1</b></span>
+    <span class="pill">Referral / warm <b>several</b></span>
+    <span class="pill">Google search <b>0</b></span>
+    <span class="pill">Website as discovery <b>0</b></span>
+    <span class="pill">Unknown (no source captured) <b>most</b></span>
+  </div>
+  <p>That last pill is its own finding: most leads are cold TidyCal bookings, and the booking form never asks how they found you. Fixing that blind spot is part of the plan regardless of SEO.</p>
+
+  <div class="callout">
+    <span class="tag">The quote that anchors the positioning</span>
+    <p>ONS Chief Economist Grant Fitzner, unprompted: <em>"I came across your work at YouTube and X, and think your framing (agentic tools for economists specifically, rather than software developers) would be of great interest."</em> The economist lens isn't a limitation — it's the reason your biggest institutional buyer reached out.</p>
+  </div>
+
+  <h3>The keyword market has a hole in it</h3>
+  <p>Two findings shape everything. First: <strong>every phrase that names your actual offering has zero measurable search volume</strong> — "ai training for economists", "agentic coding for research", "ai workshop for researchers" all return no data. Nobody searches for the thing the way you'd describe it. Second: the tool-level queries are a genuine arbitrage — explosive growth, trivial difficulty, and advertisers paying up to $100 a click for traffic you could rank for organically.</p>
+
+  <div class="scroll wide">
+    <table>
+      <thead><tr><th>Query</th><th class="num">Searches/mo (US)</th><th class="num">Difficulty (0–100)</th><th class="num">Trend, yearly</th><th>Read</th></tr></thead>
+      <tbody>
+        <tr><td>codex vs claude code</td><td class="num">9,900</td><td class="num good">14</td><td class="num good">+2,980%</td><td>The single biggest arbitrage; $84 CPC</td></tr>
+        <tr><td>cursor vs claude code</td><td class="num">6,600</td><td class="num good">1</td><td class="num good">+1,578%</td><td>Nearly uncontested</td></tr>
+        <tr><td>how to use claude code</td><td class="num">6,600</td><td class="num good">17</td><td class="num good">+890%</td><td>Learner intent, feeds training</td></tr>
+        <tr><td>claude code course</td><td class="num">1,600</td><td class="num">32</td><td class="num good">+23,900%</td><td>People shopping for exactly what you sell</td></tr>
+        <tr><td>claude code plan mode</td><td class="num">3,600</td><td class="num good">5</td><td class="num">—</td><td>No video exists — the one net-new article</td></tr>
+        <tr><td>economics of ai</td><td class="num">1,900</td><td class="num good">2</td><td class="num">flat</td><td>Cheap authority traffic in your wheelhouse</td></tr>
+        <tr><td>claude code for research</td><td class="num">70</td><td class="num">27</td><td class="num">new</td><td>Tiny, but it's your exact intersection — own it</td></tr>
+        <tr><td>ai for researchers</td><td class="num">4,400</td><td class="num hot">87</td><td class="num">−19%</td><td class="hot">A trap. Don't target head-on.</td></tr>
+        <tr><td>ai training for economists</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td class="hot">No data — demand isn't phrased this way</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>And the site today</h3>
+  <p>Near-zero organic footprint. Over 60 days: ~340 Google visitors, mostly branded homepage landings — people who already knew your name. But a real minority landed on the Codex and Claude Code guides and the Stata tutorial with no SEO effort at all, and Marginal Revolution sent ~1,900 visitors (a backlink worth more for future rankings than anything you could buy). The soil is thin, but not dead.</p>
+</section>
+
+<section id="strategy">
+  <div class="sec-head"><p class="eyebrow">03</p><h2>The two-part strategy</h2></div>
+
+  <h3>Part A — The vetting surface</h3>
+  <p>The only mechanism with evidence behind it: buyers who found you elsewhere check the site before booking. So the site gets what those buyers look for:</p>
+  <ul>
+    <li><strong>Public syllabus pages</strong> for every delivered workshop. SEACEN literally asked for your Bundesbank syllabus before inquiring — that artifact closes deals. Naming is permission-gated per client: <em>named</em> / <em>anonymized</em> ("a European central bank research centre") / <em>withheld</em>, read from your engagement ledger, never re-decided by the site.</li>
+    <li><strong>Client proof</strong> on the trainings page — institutions served, testimonials where permitted.</li>
+    <li><strong>A "how did you hear about me?" question</strong> on TidyCal bookings, with distinct <em>Google/search</em> and <em>ChatGPT/AI assistant</em> options. No webhooks, no Zapier — a scheduled script pulls answers via the TidyCal API (or parses the booking emails already in your Gmail) and logs them.</li>
+    <li><strong>Basic hygiene</strong> — articles finally in the sitemap (they aren't today), canonical URLs and structured data (the site has none anywhere).</li>
+  </ul>
+
+  <h3>Part B — The content-twin pipeline</h3>
+  <p>The policy in one sentence: <strong>never write an SEO article from scratch; give a written twin to content you already made.</strong> You have 53 written video scripts and ~25 substantive X threads with no written counterpart. Twins are agent-drafted, economist-framed, titled to match a verified query, and end with two calls to action (newsletter, trainings). Your job is a weekly digest costing ≤15 minutes.</p>
+
+  <p>Twins come in two formats, and both are MDX files published by pull request. Most are simple prose articles — cheap by design, but with the full component vocabulary available (a D3 figure or prompt block can appear in an ordinary twin). <strong>Flagship pillars get the guide treatment</strong>: an Every-style block system (copyable prompt blocks, callouts, comparison tables, a section rail) in your own visual language. Same architecture as your workshop slide kit — a template library plus a full-custom escape hatch.</p>
+
+  <p>Why "economist lens on everything," when general-dev framing would get more traffic? Because the traffic isn't the point — the buyer is. And because the second audience for these pages isn't Google at all: it's <strong>answer engines</strong>. When a research director asks ChatGPT "who trains economists on agentic coding," LLMs cite written pages, not videos. Right now your best teaching is invisible to them.</p>
+
+  <div class="callout warn">
+    <span class="tag">What was deliberately rejected</span>
+    <p>A dedicated keyword-chasing content operation (the "just chase the arbitrage" option). The traffic skews general-developer, it competes for your time against channels that demonstrably close $20k deals, and comparison queries are precisely what AI Overviews are eating. If that business is ever worth building, it's AI MBA's lane — not this brand's.</p>
+  </div>
+</section>
+
+<section id="pipeline">
+  <div class="sec-head"><p class="eyebrow">04</p><h2>How the twin pipeline works</h2></div>
+
+  <p>The machinery lives in a small repo-local ledger (SQLite, modeled on your newsletter-sources store) — <em>not</em> in Convex, and with no admin UI. Three tables: <strong>sources</strong> (every video and qualifying post, with status), <strong>twins</strong> (each article's lifecycle state), and a <strong>keyword registry</strong> (one canonical article per query, <em>across both brands</em>, so two pages never cannibalize the same search intent).</p>
+
+  <div class="callout">
+    <span class="tag">Seeding first — and written content becomes files</span>
+    <p>The pipeline's very first run ingests everything <em>already published</em> on both sites as claimed sources and keywords — a Convex audit found 7 econ articles and 13 tutorials live in the database, roughly half the backfill queue among them. Most exist <em>only</em> as database rows, which is exactly why earlier inventory passes missed them: agents see files by default, not databases. The fix went all the way: <strong>articles and tutorials convert to MDX files in git</strong> (same slugs, same URLs), shortcodes become components, and Convex retires for written content — keeping only what's genuinely dynamic (courses, videos, subscribers, the gated-unlock check). Publishing becomes a pull request: merge → Vercel deploys in ~3 minutes, every draft gets a preview URL, and a broken component fails the build instead of a reader's page load.</p>
+  </div>
+
+  <h3>The lifecycle of a twin</h3>
+  <div class="flow" role="img" aria-label="Twin lifecycle state machine">
+    <div class="frow">
+      <span class="state">candidate</span><span class="arrow">→</span>
+      <span class="state core">screened</span><span class="arrow">→</span>
+      <span class="state core">keyword_verified</span><span class="arrow">→</span>
+      <span class="state core">in_review</span><span class="arrow">→</span>
+      <span class="state core">published</span>
+    </div>
+    <div class="frow">
+      <span class="fnote">exits along the way:</span>
+      <span class="state exit">excluded</span><span class="fnote">news / no script / guest / low engagement</span>
+      <span class="state exit">keyword_blocked</span><span class="fnote">query dead or claimed, no re-target</span>
+    </div>
+    <div class="frow">
+      <span class="fnote">from review:</span>
+      <span class="state exit">rejected</span>
+      <span class="state exit">stale</span><span class="fnote">&gt;4 weeks unreviewed → keyword re-verified before it can proceed</span>
+    </div>
+  </div>
+
+  <h3>The screening rules, precisely</h3>
+  <dl class="qa">
+    <dt>Which videos qualify?</dt>
+    <dd>Every new published video that has a script. (Your production pipeline writes one for essentially every video.)</dd>
+    <dt>Which X posts qualify?</dt>
+    <dd>Evergreen teaching content that is either a structured how-to (any engagement level) <em>or</em> clears 100 likes.</dd>
+    <dt>What about a viral news post — say, a Fable review with 1,000 likes?</dt>
+    <dd><strong>Excluded.</strong> The news rule hard-overrides the engagement rule. Model-release reactions decay in weeks; twins are for content that's still true next year.</dd>
+    <dt>What if the target keyword died or got claimed by the time we draft?</dt>
+    <dd>Re-target to the nearest verified unclaimed query. If none exists, the article can still publish flagged "LLM-citability only" — no keyword claim, still quotable by answer engines.</dd>
+    <dt>What happens when I get lazy and skip three weeks?</dt>
+    <dd>Nothing piles up. At most 5 drafts can be in flight; anything unreviewed for 4 weeks flips to stale and must re-verify its keyword. Skipped weeks are absorbed, not accumulated — and if digests go unreviewed for 6+ weeks, that's checkpoint evidence in itself.</dd>
+    <dt>Does this ever become fully automatic?</dt>
+    <dd>The ratchet is defined now, built later: after 10 consecutive approvals without substantive edits, the pipeline proposes auto-publish — still gated on a verified, unclaimed keyword and both CTAs present.</dd>
+  </dl>
+</section>
+
+<section id="build">
+  <div class="sec-head"><p class="eyebrow">05</p><h2>What gets built, in what order</h2></div>
+  <p>Ten units across three phases. The ordering principle: <strong>measurement first</strong> — every week without attribution capture shortens the data window the January decision depends on.</p>
+
+  <div class="phase">
+    <h3>Phase A — Measurement foundation &amp; vetting surface</h3>
+    <p class="why">Serves the buyers you already have; starts the checkpoint's data clock.</p>
+    <div class="unit"><span class="uid">U1</span><p>Booking-source attribution: TidyCal intake question + scheduled sweep into the relationship ledger. <span class="dep">No dependencies — do first.</span></p></div>
+    <div class="unit"><span class="uid">U2</span><p>SEO hygiene: articles/tutorials/trainings into the sitemap, canonical URLs, structured data, title audit.</p></div>
+    <div class="unit"><span class="uid">U3</span><p>Public syllabus pages (permission-gated) + "Past trainings" proof on the trainings page. <span class="dep">After U2.</span></p></div>
+    <div class="unit"><span class="uid">U4</span><p>Trainings CTA component (shared MDX vocabulary) + the twin article template convention.</p></div>
+  </div>
+
+  <div class="phase">
+    <h3>Phase B — Twin pipeline</h3>
+    <p class="why">The machinery that makes twins a byproduct instead of a project.</p>
+    <div class="unit"><span class="uid">U5</span><p>Content ledger + keyword registry (SQLite + small CLI). Test-first on state transitions and one-article-per-query enforcement.</p></div>
+    <div class="unit"><span class="uid">U10</span><p>MDX conversion: all ~20 published articles + tutorials become <code>.mdx</code> files in git (same URLs, no redirects); shortcodes become components; the gated-unlock flow moves server-side (the one risk-bearing piece, test-first); Convex retires for written content. <span class="dep">Independent; unblocks U6/U7.</span></p></div>
+    <div class="unit"><span class="uid">U6</span><p>The pipeline skill + weekly cadence: detection → screening → keyword claim → drafting chain (tutorial-writing / article-writing / your voice skill / illustrations) → digest with Vercel preview links → approve by merging the PR. <span class="dep">After U4, U5, U10.</span></p></div>
+    <div class="unit"><span class="uid">U9</span><p>Guide surface: file-based MDX shell (section rail + ~640px column, econ-brand typography) with a five-block vocabulary — prose, copy-prompt, callout, comparison table, CTA. Every-style mechanics, your visual language. Public-only: no gating, no educli, no DB. <span class="dep">After U2.</span></p></div>
+  </div>
+
+  <div class="phase">
+    <h3>Phase C — Backfill &amp; checkpoint</h3>
+    <p class="why">Spend the surplus; make the January decision mechanical.</p>
+    <div class="unit"><span class="uid">U7</span><p>Execute the 15-item backfill queue through the pipeline, free wins first. <span class="dep">After U2, U4, U5, U6.</span></p></div>
+    <div class="unit"><span class="uid">U8</span><p>Checkpoint instrumentation: the PostHog metric, the baseline snapshot (Aug 1), the decision table, the quarterly LLM-visibility check, a scheduled reminder. <span class="dep">After U1, U2.</span></p></div>
+  </div>
+</section>
+
+<section id="backfill">
+  <div class="sec-head"><p class="eyebrow">06</p><h2>The backfill queue</h2></div>
+  <p>Ranked by keyword value × existing material × proven resonance. A production-database audit revealed roughly <strong>half the queue is already published</strong> — so each item now carries one of two treatments: <strong>retrofit</strong> (the page exists; retitle toward the target query, add the CTA pair, pick up sitemap/canonical/structured data) or <strong>publish</strong> (genuinely absent; draft it). Collisions resolve at claim time — sources merge into pillars rather than competing for one query.</p>
+  <div class="scroll wide">
+    <table>
+      <thead><tr><th>#</th><th>Source</th><th>Target query</th><th>Why this rank</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>"Why I Switched Back to Claude Code" — draft already written</td><td>claude code vs codex</td><td class="good">Publish — the one true free win, first out</td></tr>
+        <tr><td>2</td><td>"You're not using GPT Pro enough" — X longform + video</td><td>claude code for research</td><td class="hot">Already live as econ article — retrofit</td></tr>
+        <tr><td>3</td><td>CC vs Codex vs Cursor economist guide (video)</td><td>codex vs claude code · cursor vs claude code</td><td class="hot">Already live as econ tutorial — upgrade to a U9 guide (with redirect); current title doesn't match the query it could own</td></tr>
+        <tr><td>4</td><td>OpenAI Codex Full Course — 50k views, 5,683-line script</td><td>codex cli · codex tutorial</td><td class="good">Publish as a U9 guide — flagship pillar + spokes</td></tr>
+        <tr><td>5</td><td>Claude Code with Stata — 9.8k views</td><td>claude code for research · economics of ai</td><td class="hot">Already live (article + skill tutorial) — retrofit</td></tr>
+        <tr><td>6</td><td>Learn Claude Code From Scratch (3-hr course)</td><td>claude code course · claude code tutorial</td><td class="good">Publish — transactional intent, +23,900% trend</td></tr>
+        <tr><td>7</td><td>Windows install guide — 20k views</td><td>how to use claude code</td><td class="hot">Already live on ai-mba.io — cross-brand decision, then retrofit</td></tr>
+        <tr><td>8</td><td><em>Net-new writing</em></td><td>claude code plan mode</td><td>3,600/mo at difficulty 5 with no existing asset — from-scratch, as a U9 guide</td></tr>
+        <tr><td>9–15</td><td>PDF-skill &amp; 1M-context threads · econ-of-AI cluster (pillar + spokes) · beginner-mistakes &amp; Git tips · agents videos · monorepo thread · faculty-inequality take</td><td>claude code skills · economics of ai · claude code tips · claude code agents</td><td>Mixed: 1M-context, Git guide, and Only-Skill already live on ai-mba.io (retrofit); the rest publish, clustered to avoid cannibalization</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="checkpoint">
+  <div class="sec-head"><p class="eyebrow">07</p><h2>Measurement &amp; the January decision</h2></div>
+  <p>The brainstorm's most important honest admission was yours: <em>"this could very well be a waste of time."</em> So the plan makes quitting cheap and the decision mechanical. Two inputs, tracked from launch:</p>
+  <ul>
+    <li><strong>Attributed inquiries</strong> — any booking whose intake answer says Google/search or ChatGPT/AI assistant.</li>
+    <li><strong>The traffic metric</strong> — monthly <em>non-branded</em> organic sessions: search-engine referrals landing on content pages (articles, tutorials, guides, trainings), homepage excluded so branded name-searches don't flatter the number. Baseline snapshotted August 1.</li>
+  </ul>
+
+  <div class="matrix">
+    <div class="cell go"><h4>≥1 attributed inquiry · trend up</h4><p><span class="verdict">Continue and scale.</span> Both mechanisms firing — the bet paid.</p></div>
+    <div class="cell go"><h4>≥1 attributed inquiry · flat traffic</h4><p><span class="verdict">Continue, narrowed.</span> Only high-intent lanes: comparisons, course/training, claude-code-for-research.</p></div>
+    <div class="cell go"><h4>0 inquiries · metric ≥2× baseline, 2 consecutive months</h4><p><span class="verdict">Continue.</span> Traffic compounding; give conversion more time.</p></div>
+    <div class="cell stop"><h4>0 inquiries · below threshold</h4><p><span class="verdict">Freeze part B.</span> Twins stop. Syllabi, proof, attribution capture, and published articles stay live — part A was never conditional.</p></div>
+  </div>
+
+  <p>Alongside: a <strong>quarterly LLM-visibility check</strong> — run buyer-shaped prompts ("who trains economists on agentic coding?") against ChatGPT and Claude and log whether you're cited. Treated as directional, not decisive.</p>
+</section>
+
+<section id="open">
+  <div class="sec-head"><p class="eyebrow">08</p><h2>Seven open design decisions</h2></div>
+  <p>The review pass (four reviewer agents: coherence, feasibility, design, scope) plus the published-content audit left seven items for your judgment before or during implementation. Only #7 blocks anything (the retrofit half of the backfill); all are cheap to decide now and annoying to discover later.</p>
+  <ol class="decision-list">
+    <li><b>Where does the ledger database live?</b> The plan says "in the repo" but its own precedent (newsletter-sources) stores host-external. A repo-committed SQLite forks state across git worktrees and Ralph loops. Recommendation: host-external at <code>~/.local/share/ai_mba/content_twins.sqlite</code>. <span class="who">feasibility · proposed fix</span></li>
+    <li><b>Commit to the <code>{{cta:trainings}}</code> shortcode form.</b> The bare <code>{{trainings}}</code> spelling won't match the existing shortcode regex and would silently render nothing. <span class="who">feasibility · proposed fix</span></li>
+    <li><b>Syllabus-page booking CTA: link, not modal.</b> Linking to /trainings keeps syllabus pages static and the TidyCal modal centralized in one place. <span class="who">design · proposed fix</span></li>
+    <li><b>How does an anonymized syllabus page stay credible?</b> The testimonials strip names people at named institutions — rendering it on an anonymized page leaks the client. Needs a defined proof model (role-without-affiliation quotes, audience/format/outcome facts). <span class="who">design · decision</span></li>
+    <li><b>Define the syllabus page's own structure.</b> The guide template it "reuses" is video-guide-shaped; without a stated section order (audience → curriculum → outcomes → proof → CTA), two implementers build two different pages. <span class="who">design · decision</span></li>
+    <li><b>Trim structured data to what the checkpoint justifies?</b> Article schema + canonical serve LLM-citability directly; Organization/Service/Course schemas on the trainings surface are speculative build-out ahead of a freezable bet. <span class="who">scope · decision</span></li>
+    <li><b>Which brand keeps a contested query?</b> Windows install, 1M-context, and the Git guide are live on ai-mba.io; the twin policy is econ-lens. Duplicating them splits authority across two low-authority domains in the same SERP. Proposed default: the brand already publishing keeps its query; econ claims only research-angled variants and cross-links; moving a page between brands requires an explicit call plus a redirect. <span class="who">content audit · decision — resolve before the retrofit batch</span></li>
+  </ol>
+</section>
+
+<section id="risks">
+  <div class="sec-head"><p class="eyebrow">09</p><h2>Guardrails and honest risks</h2></div>
+  <ul>
+    <li><strong>Indexing lag is real.</strong> A near-zero-authority domain takes months to rank even at difficulty 5–15. The January thresholds are set against a tiny base on purpose — expect small absolute numbers.</li>
+    <li><strong>Keywords are volatile.</strong> Several targets move at triple-digit yearly rates; every twin re-verifies its query at draft time, and some queue items may land as citability-only pieces.</li>
+    <li><strong>TidyCal API coverage is unverified.</strong> If intake answers aren't exposed, the Gmail-parse fallback carries the unit. Confirm your plan tier includes custom intake questions (paid plans only).</li>
+    <li><strong>The gated-article unlock flow is the MDX conversion's one dangerous edge.</strong> It feeds newsletter capture, so it gets test-first treatment and the database path stays read-only until every migrated page passes a parity check.</li>
+    <li><strong>The "weekly automation" is honest about its limits.</strong> A cron can't run a chat-approval loop; in practice the cadence is a scheduled agent preparing the digest and you spending your 15 minutes. That's the design, not a failure of it.</li>
+    <li><strong>Your laziness is priced in.</strong> The WIP cap, staleness TTL, and digest exist because you said you'd eventually slack. If the loop still dies, the checkpoint reads that as data — not as guilt.</li>
+  </ul>
+
+  <footer>
+    Source artifacts: <span class="mono">docs/plans/2026-07-11-001-feat-aieconomist-content-strategy-plan.md</span> · <span class="mono">docs/brainstorms/2026-07-11-aieconomist-seo-content-strategy-requirements.md</span>. Keyword figures are a July 2026 DataForSEO snapshot (US, Google); traffic figures are PostHog, econ brand, 60 days to July 11, 2026.
+  </footer>
+</section>
+
+</div>
+
+</body>
+</html>
