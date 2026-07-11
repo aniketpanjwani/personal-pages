@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Issue W28 dashboard</title>
+</head>
+<body>
+<title>Issue W28: Fable 5 & GPT-5.6 — Live Status</title>
+<style>
+  :root {
+    --ground: #f7f8f4; --panel: #fff; --ink: #1d2430; --soft: #4c5665;
+    --line: #dcdfd6; --blue: #174ea6; --bluebg: #e8eef9; --accent: #d96b3a;
+    --accentbg: #f9ece4; --good: #3d7a4a; --goodbg: #e7f1e9; --warn: #a8672a; --warnbg: #f6eddf;
+    --serif: "Iowan Old Style", Palatino, Georgia, serif;
+    --sans: -apple-system, "Segoe UI", system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root {
+    --ground:#171a1f; --panel:#1f242c; --ink:#e7e4dc; --soft:#a4a9b0; --line:#333a44;
+    --blue:#7ba3e0; --bluebg:#232e42; --accent:#e08a5e; --accentbg:#3a2a20;
+    --good:#7cb98a; --goodbg:#223328; --warn:#d9a05e; --warnbg:#382e1e; } }
+  :root[data-theme="dark"] {
+    --ground:#171a1f; --panel:#1f242c; --ink:#e7e4dc; --soft:#a4a9b0; --line:#333a44;
+    --blue:#7ba3e0; --bluebg:#232e42; --accent:#e08a5e; --accentbg:#3a2a20;
+    --good:#7cb98a; --goodbg:#223328; --warn:#d9a05e; --warnbg:#382e1e; }
+  :root[data-theme="light"] {
+    --ground:#f7f8f4; --panel:#fff; --ink:#1d2430; --soft:#4c5665; --line:#dcdfd6;
+    --blue:#174ea6; --bluebg:#e8eef9; --accent:#d96b3a; --accentbg:#f9ece4;
+    --good:#3d7a4a; --goodbg:#e7f1e9; --warn:#a8672a; --warnbg:#f6eddf; }
+  body { background: var(--ground); color: var(--ink); font-family: var(--serif); margin: 0; line-height: 1.55; font-size: 16px; }
+  .wrap { max-width: 42rem; margin: 0 auto; padding: 1.6rem 1rem 4rem; }
+  .eyebrow { font-family: var(--sans); font-size: .7rem; letter-spacing: .13em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  h1 { font-size: 1.6rem; margin: .3rem 0 .2rem; line-height: 1.2; text-wrap: balance; }
+  .sub { color: var(--soft); font-size: .95rem; margin: 0 0 1rem; }
+  .block { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: .9rem 1.1rem; margin: .9rem 0; }
+  .bhead { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+  .bhead h2 { font-size: 1.05rem; margin: 0; }
+  .pill { font-family: var(--sans); font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .18rem .55rem; border-radius: 999px; margin-left: auto; white-space: nowrap; }
+  .p-done { background: var(--goodbg); color: var(--good); }
+  .p-partial { background: var(--warnbg); color: var(--warn); }
+  .p-open { background: var(--bluebg); color: var(--blue); }
+  .block p { font-size: .93rem; margin: .5rem 0 0; }
+  .yours { border-left: 3px solid var(--good); padding: .2rem 0 .2rem .75rem; margin-top: .6rem; font-size: .92rem; }
+  .yours .tag { font-family: var(--sans); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; color: var(--good); font-weight: 700; display: block; }
+  .src { font-family: var(--sans); font-size: .8rem; color: var(--soft); margin-top: .5rem; }
+  .src a { color: var(--blue); }
+  ul.want { margin: .5rem 0 0; padding-left: 1.1rem; font-size: .9rem; }
+  ul.want li { margin: .25rem 0; }
+  .meta { font-family: var(--sans); font-size: .78rem; color: var(--soft); display: flex; gap: 1rem; flex-wrap: wrap; border-top: 1px solid var(--line); margin-top: 1.4rem; padding-top: .8rem; }
+</style>
+<div class="wrap">
+  <span class="eyebrow">The AI Economist · issue in progress · 2026-W28</span>
+  <h1>What economists actually think of Fable 5 and GPT-5.6</h1>
+  <p class="sub">Live status — refreshed as you dictate. Green bars are your verbatim material already mapped in.</p>
+
+  <div class="block">
+    <div class="bhead"><h2>1 · Intro — the OI week</h2><span class="pill p-done">Dictated</span></div>
+    <div class="yours"><span class="tag">Your words, mapped</span>
+    A week at Opportunity Insights with the entire team — TIs, pre-docs, research principals, external collaborators — helping them integrate AI into their operations, with Codex as the main teaching tool. GPT-5.6 landed right after the last of three 2.5-hour sessions.</div>
+  </div>
+
+  <div class="block">
+    <div class="bhead"><h2>2 · Your verdict — subagents & the split</h2><span class="pill p-partial">Half dictated</span></div>
+    <div class="yours"><span class="tag">Your words, mapped</span>
+    You'd been teaching that agent-heavy workflows run a lot less consistently in Codex than in Claude Code — and GPT-5.6's headline change is much-enhanced (if perhaps erratic) subagent use. New Ultra reasoning tier. Bottom line unchanged: Fable for brainstorming and planning, GPT-5.6 for execution. Theo (early access) likes it too.</div>
+    <div class="src">Sourced: <a href="https://x.com/LiorOnAI/status/2076016904259637409">the 50-year-old math problem / 64 parallel subagents tweet</a></div>
+    <ul class="want">
+      <li><b>Still wanted:</b> the video-editor story in your words — what makes it your coolest Fable/5.6 project?</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="bhead"><h2>3 · The economists — the Gans arc & Bryan</h2><span class="pill p-open">Awaiting your take</span></div>
+    <p>Ready-made narrative: Gans Jul 1 "it is magnificent" → Jul 7 "liking Fable a lot less now that I am subject to marginal pricing… when is a prompt 'Fable-worthy'" → Jul 8 Sol early access, "outperforms 5.5 Pro on maths — significance for economics." Cowen: "excellent judgment, I will vouch." Bryan: paper-analysis code now "maybe 10 minutes per paper" with Fable/Codex.</p>
+    <ul class="want">
+      <li>Your read on the Gans arc — is his pricing complaint the real story?</li>
+      <li>Does Bryan's 10-min-per-paper match what you saw at OI?</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="bhead"><h2>4 · The pricing economics</h2><span class="pill p-open">Awaiting your take</span></div>
+    <p>Raw material: ~3x price gap for near-Fable quality ($4.50 vs $14.22 same-build comparison); Gans's marginal-pricing gripe as a lived example of inframarginal reasoning; your own "week of Fable without going bankrupt" playbook.</p>
+  </div>
+
+  <div class="block">
+    <div class="bhead"><h2>5 · Briefs (optional)</h2><span class="pill p-open">Open</span></div>
+    <p>Candidates: the Fable ban/re-release saga (Jun 12 → Jul 1); GPT-5.6 subagent eagerness from your bookmarks (@dexhorthy); Armin Ronacher's "AI doesn't speed up the thinking" (@mitsuhiko).</p>
+  </div>
+
+  <div class="meta">
+    <span>Draft: scaffolded ✓</span><span>Transcript: saved verbatim ✓</span><span>Pack: opened ✓</span><span>Roster: 29 entities ✓</span><span>Review gate & send: pending</span>
+  </div>
+</div>
+
+</body>
+</html>
