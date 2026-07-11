@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>The Outreach Control Plane, Explained</title>
+
+  <meta charset="utf-8">
+  <style>
+:root {
+  color-scheme: light;
+  --bg: #f6f3ee;
+  --paper: #fffdf8;
+  --ink: #171717;
+  --muted: #66645f;
+  --line: #ded7ca;
+  --accent: #176b5d;
+  --accent-soft: #e4f1eb;
+  --blue: #245f91;
+  --blue-soft: #e7eef8;
+  --rose: #94405b;
+  --rose-soft: #f6e7ed;
+  --gold: #8a5a12;
+  --gold-soft: #f7eddb;
+  --shadow: 0 18px 50px rgba(35, 28, 17, 0.08);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  max-width: none;
+  min-width: 0;
+  padding: 0;
+  width: 100%;
+  background:
+    linear-gradient(180deg, rgba(255,253,248,0.86), rgba(246,243,238,1) 360px),
+    var(--bg);
+  color: var(--ink);
+  font: 16px/1.58 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+a { color: var(--accent); }
+p, li, td, th, .field-value, .card, .callout, .appendix-list article {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: rgba(23, 107, 93, 0.08);
+  padding: 0.08rem 0.28rem;
+  border-radius: 5px;
+}
+.page {
+  width: min(calc(100% - 48px), 1500px);
+  max-width: none;
+  margin: 0 auto;
+  padding: clamp(28px, 3vw, 46px) 0 72px;
+}
+.hero {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: clamp(24px, 4vw, 48px);
+  box-shadow: var(--shadow);
+}
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+h1, h2, h3 { line-height: 1.12; letter-spacing: 0; }
+h1 { max-width: 920px; margin: 10px 0 12px; font-size: clamp(2.05rem, 5vw, 4.7rem); }
+h2 { margin: 0 0 16px; font-size: clamp(1.35rem, 2.4vw, 2.2rem); }
+h3 { margin: 0 0 8px; font-size: 1.05rem; }
+.subtitle { max-width: 760px; color: var(--muted); font-size: clamp(1.02rem, 1.6vw, 1.22rem); }
+.meta, .stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.pill, .stat {
+  border: 1px solid var(--line);
+  background: #fffaf1;
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: #47433b;
+  font-size: 0.88rem;
+}
+.stat { min-width: 136px; border-radius: 14px; }
+.stat strong { display: block; font-size: 1.15rem; color: var(--ink); }
+.layout {
+  display: grid;
+  grid-template-columns: clamp(190px, 15vw, 260px) minmax(0, 1fr);
+  gap: clamp(20px, 2.8vw, 44px);
+  align-items: start;
+  margin-top: 28px;
+}
+.toc {
+  position: sticky;
+  top: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255,253,248,0.86);
+  padding: 14px;
+}
+.toc a { display: block; color: #4c4944; text-decoration: none; padding: 7px 8px; border-radius: 8px; font-size: 0.9rem; }
+.toc a:hover { background: var(--accent-soft); color: var(--accent); }
+.content { min-width: 0; width: 100%; }
+.section {
+  margin-bottom: 22px;
+  padding: clamp(20px, 2.4vw, 30px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(35, 28, 17, 0.045);
+}
+.section p { max-width: 84ch; }
+.section-intro { color: var(--muted); }
+.callout {
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+}
+.callout.accent, .card.accent { background: var(--accent-soft); }
+.callout.blue, .card.blue { background: var(--blue-soft); }
+.callout.rose, .card.rose { background: var(--rose-soft); }
+.callout.gold, .card.gold { background: var(--gold-soft); }
+.card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.card {
+  min-width: 0;
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+}
+.muted { color: var(--muted); }
+.field { margin-top: 12px; }
+.field-label { color: var(--muted); font-size: 0.73rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.field-value { margin-top: 2px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+table { width: 100%; border-collapse: collapse; min-width: 720px; background: #fffaf1; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+th { color: #423d34; background: #f2eadc; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+tr:last-child td { border-bottom: 0; }
+.steps { counter-reset: step; list-style: none; padding: 0; display: grid; gap: 12px; }
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 14px 14px 14px 52px;
+  background: #fffaf1;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.flow-node {
+  position: relative;
+  min-height: 124px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fffaf1;
+}
+.flow-label { color: var(--accent); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+.flow-title { margin-top: 8px; font-weight: 800; }
+.flow-body { margin-top: 6px; color: var(--muted); font-size: 0.92rem; }
+.appendix-list { display: grid; gap: 12px; }
+.appendix-list article { border-top: 1px solid var(--line); padding-top: 14px; }
+footer {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  text-align: center;
+}
+@media (max-width: 860px) {
+  .page { width: min(calc(100% - 24px), 1500px); padding: 16px 0 48px; }
+  .layout { display: block; }
+  .toc { position: static; margin-bottom: 18px; }
+  .toc nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card-grid { grid-template-columns: 1fr; }
+  .section { border-radius: 14px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 15px; }
+  .page { width: min(calc(100% - 20px), 1500px); }
+  .hero { border-radius: 14px; padding: 22px 16px; }
+  .toc nav { grid-template-columns: 1fr; }
+  .meta, .stats { display: grid; }
+  table { min-width: 620px; }
+}
+@media (min-width: 1320px) {
+  .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<div class="eyebrow">AI Economist outreach system</div>
+<h1>The Outreach Control Plane, Explained</h1>
+<p class="subtitle">A guided tour of the system for researching prospects, writing highly personalized outreach, reviewing one person at a time, sending safely through Instantly, and learning from every campaign.</p>
+<div class="meta">
+<span class="pill"><strong>Status:</strong> Implementation-ready plan; the application has not been built yet</span>
+<span class="pill"><strong>Source:</strong> Outreach Control Plane plan, July 11, 2026</span>
+<span class="pill"><strong>Reading mode:</strong> Pedagogical overview, not the engineering specification</span>
+<span class="pill"><strong>Privacy:</strong> Public-obscure copy; secrets and machine-specific details omitted</span>
+</div>
+<div class="stats">
+<div class="stat"><strong>1 by 1</strong>Default review mode</div>
+<div class="stat"><strong>3</strong>Separate human gates</div>
+<div class="stat"><strong>5</strong>Rollout gates</div>
+<div class="stat"><strong>9</strong>Implementation milestones</div>
+</div>
+</header>
+<div class="layout">
+<aside class="toc"><div class="eyebrow">Contents</div><nav>
+<a href="#big-idea">The whole idea in one paragraph</a>
+<a href="#why-build-it">Why build this at all?</a>
+<a href="#system-loop">The operating loop</a>
+<a href="#sources-of-truth">There is no single database that is true about everything</a>
+<a href="#local-first">What local-first means here</a>
+<a href="#three-gates">Approval, publishing, and launch are three different decisions</a>
+<a href="#prospect-journey">Follow one prospect through the system</a>
+<a href="#two-watermarks">The subtle idea: ingestion and permission to send move separately</a>
+<a href="#failure-modes">Four failure modes the architecture is designed around</a>
+<a href="#reply-loop">What happens when someone replies</a>
+<a href="#authority">Who can do what?</a>
+<a href="#review-experience">The review experience on desktop and phone</a>
+<a href="#rollout-gates">The rollout ladder</a>
+<a href="#implementation-roadmap">How the build is sequenced</a>
+<a href="#not-v1">What this deliberately does not become in v1</a>
+<a href="#current-state">Where we are right now</a>
+<a href="#glossary">Glossary and durable principles</a>
+</nav></aside>
+<div class="content">
+<section class="section callout-section" id="big-idea">
+<h2>The whole idea in one paragraph</h2>
+<div class="callout accent">
+<div class="eyebrow">Mental model</div>
+<p>This is a private operating system for outreach, not an autonomous email cannon. It gives agents enough memory and structure to research, draft, compare, and prioritize intelligently, while keeping every externally visible action under human control.</p>
+<p>The local system remembers why a prospect matters, which evidence supports each sentence, how a draft changed, what was approved, what Instantly actually sent, what came back, and what should happen next. The point is to make high-personalization outreach faster and more cumulative without lowering the reputational bar.</p>
+
+</div></section>
+<section class="section cards-section" id="why-build-it">
+<h2>Why build this at all?</h2>
+<p class="section-intro">The project exists because the current workflow loses context at exactly the moments where judgment matters.</p>
+<div class="card-grid">
+<article class="card neutral">
+<div class="eyebrow">Problem 1</div>
+<h3>Each campaign starts too fresh</h3>
+<ul><li>Research, draft history, approvals, and outcomes live in different places.</li><li>A new agent cannot reliably reconstruct why an old email worked or failed.</li><li>Useful connection and proof mechanisms are rediscovered instead of reused deliberately.</li></ul>
+</article>
+<article class="card rose">
+<div class="eyebrow">Problem 2</div>
+<h3>The market is reputation-sensitive</h3>
+<ul><li>Many recipients are peers, economists, academics, or policy professionals.</li><li>A weak factual hook or awkward named connection can cost more than one missed reply.</li><li>Bulk automation is therefore the wrong default even if it is technically possible.</li></ul>
+</article>
+<article class="card gold">
+<div class="eyebrow">Problem 3</div>
+<h3>Replies are perishable</h3>
+<ul><li>A promising response should arrive with its original research and campaign context attached.</li><li>The agent should prepare a next step quickly, but never send the reply by itself.</li><li>Opt-outs must become permanent suppression before any later outreach can proceed.</li></ul>
+</article>
+<article class="card blue">
+<div class="eyebrow">Opportunity</div>
+<h3>The work can compound</h3>
+<ul><li>The system can learn which public-work hooks, proof routes, CTAs, and connection paths work.</li><li>It can borrow mechanisms without copying private correspondence across prospects.</li><li>The result is better human judgment with less reconstruction work.</li></ul>
+</article>
+</div></section>
+<section class="section flow-section" id="system-loop">
+<h2>The operating loop</h2>
+<p class="section-intro">Think of the system as a loop with human checkpoints, not a funnel that becomes autonomous after a draft is generated.</p>
+<div class="flow">
+<div class="flow-node">
+<div class="flow-label">1</div>
+<div class="flow-title">Research</div>
+<div class="flow-body">Collect public evidence, buyer context, connections, and uncertainty.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">2</div>
+<div class="flow-title">Draft</div>
+<div class="flow-body">Create a versioned message and explain the mechanism behind it.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">3</div>
+<div class="flow-title">Approve</div>
+<div class="flow-body">A human freezes one exact version. Nothing is published yet.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">4</div>
+<div class="flow-title">Publish paused</div>
+<div class="flow-body">Copy approved intent into a paused Instantly campaign and verify it.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">5</div>
+<div class="flow-title">Launch</div>
+<div class="flow-body">Run fresh checks and separately authorize delivery.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">6</div>
+<div class="flow-title">Observe and learn</div>
+<div class="flow-body">Import delivery, replies, outcomes, and lessons back into the corpus.</div>
+</div>
+</div></section>
+<section class="section cards-section" id="sources-of-truth">
+<h2>There is no single database that is true about everything</h2>
+<p class="section-intro">The design works by assigning different kinds of truth to the system that is actually qualified to own them.</p>
+<div class="card-grid">
+<article class="card accent">
+<div class="eyebrow">Local corpus</div>
+<h3>What we intended and why</h3>
+<div class="field">
+<div class="field-label">Owns</div>
+<div class="field-value">Research, evidence, draft versions, approvals, annotations, strategy, and learning</div>
+</div>
+<div class="field">
+<div class="field-label">Does not own</div>
+<div class="field-value">Whether Instantly actually delivered or received a message</div>
+</div>
+
+</article>
+<article class="card blue">
+<div class="eyebrow">Instantly</div>
+<h3>What the delivery system observed</h3>
+<div class="field">
+<div class="field-label">Owns</div>
+<div class="field-value">Campaign state, lead mapping, delivery events, sent messages, replies, and threads</div>
+</div>
+<div class="field">
+<div class="field-label">Does not own</div>
+<div class="field-value">Our research rationale or human approval history</div>
+</div>
+
+</article>
+<article class="card rose">
+<div class="eyebrow">Suppression store</div>
+<h3>Who must never be contacted again</h3>
+<div class="field">
+<div class="field-label">Owns</div>
+<div class="field-value">Permanent do-not-contact records and opt-outs</div>
+</div>
+<div class="field">
+<div class="field-label">Rule</div>
+<div class="field-value">If suppression cannot be verified, remote writing stops</div>
+</div>
+
+</article>
+<article class="card gold">
+<div class="eyebrow">Relationship workspace</div>
+<h3>Who has become a real relationship</h3>
+<div class="field">
+<div class="field-label">Owns</div>
+<div class="field-value">Curated organization context after admission</div>
+</div>
+<div class="field">
+<div class="field-label">Boundary</div>
+<div class="field-value">The outreach system proposes updates; it does not silently rewrite relationship records</div>
+</div>
+
+</article>
+</div></section>
+<section class="section callout-section" id="local-first">
+<h2>What local-first means here</h2>
+<div class="callout blue">
+<div class="eyebrow">Not merely storage location</div>
+<p>The working memory lives in a private local SQLite corpus. A single local service is the only writer, so the UI, CLI, agents, and background automation cannot invent different versions of reality.</p>
+<p>Local-first also means the system can be useful when it is not hosted continuously. But it does not pretend the Mac is always online: Instantly-native limits and stop behavior remain necessary because local automation cannot be the emergency brake while the computer is asleep.</p>
+<ul><li>Private prospect data and messages stay outside Git.</li><li>Phone access is private through Tailscale, never a public web app.</li><li>Encrypted attachments and backups remain recoverable without moving the primary corpus to a cloud database.</li></ul>
+</div></section>
+<section class="section matrix-section" id="three-gates">
+<h2>Approval, publishing, and launch are three different decisions</h2>
+<p class="section-intro">This distinction is the central safety property. Collapsing any two of these would make review less meaningful.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Decision</th>
+<th>What it means</th>
+<th>What it does not mean</th>
+<th>Required evidence</th>
+</tr></thead><tbody>
+<tr>
+<td>Approve</td>
+<td>I endorse this exact local version for this prospect</td>
+<td>No Instantly campaign or lead is created</td>
+<td>Exact copy, evidence, compliance, suppression, relationship, and reviewed remote-state fingerprints</td>
+</tr>
+<tr>
+<td>Publish</td>
+<td>Copy the approved bundle into the confirmed paused campaign</td>
+<td>Nothing is allowed to deliver</td>
+<td>Fresh sync, fresh suppression and relationship checks, paused-state readback, exact remote mapping</td>
+</tr>
+<tr>
+<td>Launch</td>
+<td>Permit the bounded confirmed campaign to deliver</td>
+<td>No permission to change copy, recipients, accounts, or limits</td>
+<td>A second fresh preflight, hard remote caps, worst-case send count, and explicit human confirmation</td>
+</tr>
+</tbody></table></div></section>
+<section class="section steps-section" id="prospect-journey">
+<h2>Follow one prospect through the system</h2>
+<ol class="steps">
+<li>
+<strong>Create the prospect record</strong>
+<p>Store identity, organization, role, public sources, buyer context, and why this person belongs in the campaign.</p>
+</li>
+<li>
+<strong>Assemble personalization evidence</strong>
+<p>Record a public-work hook, possible connection path, proof route, uncertainty, and whether each fact has been verified.</p>
+</li>
+<li>
+<strong>Generate a message version</strong>
+<p>The agent writes a draft, labels the mechanism it used, cites the evidence, and explains its recommendation.</p>
+</li>
+<li>
+<strong>Prioritize the review</strong>
+<p>The queue balances opportunity value, reputational risk, factual uncertainty, named connections, reply urgency, and relationship potential.</p>
+</li>
+<li>
+<strong>Review one person</strong>
+<p>You approve, request a revision, skip, reject, or override the suggested review tier. Every outcome is durable.</p>
+</li>
+<li>
+<strong>Freeze the approval</strong>
+<p>Approval binds one exact version and its evidence. A clean later sync refreshes eligibility; a meaningful change invalidates it.</p>
+</li>
+<li>
+<strong>Publish into a paused campaign</strong>
+<p>The service writes a durable intent, calls Instantly, and reads the result back lead by lead.</p>
+</li>
+<li>
+<strong>Launch separately</strong>
+<p>The service shows the exact bounded blast radius and asks for a new human confirmation.</p>
+</li>
+<li>
+<strong>Import what happened</strong>
+<p>Delivery, replies, attachments, and campaign events return as append-only observations rather than overwriting intent.</p>
+</li>
+<li>
+<strong>Record the outcome</strong>
+<p>The agent can now compare the original strategy with what actually happened and reuse the mechanism responsibly later.</p>
+</li>
+</ol></section>
+<section class="section flow-section" id="two-watermarks">
+<h2>The subtle idea: ingestion and permission to send move separately</h2>
+<p class="section-intro">A failed suppression write must not make us lose later replies, but it must stop later sending. The plan therefore uses two watermarks.</p>
+<div class="flow">
+<div class="flow-node">
+<div class="flow-label">Observe</div>
+<div class="flow-title">Ingestion watermark</div>
+<div class="flow-body">How far we have durably captured remote messages and events.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">Obligate</div>
+<div class="flow-title">Suppression ledger</div>
+<div class="flow-body">Every observed opt-out becomes a durable obligation before anything can forget it.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">Verify</div>
+<div class="flow-title">DNC receipt</div>
+<div class="flow-body">The permanent suppression store independently confirms the address is blocked.</div>
+</div>
+<div class="flow-node">
+<div class="flow-label">Permit</div>
+<div class="flow-title">Eligibility watermark</div>
+<div class="flow-body">Only advances after every suppression obligation through that point is verified.</div>
+</div>
+</div></section>
+<section class="section cards-section" id="failure-modes">
+<h2>Four failure modes the architecture is designed around</h2>
+<div class="card-grid">
+<article class="card gold">
+<div class="eyebrow">Drift</div>
+<h3>Local intent and Instantly disagree</h3>
+<ul><li>Preserve both versions.</li><li>Identify the affected prospect or campaign.</li><li>Block only the bounded affected scope when possible.</li><li>Require human reconciliation before continuing.</li></ul>
+</article>
+<article class="card rose">
+<div class="eyebrow">Ambiguity</div>
+<h3>The API response is lost</h3>
+<ul><li>Do not assume the mutation failed.</li><li>Read remote state before considering a retry.</li><li>Keep the result unknown when absence cannot be proven.</li><li>Never automatically retry an ambiguous reply-send.</li></ul>
+</article>
+<article class="card blue">
+<div class="eyebrow">Suppression</div>
+<h3>An opt-out lands between two databases</h3>
+<ul><li>Create a durable obligation first.</li><li>Verify the permanent DNC write separately.</li><li>Reconcile interrupted transitions after restart.</li><li>Keep remote writes blocked until the receipt exists.</li></ul>
+</article>
+<article class="card accent">
+<div class="eyebrow">Recovery</div>
+<h3>A valid old backup could be unsafe</h3>
+<ul><li>Restore into quarantine with remote credentials disabled.</li><li>Never roll permanent suppression backward.</li><li>Quarantine unfinished mutation intents from replay.</li><li>Rebuild search only after canonical history passes integrity checks.</li></ul>
+</article>
+</div></section>
+<section class="section steps-section" id="reply-loop">
+<h2>What happens when someone replies</h2>
+<ol class="steps">
+<li>
+<strong>Poll and catch up</strong>
+<p>The local watcher resumes from its last checkpoint whenever the environment is available.</p>
+</li>
+<li>
+<strong>Capture before judging</strong>
+<p>Store the exact available message and provenance; fetch safe attachment bytes while their links still work.</p>
+</li>
+<li>
+<strong>Handle opt-outs first</strong>
+<p>A deterministic opt-out is written to permanent suppression before the thread can become send-eligible again.</p>
+</li>
+<li>
+<strong>Classify with uncertainty</strong>
+<p>Label automatic, opt-out, substantive, referral, positive, negative, or unclear, and retain confidence plus evidence.</p>
+</li>
+<li>
+<strong>Reconstruct the context</strong>
+<p>Bring together the thread, original evidence, campaign strategy, prospect history, and analogous prior outcomes.</p>
+</li>
+<li>
+<strong>Draft but do not send</strong>
+<p>The agent proposes a response and next action. Every real reply still receives individual human approval.</p>
+</li>
+<li>
+<strong>Propose relationship admission</strong>
+<p>A substantive interaction produces a curated proposal for the existing relationship workflow, not an automatic CRM write.</p>
+</li>
+</ol></section>
+<section class="section matrix-section" id="authority">
+<h2>Who can do what?</h2>
+<p class="section-intro">Agents get broad ability to think and prepare. Humans keep authority over externally visible or boundary-changing actions.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Capability</th>
+<th>Human</th>
+<th>Interactive agent</th>
+<th>Automation</th>
+</tr></thead><tbody>
+<tr>
+<td>Research, search, compare, draft</td>
+<td>Yes</td>
+<td>Yes, within a scoped audited session</td>
+<td>No broad exploration</td>
+</tr>
+<tr>
+<td>Read-only sync and status</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Classify and propose next actions</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes, as proposals</td>
+</tr>
+<tr>
+<td>Record a verified opt-out</td>
+<td>Reviewable</td>
+<td>Observe result</td>
+<td>May trigger the deterministic safety path</td>
+</tr>
+<tr>
+<td>Approve exact copy</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Publish, launch, or reply-send</td>
+<td>Yes, with a fresh action-bound confirmation</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Resolve drift or confidentiality exceptions</td>
+<td>Yes</td>
+<td>Propose only</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Promote a restore or apply a relationship update</td>
+<td>Yes, through the owning workflow</td>
+<td>No</td>
+<td>No</td>
+</tr>
+</tbody></table></div></section>
+<section class="section cards-section" id="review-experience">
+<h2>The review experience on desktop and phone</h2>
+<div class="card-grid">
+<article class="card blue">
+<div class="eyebrow">Desktop</div>
+<h3>Queue plus focused detail</h3>
+<ul><li>The left side explains what needs attention and why it is prioritized.</li><li>The detail view keeps exact copy, evidence, history, blockers, and actions together.</li><li>Reply urgency can outrank draft review without hiding the underlying ranking logic.</li></ul>
+</article>
+<article class="card accent">
+<div class="eyebrow">Phone</div>
+<h3>One prospect at a time</h3>
+<ul><li>A stable sequential flow replaces a compressed desktop dashboard.</li><li>Next and previous navigation preserves place after each decision.</li><li>The action region is touch-safe, and previews clearly return to the underlying record.</li></ul>
+</article>
+<article class="card neutral">
+<div class="eyebrow">Both</div>
+<h3>Same facts, different layout</h3>
+<ul><li>UI and agent tools consume the same canonical work-item description.</li><li>Disabled actions explain the actual blocker instead of merely disappearing.</li><li>A stale record is refreshed without losing the attempted operator input.</li></ul>
+</article>
+<article class="card gold">
+<div class="eyebrow">Private access</div>
+<h3>Tailscale, not public hosting</h3>
+<ul><li>The service listens only on the local machine.</li><li>A new device pairs with a short-lived code displayed on the Mac.</li><li>Public, LAN, forged-identity, expired-session, and CSRF cases are tested negatively.</li></ul>
+</article>
+</div></section>
+<section class="section matrix-section" id="rollout-gates">
+<h2>The rollout ladder</h2>
+<p class="section-intro">No gate inherits authority from the previous one. Each gate enables one bounded class of action and can be revoked independently.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Gate</th>
+<th>What becomes possible</th>
+<th>What must be proven first</th>
+</tr></thead><tbody>
+<tr>
+<td>G0 - Fixtures</td>
+<td>Local corpus, review UI, agent tools, fake adapters</td>
+<td>Automated tests, private paths, database integrity</td>
+</tr>
+<tr>
+<td>G1 - Disposable read</td>
+<td>Read-only sync of a dedicated test campaign</td>
+<td>Exact bodies, threads, directions, cursors, attachments, and remote states</td>
+</tr>
+<tr>
+<td>G2 - Disposable publish</td>
+<td>Paused publish to at most two self-controlled recipients</td>
+<td>Zero scheduled delivery, exact readback, per-lead mapping, lost-response reconciliation</td>
+</tr>
+<tr>
+<td>G3 - Self-controlled send</td>
+<td>Activation, delivery, reply-send/readback, and pause</td>
+<td>Exactly-once bounded behavior, settlement, no unexpected delivery</td>
+</tr>
+<tr>
+<td>G4 - Academic-econ pilot</td>
+<td>One bounded external tranche</td>
+<td>Campaign QA, suppression, proof routing, jurisdiction pack, sender health, hard caps, recovery, iPhone access, and explicit approval</td>
+</tr>
+</tbody></table></div></section>
+<section class="section steps-section" id="implementation-roadmap">
+<h2>How the build is sequenced</h2>
+<ol class="steps">
+<li>
+<strong>U1 - Build the private foundation</strong>
+<p>Create the local package, service ownership, migration framework, private paths, and doctor checks.</p>
+</li>
+<li>
+<strong>U2 - Make research and drafts durable</strong>
+<p>Add prospect evidence, immutable versions, retrieval, agent sessions, and shared UI/CLI work-item contracts.</p>
+</li>
+<li>
+<strong>U3 - Add suppression and exact approval</strong>
+<p>Connect the permanent DNC authority, relationship checks, review priority, and approval binding.</p>
+</li>
+<li>
+<strong>U4 - Mirror Instantly safely</strong>
+<p>Implement read-only sync, separate ingestion and eligibility watermarks, attachments, and drift.</p>
+</li>
+<li>
+<strong>U5 and U6 - Add remote actions and reply operations</strong>
+<p>Build the mutation outbox, publish/launch controls, reply triage, reply-send, and relationship proposals.</p>
+</li>
+<li>
+<strong>U7 - Validate the review experience early, then connect it</strong>
+<p>Start with fixture-backed desktop/phone review after U3; integrate live state and private phone access later.</p>
+</li>
+<li>
+<strong>U8 - Prove recovery before real data</strong>
+<p>Create sealed encrypted snapshots and restore into quarantine without rolling suppression backward.</p>
+</li>
+<li>
+<strong>U9 - Execute the gates and open a bounded pilot</strong>
+<p>Run the disposable proofs, verify operational readiness, complete a self-controlled rehearsal, and only then open G4.</p>
+</li>
+</ol></section>
+<section class="section cards-section" id="not-v1">
+<h2>What this deliberately does not become in v1</h2>
+<div class="card-grid">
+<article class="card rose">
+<div class="eyebrow">Not autonomous</div>
+<h3>No autonomous cold email or replies</h3>
+<ul><li>Agents may prepare and recommend.</li><li>Humans approve every externally visible message state.</li></ul>
+</article>
+<article class="card blue">
+<div class="eyebrow">Not a delivery engine</div>
+<h3>No replacement for Instantly</h3>
+<ul><li>Instantly still sends and owns observed delivery state.</li><li>The control plane adds memory, judgment, and reconciliation.</li></ul>
+</article>
+<article class="card gold">
+<div class="eyebrow">Not a general CRM</div>
+<h3>No competing relationship database</h3>
+<ul><li>Substantive replies create proposals.</li><li>The existing relationship workflow remains authoritative.</li></ul>
+</article>
+<article class="card accent">
+<div class="eyebrow">Not cloud coordination</div>
+<h3>No Turso or direct mailbox sync yet</h3>
+<ul><li>SQLite remains the primary corpus.</li><li>Google and Microsoft mailbox reconciliation stays deferred.</li></ul>
+</article>
+</div></section>
+<section class="section callout-section" id="current-state">
+<h2>Where we are right now</h2>
+<div class="callout gold">
+<div class="eyebrow">Planning complete</div>
+<p>The conceptual and implementation plan is complete. It has been confidence-deepened, reviewed through architecture, data-integrity, agent, product, design, security, feasibility, scope, and adversarial lenses, and converted into nine implementation milestones.</p>
+<p>No control-plane application has been built yet. The next substantive choice is execution style: a supervised build-and-review workflow or a longer autonomous goal run. In either case, the plan says to start with local fixtures and private foundations, not with real recipients or live sending.</p>
+
+</div></section>
+<section class="section appendix-section" id="glossary">
+<h2>Glossary and durable principles</h2>
+<p class="section-intro">Use these definitions when reading the engineering plan or evaluating implementation work.</p>
+<div class="appendix-list">
+<article>
+<h3>Key terms</h3>
+<ul><li>Corpus: the private local operational memory.</li><li>Checkpoint: a durable record of completed synchronization work.</li><li>Ingestion watermark: how far remote observations have been safely captured.</li><li>Eligibility watermark: how far the system may rely on suppression and safety obligations being complete.</li><li>Drift: a disagreement between approved local intent and observed remote state.</li><li>Mutation outbox: durable local intent recorded before an external write.</li><li>Action capability: a short-lived, one-use human confirmation bound to exact inputs.</li><li>Sealed epoch: a fully copied, verified, encrypted backup generation.</li></ul>
+</article>
+<article>
+<h3>Principles that should survive implementation details</h3>
+<ul><li>Preserve intent and observation separately.</li><li>Do not infer remote failure from a lost response.</li><li>Suppression becomes permanent before later sending becomes eligible.</li><li>Approval never implies publishing; publishing never implies launch.</li><li>Private correspondence may inform mechanisms, but may not be transplanted across prospects without approval.</li><li>Recovery must not roll suppression backward or replay unfinished external actions.</li><li>The default unit of judgment is one person, not one batch.</li></ul>
+</article>
+</div></section>
+</div></div>
+<footer>Composed from the implementation-ready Outreach Control Plane plan on July 11, 2026. This is a public-obscure, noindex teaching copy; the repo plan remains canonical.</footer>
+</main>
+</body>
+</html>
