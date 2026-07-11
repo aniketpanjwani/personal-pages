@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Deck Skill Calibration Report Directions</title>
+
+  <meta charset="utf-8">
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #64706a;
+      --line: #d9dedb;
+      --paper: #ffffff;
+      --wash: #f3f5f3;
+      --green: #1d6b4f;
+      --green-soft: #e6f2ec;
+      --rust: #a6422d;
+      --rust-soft: #f8e9e5;
+      --gold: #a67312;
+      --gold-soft: #f8efd8;
+      --blue: #295f8a;
+      --blue-soft: #e7f0f7;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--wash);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.4;
+      letter-spacing: 0;
+    }
+    header {
+      background: var(--ink);
+      color: white;
+      padding: 22px 20px 20px;
+    }
+    .header-inner, main { max-width: 1120px; margin: 0 auto; }
+    .eyebrow {
+      margin: 0 0 7px;
+      color: #b9d6c9;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0; font-size: 26px; line-height: 1.15; }
+    .intro { margin: 8px 0 0; max-width: 740px; color: #dce5e0; font-size: 14px; }
+    main { padding: 18px 14px 34px; }
+    .notice {
+      border-left: 4px solid var(--gold);
+      background: var(--gold-soft);
+      padding: 11px 13px;
+      margin-bottom: 18px;
+      font-size: 13px;
+    }
+    .direction {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      margin-bottom: 18px;
+    }
+    .direction.recommended { border: 2px solid var(--green); }
+    .direction-head {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .letter {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      background: var(--ink);
+      color: white;
+      border-radius: 50%;
+      font-size: 19px;
+      font-weight: 900;
+    }
+    .recommended .letter { background: var(--green); }
+    h2 { margin: 0; font-size: 18px; line-height: 1.2; }
+    .subtitle { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
+    .badge {
+      color: var(--green);
+      background: var(--green-soft);
+      border: 1px solid #b7d7c8;
+      border-radius: 999px;
+      padding: 5px 8px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .mock {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr);
+      min-height: 285px;
+    }
+    .side {
+      background: #f8f9f8;
+      border-right: 1px solid var(--line);
+      padding: 14px;
+    }
+    .side-title { margin: 0 0 12px; font-size: 12px; font-weight: 850; text-transform: uppercase; }
+    .metric { margin-bottom: 13px; }
+    .metric strong { display: block; font-size: 24px; line-height: 1; }
+    .metric span { color: var(--muted); font-size: 11px; }
+    .meter { height: 6px; margin-top: 5px; background: #dfe4e1; overflow: hidden; }
+    .meter > i { display: block; height: 100%; background: var(--green); }
+    .nav-item { padding: 7px 8px; margin: 3px 0; font-size: 12px; color: var(--muted); }
+    .nav-item.active { color: var(--ink); background: var(--green-soft); font-weight: 750; }
+    .content { padding: 14px; min-width: 0; }
+    .content-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    h3 { margin: 0; font-size: 15px; }
+    .filter { color: var(--muted); font-size: 11px; }
+    .finding {
+      display: grid;
+      grid-template-columns: 5px minmax(0, 1fr) auto;
+      gap: 10px;
+      border: 1px solid var(--line);
+      margin-bottom: 9px;
+      padding: 10px;
+      background: white;
+    }
+    .finding > i { width: 5px; height: 100%; min-height: 46px; background: var(--gold); }
+    .finding.fail > i { background: var(--rust); }
+    .finding.pass > i { background: var(--green); }
+    .finding-title { margin: 0 0 3px; font-weight: 800; font-size: 12px; }
+    .finding-copy { margin: 0; color: var(--muted); font-size: 11px; }
+    .pill {
+      align-self: start;
+      padding: 4px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .pill.fail { color: var(--rust); background: var(--rust-soft); }
+    .pill.warn { color: #76500b; background: var(--gold-soft); }
+    .pill.pass { color: var(--green); background: var(--green-soft); }
+    .actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .action {
+      border: 1px solid #aeb8b2;
+      border-radius: 4px;
+      color: #47524c;
+      background: #f8faf9;
+      padding: 5px 7px;
+      font-size: 10px;
+      font-weight: 750;
+    }
+    .action.primary { color: white; border-color: var(--green); background: var(--green); }
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr 34px 1fr 34px 1fr;
+      align-items: center;
+      gap: 5px;
+      margin-top: 12px;
+    }
+    .flow-step { border: 1px solid var(--line); padding: 10px; text-align: center; font-size: 11px; font-weight: 750; }
+    .arrow { text-align: center; color: var(--muted); font-weight: 900; }
+    .direction-foot {
+      border-top: 1px solid var(--line);
+      padding: 11px 16px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .direction-foot strong { color: var(--ink); }
+    .connected .side { background: var(--blue-soft); }
+    .connected .nav-item.active { background: white; }
+    .sync {
+      border: 1px solid #abc6da;
+      background: var(--blue-soft);
+      color: var(--blue);
+      padding: 8px 10px;
+      margin-bottom: 10px;
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    @media (max-width: 680px) {
+      header { padding: 18px 16px; }
+      h1 { font-size: 22px; }
+      main { padding: 12px 8px 24px; }
+      .direction-head { grid-template-columns: 42px minmax(0, 1fr); padding: 12px; }
+      .badge { grid-column: 2; justify-self: start; }
+      .mock { grid-template-columns: 1fr; }
+      .side { border-right: 0; border-bottom: 1px solid var(--line); }
+      .side .metric { display: inline-block; width: 31%; margin: 0; vertical-align: top; }
+      .side .nav-item { display: none; }
+      .content { padding: 10px; }
+      .finding { grid-template-columns: 4px minmax(0, 1fr); }
+      .finding .pill { grid-column: 2; justify-self: start; }
+      .flow { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <p class="eyebrow">Directional sketch</p>
+      <h1>How should a calibration report become decisions?</h1>
+      <p class="intro">Three shapes for reading findings, approving expectations, and handing durable decisions back to Codex.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="notice"><strong>Judge the workflow, not the styling.</strong> This sketch is generic and display-only. Nothing here records a click.</div>
+
+    <section class="direction">
+      <div class="direction-head">
+        <div class="letter">A</div>
+        <div>
+          <h2>Readable briefing</h2>
+          <p class="subtitle">The report explains what happened; action returns to Codex.</p>
+        </div>
+      </div>
+      <div class="mock">
+        <aside class="side">
+          <p class="side-title">Run summary</p>
+          <div class="metric"><strong>18</strong><span>cases run</span><div class="meter"><i style="width:82%"></i></div></div>
+          <div class="metric"><strong>3</strong><span>regressions</span></div>
+          <div class="metric"><strong>7</strong><span>judge flags</span></div>
+          <div class="nav-item active">Executive summary</div>
+          <div class="nav-item">Release gates</div>
+          <div class="nav-item">Case details</div>
+        </aside>
+        <div class="content">
+          <div class="content-bar"><h3>What needs attention</h3><span class="filter">Highest impact first</span></div>
+          <div class="finding fail"><i></i><div><p class="finding-title">Baseline confidence is overstated</p><p class="finding-copy">The chosen parent maps fewer slides than a later comparator. The report explains the evidence and recommended change.</p></div><span class="pill fail">Blocker</span></div>
+          <div class="finding"><i></i><div><p class="finding-title">Repeated feedback creates too many decisions</p><p class="finding-copy">Three recurring comments became nine separate approvals.</p></div><span class="pill warn">Review</span></div>
+          <div class="finding pass"><i></i><div><p class="finding-title">Canonical source remained untouched</p><p class="finding-copy">Mutation guard and artifact checks passed.</p></div><span class="pill pass">Passed</span></div>
+          <div class="flow"><div class="flow-step">Read report</div><div class="arrow">→</div><div class="flow-step">Return to Codex</div><div class="arrow">→</div><div class="flow-step">Describe decisions</div></div>
+        </div>
+      </div>
+      <div class="direction-foot"><strong>Best for:</strong> fastest v1 and excellent pedagogy. <strong>Tradeoff:</strong> decisions must be restated in chat.</div>
+    </section>
+
+    <section class="direction recommended">
+      <div class="direction-head">
+        <div class="letter">B</div>
+        <div>
+          <h2>Portable decision packet</h2>
+          <p class="subtitle">Review in HTML, record judgments, then hand a structured packet to Codex.</p>
+        </div>
+        <span class="badge">Recommended</span>
+      </div>
+      <div class="mock">
+        <aside class="side">
+          <p class="side-title">Adjudication</p>
+          <div class="metric"><strong>4/7</strong><span>decisions made</span><div class="meter"><i style="width:57%"></i></div></div>
+          <div class="metric"><strong>2</strong><span>promote</span></div>
+          <div class="metric"><strong>1</strong><span>needs context</span></div>
+          <div class="nav-item active">Decision queue</div>
+          <div class="nav-item">Accepted behavior</div>
+          <div class="nav-item">Agent patch</div>
+        </aside>
+        <div class="content">
+          <div class="content-bar"><h3>Finding 2 of 7</h3><span class="filter">Known dogfood defect</span></div>
+          <div class="finding"><i></i><div>
+            <p class="finding-title">Consolidate repeated feedback across slides 10-12</p>
+            <p class="finding-copy">Expected behavior: show one cross-slide decision with all three occurrences preserved. Current behavior: nine independent decisions.</p>
+            <div class="actions"><span class="action primary">Promote expectation</span><span class="action">Reject</span><span class="action">Needs context</span><span class="action">Edit note</span></div>
+          </div><span class="pill warn">Pending</span></div>
+          <div class="finding pass"><i></i><div><p class="finding-title">Decision packet is agent-readable</p><p class="finding-copy">Selections, notes, reviewer, report version, case IDs, and skill SHA travel together.</p></div><span class="pill pass">Structured</span></div>
+          <div class="flow"><div class="flow-step">Review on phone</div><div class="arrow">→</div><div class="flow-step">Export decision packet</div><div class="arrow">→</div><div class="flow-step">Codex imports and acts</div></div>
+        </div>
+      </div>
+      <div class="direction-foot"><strong>Best for:</strong> low-friction human promotion without a hosted service. <strong>Tradeoff:</strong> the packet must be returned to the repo or task before Codex can consume it.</div>
+    </section>
+
+    <section class="direction connected">
+      <div class="direction-head">
+        <div class="letter">C</div>
+        <div>
+          <h2>Connected review workspace</h2>
+          <p class="subtitle">Actions persist remotely and Codex reads them through an authenticated service.</p>
+        </div>
+      </div>
+      <div class="mock">
+        <aside class="side">
+          <p class="side-title">Workspace</p>
+          <div class="metric"><strong>6</strong><span>open runs</span><div class="meter"><i style="width:68%;background:var(--blue)"></i></div></div>
+          <div class="metric"><strong>3</strong><span>reviewers</span></div>
+          <div class="metric"><strong>12</strong><span>promoted rules</span></div>
+          <div class="nav-item active">Assigned to me</div>
+          <div class="nav-item">Calibration history</div>
+          <div class="nav-item">Skill releases</div>
+        </aside>
+        <div class="content">
+          <div class="sync">Synced 20 seconds ago · Codex can read approved decisions</div>
+          <div class="content-bar"><h3>Review queue</h3><span class="filter">Primary model · release candidate</span></div>
+          <div class="finding fail"><i></i><div><p class="finding-title">Approve confidence-threshold revision</p><p class="finding-copy">Compare the current and proposed behavior across six lineage cases.</p><div class="actions"><span class="action primary">Approve patch</span><span class="action">Request rerun</span><span class="action">Comment</span></div></div><span class="pill fail">Action</span></div>
+          <div class="finding pass"><i></i><div><p class="finding-title">Full regression suite passed</p><p class="finding-copy">The server retains traces, decisions, model metadata, and promotion history.</p></div><span class="pill pass">Passed</span></div>
+          <div class="flow"><div class="flow-step">Review anywhere</div><div class="arrow">→</div><div class="flow-step">Decisions sync</div><div class="arrow">→</div><div class="flow-step">Codex continues</div></div>
+        </div>
+      </div>
+      <div class="direction-foot"><strong>Best for:</strong> recurring multi-reviewer operations. <strong>Tradeoff:</strong> authentication, hosting, permissions, and maintenance become part of the product.</div>
+    </section>
+  </main>
+</body>
+</html>
