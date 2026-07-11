@@ -1,0 +1,411 @@
+<style>
+  :root {
+    --paper: #FAFAF7;
+    --ink: #1F2422;
+    --ink-soft: #4C554F;
+    --ink-faint: #79837C;
+    --line: #DCE1DB;
+    --card: #F1F3EE;
+    --spine: #166E5A;
+    --spine-soft: #E3EFEA;
+    --lens: #5B54C4;
+    --lens-soft: #ECEAF8;
+    --amber: #A15D0B;
+    --amber-soft: #F6EBD9;
+    --code-bg: #EDF0EA;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: "Seravek", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #15191B;
+      --ink: #E2E7E3;
+      --ink-soft: #A9B3AC;
+      --ink-faint: #77817A;
+      --line: #2C3330;
+      --card: #1C2220;
+      --spine: #45BCA0;
+      --spine-soft: #17332C;
+      --lens: #9D93EC;
+      --lens-soft: #26243D;
+      --amber: #DCA55C;
+      --amber-soft: #33270F;
+      --code-bg: #1E2523;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #15191B;
+    --ink: #E2E7E3;
+    --ink-soft: #A9B3AC;
+    --ink-faint: #77817A;
+    --line: #2C3330;
+    --card: #1C2220;
+    --spine: #45BCA0;
+    --spine-soft: #17332C;
+    --lens: #9D93EC;
+    --lens-soft: #26243D;
+    --amber: #DCA55C;
+    --amber-soft: #33270F;
+    --code-bg: #1E2523;
+  }
+  :root[data-theme="light"] {
+    --paper: #FAFAF7;
+    --ink: #1F2422;
+    --ink-soft: #4C554F;
+    --ink-faint: #79837C;
+    --line: #DCE1DB;
+    --card: #F1F3EE;
+    --spine: #166E5A;
+    --spine-soft: #E3EFEA;
+    --lens: #5B54C4;
+    --lens-soft: #ECEAF8;
+    --amber: #A15D0B;
+    --amber-soft: #F6EBD9;
+    --code-bg: #EDF0EA;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.65;
+    margin: 0;
+    font-size: 16.5px;
+  }
+  .wrap { max-width: 46rem; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+
+  h1, h2, h3 { font-family: var(--serif); line-height: 1.2; text-wrap: balance; }
+  h1 { font-size: 2.3rem; font-weight: 600; margin: 0.4rem 0 0.6rem; }
+  h2 { font-size: 1.55rem; font-weight: 600; margin: 0 0 0.9rem; }
+  h3 { font-size: 1.15rem; font-weight: 600; margin: 1.6rem 0 0.5rem; }
+  p { margin: 0 0 1rem; }
+  section { margin-top: 3.2rem; }
+  a { color: var(--spine); }
+
+  .eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--spine); font-weight: 600; margin-bottom: 0.4rem;
+  }
+  .lede { font-size: 1.14rem; color: var(--ink-soft); }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1.6rem;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    padding: 0.65rem 0; margin: 1.6rem 0 0; font-size: 0.82rem; color: var(--ink-faint);
+  }
+  .meta code { font-size: 0.78rem; }
+
+  code, pre {
+    font-family: var(--mono); font-size: 0.85em;
+    background: var(--code-bg); border-radius: 4px; padding: 0.08em 0.35em;
+  }
+
+  .callout {
+    border-left: 3px solid var(--spine);
+    background: var(--spine-soft);
+    padding: 0.9rem 1.1rem; border-radius: 0 6px 6px 0; margin: 1.4rem 0;
+  }
+  .callout.warn { border-left-color: var(--amber); background: var(--amber-soft); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .label {
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 700; display: block; margin-bottom: 0.3rem;
+  }
+
+  /* Diagram bands */
+  .diagram { margin: 1.6rem 0; overflow-x: auto; }
+  .band { display: grid; gap: 0.55rem; }
+  .row { display: grid; gap: 0.55rem; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); }
+  .node {
+    border: 1px solid var(--line); background: var(--card);
+    border-radius: 6px; padding: 0.55rem 0.75rem;
+    font-size: 0.82rem; line-height: 1.45;
+  }
+  .node b { display: block; font-size: 0.85rem; }
+  .node small { color: var(--ink-faint); }
+  .node.spine { border-color: var(--spine); background: var(--spine-soft); }
+  .node.lens { border-color: var(--lens); background: var(--lens-soft); }
+  .node.amber { border-color: var(--amber); background: var(--amber-soft); }
+  .flow-arrow {
+    text-align: center; color: var(--ink-faint); font-size: 0.8rem;
+    padding: 0.05rem 0; letter-spacing: 0.06em;
+  }
+
+  /* Tier table */
+  table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 1.2rem 0; }
+  th, td { text-align: left; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; }
+  .table-scroll { overflow-x: auto; }
+
+  /* Trap cards */
+  .trap { border: 1px solid var(--line); border-radius: 8px; margin: 0.9rem 0; overflow: hidden; }
+  .trap summary {
+    cursor: pointer; padding: 0.75rem 1rem; font-weight: 600; font-size: 0.95rem;
+    display: flex; gap: 0.6rem; align-items: baseline; list-style: none;
+  }
+  .trap summary::-webkit-details-marker { display: none; }
+  .trap summary::before { content: "+"; color: var(--spine); font-family: var(--mono); font-weight: 700; }
+  .trap[open] summary::before { content: "–"; }
+  .trap .body { padding: 0 1rem 0.9rem; font-size: 0.92rem; color: var(--ink-soft); }
+  .trap .body p { margin-bottom: 0.6rem; }
+  .tag {
+    font-family: var(--mono); font-size: 0.68rem; padding: 0.1rem 0.45rem;
+    border-radius: 999px; background: var(--code-bg); color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  /* Roadmap */
+  .unit { display: grid; grid-template-columns: 3.2rem 1fr; gap: 0 1rem; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+  .unit:last-child { border-bottom: none; }
+  .uid { font-family: var(--mono); font-weight: 700; color: var(--spine); font-size: 0.95rem; }
+  .unit b { font-size: 0.97rem; }
+  .unit p { font-size: 0.9rem; color: var(--ink-soft); margin: 0.15rem 0 0; }
+  .unit .dep { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); }
+  .phase-label {
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 700; margin: 1.6rem 0 0.2rem;
+  }
+
+  ul { padding-left: 1.2rem; margin: 0 0 1rem; }
+  li { margin-bottom: 0.45rem; }
+  li::marker { color: var(--spine); }
+
+  .two-col { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin: 1.2rem 0; }
+  .panel { border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.1rem; background: var(--card); }
+  .panel h3 { margin-top: 0; font-size: 1.02rem; }
+  .panel ul { margin-bottom: 0; font-size: 0.9rem; }
+
+  .toc { font-size: 0.9rem; columns: 2; column-gap: 2rem; margin: 1.2rem 0 0; padding-left: 1.2rem; }
+  @media (max-width: 560px) { .toc { columns: 1; } }
+  .toc li { margin-bottom: 0.3rem; }
+
+  footer { margin-top: 4rem; padding-top: 1.2rem; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--ink-faint); }
+  footer code { font-size: 0.78rem; }
+</style>
+
+<div class="wrap">
+  <header>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Collaboration Data Layer, Explained</title>
+
+    <div class="eyebrow">Agent-Native LaTeX Environment · Implementation Plan, Explained</div>
+    <h1>The Collaboration Data Layer</h1>
+    <p class="lede">A capture-everything behavioral record of how humans and agents write papers together — owned by you, mirrored to vendors only as disposable lenses, and designed so that nothing your product learns is ever lost. This page explains the plan; the plan itself lives in the repo.</p>
+    <div class="meta">
+      <span>Plan: <code>docs/plans/2026-07-11-002-feat-collaboration-data-layer-plan.md</code></span>
+      <span>Origin: <code>docs/brainstorms/2026-07-11-collaboration-data-layer-requirements.md</code></span>
+      <span>8 units · 16 requirements · reviewed by 8 specialist agents</span>
+    </div>
+    <ul class="toc">
+      <li><a href="#idea">The idea in one minute</a></li>
+      <li><a href="#architecture">The architecture</a></li>
+      <li><a href="#invariant">The one governing invariant</a></li>
+      <li><a href="#life">Life of an event</a></li>
+      <li><a href="#tiers">Tier A and Tier B</a></li>
+      <li><a href="#trust">The trust ledger</a></li>
+      <li><a href="#traps">Eight traps the reviews caught</a></li>
+      <li><a href="#roadmap">The roadmap: U1–U8</a></li>
+      <li><a href="#risks">Risks and what's deferred</a></li>
+    </ul>
+  </header>
+
+  <section id="idea">
+    <h2>The idea in one minute</h2>
+    <p>Your product already keeps a research-grade <em>provenance</em> graph — who wrote which span, which agent proposed which suggestion, who accepted it. But it throws away almost all of the <em>behavior</em> around that provenance: compile attempts survive as a single overwritten flag, rejected agent work is deleted with its branch refs, nothing records how long a human deliberated over a suggestion, and no keystroke, view, or timing data exists anywhere.</p>
+    <p>The data layer fixes this with one posture: <strong>capture everything by default, cut back later</strong>. Behavioral data not captured today is gone forever; the option value of having it — for product decisions first, for essays and research as a byproduct — is the whole point.</p>
+    <p>The architecture follows a single slogan: <strong>own the spine, rent the lenses</strong>. The permanent record is an append-only event store in your own Postgres. PostHog and Sentry are bolted on as disposable viewing instruments — dashboards, session replay, exception triage — that never hold anything you can't lose.</p>
+  </section>
+
+  <section id="architecture">
+    <h2>The architecture</h2>
+    <div class="diagram">
+      <div class="band">
+        <div class="row">
+          <div class="node"><b>Web editor</b><small>changeset batches, views, review dwell — origin-filtered</small></div>
+          <div class="node"><b>Paperstore</b><small>every mutation, both transports (JSON + git push)</small></div>
+          <div class="node"><b>Compile service</b><small>outcomes + structured errors</small></div>
+          <div class="node"><b>Agent MCP calls</b><small>full payloads + self-reported intent</small></div>
+          <div class="node"><b>Tier B uploader</b><small>consenting sessions, redacted</small></div>
+        </div>
+        <div class="flow-arrow">▼ &nbsp; everything lands here &nbsp; ▼</div>
+        <div class="row">
+          <div class="node spine"><b>The owned spine</b><small><code>telemetry</code> schema in your Postgres — append-only, partitioned monthly, unlimited retention, no foreign keys into anything purgeable</small></div>
+        </div>
+        <div class="flow-arrow">▼ &nbsp; read-only derivations &nbsp; ▼</div>
+        <div class="row">
+          <div class="node lens"><b>PostHog</b><small>metadata-only mirror; dashboards + masked replay</small></div>
+          <div class="node lens"><b>Sentry</b><small>exceptions; operator agents query via MCP</small></div>
+          <div class="node spine"><b>Agent query API</b><small>agents read their own trail + compile errors</small></div>
+          <div class="node spine"><b>Parquet export</b><small>DuckDB attach → columnar files for analysis</small></div>
+        </div>
+      </div>
+    </div>
+    <p>Three properties matter more than the boxes:</p>
+    <ul>
+      <li><strong>No new service.</strong> Capture hooks live inside the services that already exist; the only new HTTP surface is a browser ingest endpoint and a Tier B upload route.</li>
+      <li><strong>Isolation is structural, not a convention.</strong> A dedicated Postgres <em>schema</em> means backup exclusion, the read-only export role, and the purge exemption are one-line grants and flags — not hand-maintained table lists that drift.</li>
+      <li><strong>The lenses are disposable.</strong> Nothing goes to a vendor that isn't derivable from the spine, and manuscript text never goes at all.</li>
+    </ul>
+  </section>
+
+  <section id="invariant">
+    <h2>The one governing invariant</h2>
+    <div class="callout">
+      <span class="label">Invariant</span>
+      <p>Every recovery tool in this repo — reseed, restore, purge-with-snapshot-rewrite, projection repair — assumes derived state can be rebuilt by <em>rewriting</em> it. Telemetry is the one store that holds <em>more</em> history than the substrate it derives from, so recovery tooling may only ever <strong>append</strong> to it (boundary-marker events). Never renumber, rebuild, or overwrite.</p>
+    </div>
+    <p>This sentence is the deepest thing in the plan, and it came out of review: the architecture borrowed its "derived record" discipline from the op-log/git relationship, but the op-log can always be rebuilt from git. Telemetry can't be rebuilt from anything — a rejected suggestion's content, a keystroke's timing, a purged paper's ledger entry exist nowhere else. Four separate review findings (unstable op-log sequences, tombstone-free restores, database-dropping backups, gap-erasing markers) were all instances of rewrite-based tools colliding with a stream that must never be rewritten.</p>
+  </section>
+
+  <section id="life">
+    <h2>Life of an event</h2>
+    <h3>A mutation (save, suggestion, accept…)</h3>
+    <div class="diagram">
+      <div class="band">
+        <div class="row">
+          <div class="node"><b>1 · Commit to git</b><small>source of truth, as today</small></div>
+          <div class="node"><b>2 · Op-log entry</b><small>carries a stable entry UUID</small></div>
+          <div class="node"><b>3 · Respond to client</b><small>mutation is done — telemetry never blocks it</small></div>
+          <div class="node spine"><b>4 · Event insert</b><small>separate transaction, after commit, best-effort</small></div>
+        </div>
+        <div class="flow-arrow">▼ &nbsp; and if step 4 ever fails… &nbsp; ▼</div>
+        <div class="row">
+          <div class="node spine"><b>Reconciler</b><small>periodically diffs op-log entry-UUID sets against events and backfills gaps — <em>lag, never lead</em></small></div>
+        </div>
+      </div>
+    </div>
+    <p>Two subtleties make this trustworthy:</p>
+    <ul>
+      <li><strong>Identity comes from the op-log entry UUID, not the row sequence.</strong> The op-log gets rewritten (and renumbered) by at least four admin paths. The UUID inside each entry survives every rewrite, so a backfilled event and the original event compute the same <code>event_id</code> and deduplicate instead of duplicating.</li>
+      <li><strong>Backfill restores existence, not fidelity.</strong> Op-log entries carry no payloads, so a reconciler-created event is flagged as reduced-fidelity, and event classes the reconciler can't see (reads, browser batches, compiles) get outage loss counters. The record is honest about its own gaps.</li>
+    </ul>
+    <h3>A keystroke</h3>
+    <p>The editor doesn't log literal key events — it logs <strong>CodeMirror changesets</strong> with per-edit timing offsets: every keystroke's effect and rhythm ("it's like seeing thought") without building a keylogger. Batches are client-stamped with a UUID, flushed on interval and on tab-hide, filtered to <em>locally-originated</em> transactions so a five-person live room doesn't record every edit five times, and sent with <code>fetch keepalive</code> — because <code>sendBeacon</code>, the obvious choice, can't carry an Authorization header. Server receive-time is the authoritative clock; client timestamps are only trusted as offsets within one batch.</p>
+  </section>
+
+  <section id="tiers">
+    <h2>Tier A and Tier B</h2>
+    <div class="table-scroll"><table>
+      <tr><th></th><th>Tier A — everyone, by default</th><th>Tier B — you + consenting friends</th></tr>
+      <tr><td><b>What</b></td><td>Everything that crosses a product surface: tool calls with full payloads, review lifecycle with timing, compiles with errors, editor interaction, rejected-suggestion content</td><td>The agent session itself: prompts, reasoning, local tool calls — uploaded from Claude Code / Codex at session end</td></tr>
+      <tr><td><b>Setup</b></td><td>None. If you use the product, it's on.</td><td>Explicit consent step mints a capture token; hooks installed on the participant's machine</td></tr>
+      <tr><td><b>Why it exists</b></td><td>Product truth: every question answerable without adding instrumentation first</td><td>"How humans and agents think together" mostly happens <em>outside</em> the product boundary</td></tr>
+      <tr><td><b>Guardrails</b></td><td>Disclosure acknowledged at onboarding chokepoints before capture starts</td><td>Session-level gating on structured signals only; secrets scrubbed twice; coauthors get notice; transcripts never mirrored to any vendor</td></tr>
+    </table></div>
+    <p>The Tier B gate deserves one pedagogical note: it deliberately refuses to make decisions based on transcript <em>content</em>. Free text is untrusted model output — so the gate reads only structured signals (session cwd, paper ids and file paths in tool-call <em>arguments</em>), and anything reaching outside the registered repo skips the whole session. One skipped session is cheap; one leaked draft from a non-consenting coauthor is not.</p>
+  </section>
+
+  <section id="trust">
+    <h2>The trust ledger</h2>
+    <p>The product's pitch is "your paper is yours," and this layer records everything its users do. The plan resolves that tension with explicit, enforceable commitments rather than fine print:</p>
+    <div class="two-col">
+      <div class="panel">
+        <h3>Never leaves the spine</h3>
+        <ul>
+          <li>Manuscript text, in any form — the PostHog mirror is a schema-generated metadata allowlist</li>
+          <li>Session replay is default-deny masked (<code>maskAllText</code>), with an automated test that a fixture manuscript string never appears in a replay payload — if that test can't stay green, replay is dropped, not the invariant</li>
+          <li>Tier B transcripts, categorically</li>
+          <li>Tokens and emails — URLs scrubbed in both SDKs, opaque principal ids only, IPs discarded</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Survives everything (by decision)</h3>
+        <ul>
+          <li>Telemetry survives paper purge and account deletion — your recorded, twice-affirmed call</li>
+          <li>The disclosure says so plainly, including that purged papers remain reconstructable, and that a purged paper's text can persist in other consenting users' transcripts</li>
+          <li>First capture is gated on a recorded acknowledgment of that disclosure — at account creation, share-link redemption, and credential minting, with a rollout step covering everyone who already exists</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout warn">
+      <span class="label">The deliberate inversion</span>
+      <p>Purge used to be trace-free: snapshots scrub tombstones, so nothing durable proved a paper was ever purged. Now telemetry <em>is</em> the purge ledger — purge writes <code>paper_purge_started</code> / <code>paper_purge_completed</code> events, and restore refuses to resurrect any paper whose completed purge event exists. Deleting the paper became the one thing the event store is <em>required</em> to remember.</p>
+    </div>
+  </section>
+
+  <section id="traps">
+    <h2>Eight traps the reviews caught</h2>
+    <p>The plan went through three deepening specialists and five document reviewers. These are the findings that changed it — each one is a small systems lesson. Click to expand.</p>
+
+    <details class="trap"><summary>Op-log sequences aren't stable identity <span class="tag">data integrity</span></summary>
+      <div class="body"><p>The first draft keyed events on the op-log's auto-increment sequence. But four admin paths <em>delete and re-insert</em> the whole op-log, renumbering everything — after one raw git push or one restore, every stored sequence dangles and the reconciler would mass-duplicate entire paper histories.</p><p><b>Fix:</b> key on the entry UUID stored <em>inside</em> each entry's payload — the one identity that survives rewrites. Sequence becomes an ordering hint.</p></div>
+    </details>
+
+    <details class="trap"><summary>Partition keys break ON CONFLICT dedup <span class="tag">postgres</span></summary>
+      <div class="body"><p>Postgres requires every unique index on a partitioned table to include the partition key. Partitioning on insert-time <code>received_at</code> means a retried insert gets a <em>different</em> partition-key value — so the dedup constraint could never fire, and "duplicate insert is a no-op" was unimplementable as written.</p><p><b>Fix:</b> partition on a deterministic <code>event_ts</code> assigned exactly once and carried through every retry; unique index is <code>(event_ts, event_id)</code>; keep <code>received_at</code> as a separate clock column.</p></div>
+    </details>
+
+    <details class="trap"><summary>sendBeacon can't authenticate <span class="tag">web platform</span></summary>
+      <div class="body"><p>The classic flush-on-tab-close API can't set an Authorization header. The escape hatches — token in URL, cookie auth — each violate a house security rule (and cookie auth would introduce CSRF to a proxy that currently has none).</p><p><b>Fix:</b> <code>fetch(…, {keepalive: true})</code> — same unload semantics, real headers, same 64KiB budget, which the final flush now explicitly respects.</p></div>
+    </details>
+
+    <details class="trap"><summary>The backup pipeline drops the whole database <span class="tag">ops</span></summary>
+      <div class="body"><p>Existing backups use <code>pg_dump --clean --create</code> — the dump itself carries <code>DROP DATABASE</code>. Excluding the telemetry schema from the dump does nothing when restore drops the database it lives in: the "restore telemetry first" ordering would destroy telemetry at step two.</p><p><b>Fix:</b> schema-scoped dumps restored into the existing database, and the backup script asserts the dump contains no DROP DATABASE statement.</p></div>
+    </details>
+
+    <details class="trap"><summary>A torn purge poisons the ledger forever <span class="tag">crash semantics</span></summary>
+      <div class="body"><p>One synchronous <code>paper_purged</code> event written before a long, interruptible snapshot-rewrite sequence means a crash mid-purge leaves an append-only ledger asserting something false — and append-only means it can never be corrected.</p><p><b>Fix:</b> bracket the purge with <code>started</code>/<code>completed</code> events and make it resumable. Started-without-completed means "resume me," never "purged" and never "never happened."</p></div>
+    </details>
+
+    <details class="trap"><summary>Recovery markers turn lag into permanent loss <span class="tag">reconciliation</span></summary>
+      <div class="body"><p>"The reconciler only looks after the most recent marker" prevents mass re-backfill after restores — but if an outage gap exists when a marker is written, everything in the gap becomes permanently unreachable even though the data to backfill from still exists.</p><p><b>Fix:</b> any tool writing a marker must first run a catch-up pass over pre-marker state. Markers schedule steady-state work; they never bury debt.</p></div>
+    </details>
+
+    <details class="trap"><summary>File paths are how cross-paper text leaks <span class="tag">consent</span></summary>
+      <div class="body"><p>Tier B's gate checked paper <em>ids</em> in tool-call arguments — but agents read files by <em>path</em>, and a session in repo A can freely read <code>~/papers/repo-B/draft.tex</code>, uploading a non-consenting collaborator's manuscript while every id-based check passes.</p><p><b>Fix:</b> resolve every path in structured arguments; any path outside the registered repo root skips the whole session.</p></div>
+    </details>
+
+    <details class="trap"><summary>Masking inputs doesn't mask a manuscript <span class="tag">privacy</span></summary>
+      <div class="body"><p>Session-replay "input masking" protects form fields — but CodeMirror renders the manuscript as ordinary DOM text, and it also appears in the PDF preview, suggestion diffs, and comments. Input masking alone would ship the paper to a vendor while the plan claimed otherwise.</p><p><b>Fix:</b> default-deny (<code>maskAllText</code>) with a chrome-only unmask allowlist, held in place by an automated test — and if the test can't be kept green, replay is dropped rather than the guarantee.</p></div>
+    </details>
+  </section>
+
+  <section id="roadmap">
+    <h2>The roadmap: U1–U8</h2>
+    <div class="phase-label">Phase 1 · Build the spine</div>
+    <div class="unit"><span class="uid">U1</span><div><b>Telemetry store foundation</b> <span class="dep">deps: none</span><p>The schema, envelope, partitioning, dedup identities, secret scrub, and purge isolation. Everything else stands on this.</p></div></div>
+    <div class="unit"><span class="uid">U2</span><div><b>Paperstore capture &amp; reconciliation</b> <span class="dep">deps: U1</span><p>Every mutation and suggestion-lifecycle event, rejected content captured before pruning, the reconciler, and the realtime task-event mirror.</p></div></div>
+    <div class="unit"><span class="uid">U3</span><div><b>Compile capture</b> <span class="dep">deps: U1</span><p>Every compile attempt with structured errors becomes durable; full logs stay ephemeral by decision.</p></div></div>
+    <div class="phase-label">Phase 2 · Extend to browser and agents</div>
+    <div class="unit"><span class="uid">U4</span><div><b>Browser ingest &amp; editor instrumentation</b> <span class="dep">deps: U1</span><p>The hardened ingest route, changeset batching, review-dwell events, and the disclosure gate with its rollout for existing users.</p></div></div>
+    <div class="unit"><span class="uid">U5</span><div><b>Agent context fields &amp; queries</b> <span class="dep">deps: U2, U3</span><p>Agents self-report intent and read back their own trail — conservatively scoped so no one reads a coauthor's behavior.</p></div></div>
+    <div class="phase-label">Phase 3 · Lenses, Tier B, operations</div>
+    <div class="unit"><span class="uid">U6</span><div><b>PostHog mirror &amp; Sentry</b> <span class="dep">deps: U1</span><p>Dashboards, masked replay, scrubbed exceptions, operator-agent access via official MCP servers.</p></div></div>
+    <div class="unit"><span class="uid">U7</span><div><b>Tier B session capture</b> <span class="dep">deps: U1, U5</span><p>Consent tokens, the structured-signal gate, two-layer redaction, revocation semantics, uploaders for Claude Code and Codex.</p></div></div>
+    <div class="unit"><span class="uid">U8</span><div><b>Export, purge/backup, operations</b> <span class="dep">deps: U1–U4</span><p>Parquet export, the purge ledger, backup carve-outs, the disclosure page, and acceptance-matrix evidence.</p></div></div>
+    <div class="callout">
+      <span class="label">Sequencing note</span>
+      <p>The plan assumes the realtime-collaboration branch (uncommitted in your main checkout) merges first: it introduces the transactional outbox, task-event tables, and additive-migration rules this spine extends. Its task events are <em>mirrored</em> into telemetry rather than merely consumed — under the realtime plan they're purged with the paper, and this layer must not lose the delegated-agent record when that happens.</p>
+    </div>
+  </section>
+
+  <section id="risks">
+    <h2>Risks and what's deferred</h2>
+    <h3>Live risks</h3>
+    <ul>
+      <li><strong>Trust bet</strong> — default-on capture with honest disclosure sits in tension with "your paper is yours." Mitigations: onboarding-bound disclosure, conservative agent-query scoping, content never leaving the spine. Watch the first design-partner reactions.</li>
+      <li><strong>Realtime coordination</strong> — the plan extends uncommitted work; if it merges differently, the envelope adapts; if it stalls, the spine proceeds on current main and reconciles later.</li>
+      <li><strong>Volume</strong> — changeset capture grows fast; partitions + verified-export-then-drop are the pressure valve, coarsening timing granularity is the named first lever.</li>
+      <li><strong>Masking fidelity</strong> — the replay-masking test is the load-bearing privacy control; replay is dropped before the invariant ever is.</li>
+    </ul>
+    <h3>Deliberately deferred</h3>
+    <ul>
+      <li>The user-facing "your paper's story" dashboard — the schema is ready for it from day one; the UI comes later.</li>
+      <li>Experimentation/randomization hooks, formal research apparatus, streaming analytics.</li>
+      <li>LLM-based post-hoc task-type classification over the Parquet exports — the design guarantees it stays possible (agent intent fields + full payloads), so the eventual "acceptance rates by task type" analysis needs no capture-day taxonomy.</li>
+    </ul>
+    <h3>Still open (FYI-level, from review)</h3>
+    <ul>
+      <li>Rate limits on the agent <em>query</em> surface (the write path has them; the read path should mirror the pattern).</li>
+      <li>Where the capture token lives on a participant's machine (keychain vs. permissioned file).</li>
+      <li>Which container runs the DuckDB export (Postgres's port stays unpublished).</li>
+      <li>Whether the restore-time tombstone check fails closed when telemetry is soft-disabled (it should).</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Companion reading to <code>docs/plans/2026-07-11-002-feat-collaboration-data-layer-plan.md</code> (origin brainstorm: <code>docs/brainstorms/2026-07-11-collaboration-data-layer-requirements.md</code>). The plan document is authoritative where the two differ.</p>
+  </footer>
+</div>
